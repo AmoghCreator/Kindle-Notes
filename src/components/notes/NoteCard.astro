@@ -158,6 +158,23 @@ const typeIcon = getTypeIcon(note.type);
 </article>
 
 <script>
+  // Services will be dynamically imported
+  let db = null;
+  let notesService = null;
+  
+  // Initialize services when needed
+  async function initializeServices() {
+    if (!db) {
+      const { KindleNotesDatabase } = await import('../../lib/storage/database');
+      const { NotesStorage } = await import('../../lib/storage/notes');
+      
+      db = new KindleNotesDatabase();
+      await db.open();
+      notesService = new NotesStorage(db);
+    }
+    return { db, notesService };
+  }
+
   function copyNote(noteId: string) {
     const noteElement = document.querySelector(`[data-note-id="${noteId}"]`);
     if (noteElement) {
@@ -212,54 +229,55 @@ const typeIcon = getTypeIcon(note.type);
     }
   }
 
-  function saveNoteEdit(noteId: string) {
+  async function saveNoteEdit(noteId: string) {
     const noteElement = document.querySelector(`[data-note-id="${noteId}"]`);
     if (noteElement) {
       const newContent = noteElement.textContent || '';
       
-      // Save to backend
-      fetch(`/api/notes/${noteId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content: newContent })
-      }).then(response => {
-        if (response.ok) {
-          showToast('Note updated!', 'success');
-          
-          // Exit editing mode
-          noteElement.setAttribute('contenteditable', 'false');
-          noteElement.classList.remove('editing');
-          
-          // Remove save button
-          const saveBtn = noteElement.closest('.note-card')?.querySelector('.save-btn');
-          saveBtn?.remove();
-        } else {
-          showToast('Failed to update note', 'error');
-        }
-      }).catch(() => {
+      try {
+        // Initialize services
+        const { notesService } = await initializeServices();
+        
+        // Update note in local storage
+        await notesService.update(noteId, { content: newContent });
+        
+        showToast('Note updated!', 'success');
+        
+        // Exit editing mode
+        noteElement.setAttribute('contenteditable', 'false');
+        noteElement.classList.remove('editing');
+        
+        // Remove save button
+        const saveBtn = noteElement.closest('.note-card')?.querySelector('.save-btn');
+        saveBtn?.remove();
+      } catch (error) {
+        console.error('Failed to update note:', error);
         showToast('Failed to update note', 'error');
-      });
+      }
     }
   }
 
-  function toggleFavorite(noteId: string) {
+  async function toggleFavorite(noteId: string) {
     const button = document.querySelector(`[onclick="toggleFavorite('${noteId}')"]`);
     const isFavorited = button?.classList.contains('favorited');
     
-    fetch(`/api/notes/${noteId}/favorite`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ favorite: !isFavorited })
-    }).then(response => {
-      if (response.ok) {
-        button?.classList.toggle('favorited');
-        const svg = button?.querySelector('svg');
-        if (svg) {
-          svg.setAttribute('fill', button.classList.contains('favorited') ? 'currentColor' : 'none');
-        }
-        showToast(isFavorited ? 'Removed from favorites' : 'Added to favorites', 'success');
+    try {
+      // Initialize services
+      const { notesService } = await initializeServices();
+      
+      // Update favorite status in local storage
+      await notesService.update(noteId, { isFavorite: !isFavorited });
+      
+      button?.classList.toggle('favorited');
+      const svg = button?.querySelector('svg');
+      if (svg) {
+        svg.setAttribute('fill', button.classList.contains('favorited') ? 'currentColor' : 'none');
       }
-    }).catch(console.error);
+      showToast(isFavorited ? 'Removed from favorites' : 'Added to favorites', 'success');
+    } catch (error) {
+      console.error('Failed to toggle favorite:', error);
+      showToast('Failed to update favorite', 'error');
+    }
   }
 
   function showToast(message: string, type: 'success' | 'error') {

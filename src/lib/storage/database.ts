@@ -1,20 +1,34 @@
 // IndexedDB database configuration using Dexie.js
 import Dexie, { type Table } from 'dexie';
-import type { Book, Note, Upload } from '@/lib/types';
+import type { Book, Note, Upload, ImportSession, ParsedTextEntry, DeduplicationResult } from '@/lib/types';
 
 export class KindleNotesDatabase extends Dexie {
     books!: Table<Book, string>;
     notes!: Table<Note, string>;
     uploads!: Table<Upload, string>;
+    importSessions!: Table<ImportSession, string>;
+    parsedEntries!: Table<ParsedTextEntry, string>;
+    deduplicationResults!: Table<DeduplicationResult, string>;
 
     constructor() {
         super('KindleNotesDB');
 
+        // Version 1: Original schema
         this.version(1).stores({
             // Primary keys and indexes for optimal query performance
             books: '++id, title, author, *tags, createdAt, lastModifiedAt',
             notes: '++id, bookId, *tags, text, type, createdAt, lastModifiedAt, [bookId+createdAt]',
             uploads: '++id, filename, status, createdAt, completedAt'
+        });
+
+        // Version 2: Add text import tables
+        this.version(2).stores({
+            books: '++id, title, author, *tags, createdAt, lastModifiedAt',
+            notes: '++id, bookId, *tags, text, type, createdAt, lastModifiedAt, [bookId+createdAt]',
+            uploads: '++id, filename, status, createdAt, completedAt',
+            importSessions: '++id, fileName, status, startedAt, completedAt',
+            parsedEntries: '++id, sessionId, bookIdentifier, entryType, parseIndex, [sessionId+parseIndex]',
+            deduplicationResults: '++id, parsedEntryId, decision, existingNoteId, [parsedEntryId+decision]'
         });
 
         // Hooks for data validation and auto-computed fields

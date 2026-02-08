@@ -1,10 +1,10 @@
-import { DatabaseService } from './database';
+import type { KindleNotesDatabase } from './database';
 import type { Note, NoteType } from '../types';
 import { ValidationError, NotFoundError } from '../../utils/errors';
 import { validateNote } from '../../utils/validation';
 
 export class NotesStorage {
-    constructor(private db: DatabaseService) { }
+    constructor(private db: KindleNotesDatabase) { }
 
     async create(data: Omit<Note, 'id' | 'createdAt' | 'updatedAt'>): Promise<Note> {
         // Validate input data

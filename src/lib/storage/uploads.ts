@@ -1,10 +1,10 @@
-import { DatabaseService } from './database';
-import type { Upload, UploadResult } from '../types';
+import type { KindleNotesDatabase } from './database';
+import type { Upload, UploadStatus } from '../types';
 import { ValidationError, NotFoundError } from '../utils/errors';
 import { validateUpload } from '../utils/validation';
 
 export class UploadsStorage {
-    constructor(private db: DatabaseService) { }
+    constructor(private db: KindleNotesDatabase) { }
 
     async create(data: Omit<Upload, 'id' | 'createdAt' | 'updatedAt'>): Promise<Upload> {
         // Validate input data

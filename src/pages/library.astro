@@ -122,7 +122,7 @@ const recentNotes = [];
 </BaseLayout>
 
 <script>
-  import { DatabaseService } from '../lib/storage/database';
+  import { KindleNotesDatabase } from '../lib/storage/database';
   import { BooksStorage } from '../lib/storage/books';
   import { NotesStorage } from '../lib/storage/notes';
 
@@ -137,7 +137,7 @@ const recentNotes = [];
     };
   }
 
-  let db: DatabaseService;
+  let db: KindleNotesDatabase;
   let booksStorage: BooksStorage;
   let notesStorage: NotesStorage;
   let currentView = 'grid';
@@ -146,8 +146,8 @@ const recentNotes = [];
   async function initializeLibrary() {
     try {
       // Initialize database
-      db = new DatabaseService();
-      await db.initialize();
+      db = new KindleNotesDatabase();
+      await db.open();
       
       booksStorage = new BooksStorage(db);
       notesStorage = new NotesStorage(db);
@@ -252,7 +252,7 @@ const recentNotes = [];
       <div class="book-content">
         <header class="book-header">
           <h3 class="book-title">
-            <a href="/books/${book.id}">${book.title}</a>
+            <a href="/book?id=${book.id}">${book.title}</a>
           </h3>
           <p class="book-author">${book.author}</p>
         </header>
@@ -273,7 +273,7 @@ const recentNotes = [];
         </div>
         
         <div class="book-actions">
-          <a href="/books/${book.id}" class="btn btn-sm btn-primary">View Notes</a>
+          <a href="/book?id=${book.id}" class="btn btn-sm btn-primary">View Notes</a>
         </div>
       </div>
     `;

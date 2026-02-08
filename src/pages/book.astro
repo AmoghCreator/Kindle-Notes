@@ -1,0 +1,727 @@
+---
+// Book detail page showing notes for a specific book
+// Usage: /book?id=book-id-here
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EmptyState from '../components/common/EmptyState.astro';
+import LoadingSpinner from '../components/common/LoadingSpinner.astro';
+---
+
+<BaseLayout title="Book Notes" description="View notes and highlights for this book">
+  <main class="book-detail">
+    <!-- Loading state -->
+    <div id="loadingState" class="loading-container">
+      <LoadingSpinner size="lg" message="Loading book notes..." />
+    </div>
+
+    <!-- Error state -->
+    <div id="errorState" style="display: none;" class="error-container">
+      <EmptyState
+        title="Book Not Found"
+        message="The book you're looking for doesn't exist or has been removed."
+        icon="alert"
+        action={{
+          text: "Back to Library",
+          href: "/library"
+        }}
+      />
+    </div>
+
+    <!-- Empty notes state -->
+    <div id="emptyState" style="display: none;">
+      <EmptyState
+        title="No Notes Yet"
+        message="This book doesn't have any notes or highlights yet."
+        icon="notes"
+        action={{
+          text: "Back to Library",
+          href: "/library"
+        }}
+      />
+    </div>
+
+    <!-- Book content -->
+    <div id="bookContent" style="display: none;">
+      <!-- Book header -->
+      <header class="book-header">
+        <div class="book-info">
+          <div class="book-cover" id="bookCover">
+            <!-- Cover will be populated by JS -->
+          </div>
+          <div class="book-details">
+            <nav class="breadcrumb">
+              <a href="/library">Library</a>
+              <span class="breadcrumb-separator">›</span>
+              <span class="current-book" id="breadcrumbTitle">Book</span>
+            </nav>
+            <h1 class="book-title" id="bookTitle">Loading...</h1>
+            <p class="book-author" id="bookAuthor">Loading...</p>
+            <div class="book-stats" id="bookStats">
+              <!-- Stats will be populated by JS -->
+            </div>
+          </div>
+        </div>
+        
+        <div class="book-actions">
+          <button class="btn btn-ghost" id="sortToggle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 6h18M7 12h10m-7 6h4"/>
+            </svg>
+            Sort: Recent
+          </button>
+          
+          <button class="btn btn-ghost" id="filterToggle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46"/>
+            </svg>
+            All Types
+          </button>
+        </div>
+      </header>
+
+      <!-- Filters -->
+      <div class="filters" id="filtersSection" style="display: none;">
+        <div class="filter-group">
+          <label>Note Type:</label>
+          <div class="filter-buttons">
+            <button class="filter-btn active" data-type="all">All</button>
+            <button class="filter-btn" data-type="highlight">Highlights</button>
+            <button class="filter-btn" data-type="note">Notes</button>
+            <button class="filter-btn" data-type="bookmark">Bookmarks</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notes list -->
+      <section class="notes-section">
+        <div class="notes-list" id="notesList">
+          <!-- Notes will be populated by JavaScript -->
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  import { KindleNotesDatabase } from '../lib/storage/database';
+  import { BooksStorage } from '../lib/storage/books';
+  import { NotesStorage } from '../lib/storage/notes';
+
+  let db: KindleNotesDatabase;
+  let booksStorage: BooksStorage;
+  let notesStorage: NotesStorage;
+  let currentBook: any = null;
+  let allNotes: any[] = [];
+  let filteredNotes: any[] = [];
+  let currentSort = 'recent';
+  let currentFilter = 'all';
+
+  async function initializeBookDetail() {
+    try {
+      // Initialize database
+      db = new KindleNotesDatabase();
+      await db.open();
+      
+      booksStorage = new BooksStorage(db);
+      notesStorage = new NotesStorage(db);
+
+      // Get book ID from URL query parameter
+      const bookId = getBookIdFromUrl();
+      if (!bookId) {
+        showError();
+        return;
+      }
+
+      // Load book and notes
+      await loadBookDetail(bookId);
+    } catch (error) {
+      console.error('Failed to initialize book detail:', error);
+      showError();
+    }
+  }
+
+  function getBookIdFromUrl(): string | null {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('id');
+  }
+
+  async function loadBookDetail(bookId: string) {
+    showLoading();
+
+    try {
+      // Load book and notes in parallel
+      const [book, notes] = await Promise.all([
+        booksStorage.findById(bookId),
+        notesStorage.findByBookId(bookId)
+      ]);
+
+      if (!book) {
+        showError();
+        return;
+      }
+
+      currentBook = book;
+      allNotes = notes;
+      filteredNotes = [...allNotes];
+
+      renderBookDetail();
+      renderNotes();
+      showContent();
+    } catch (error) {
+      console.error('Error loading book detail:', error);
+      showError();
+    }
+  }
+
+  function renderBookDetail() {
+    if (!currentBook) return;
+
+    // Update page title
+    document.title = `${currentBook.title} - Kindle Notes`;
+
+    // Update breadcrumb
+    const breadcrumbTitle = document.getElementById('breadcrumbTitle');
+    if (breadcrumbTitle) {
+      breadcrumbTitle.textContent = currentBook.title;
+    }
+
+    // Update book info
+    document.getElementById('bookTitle')!.textContent = currentBook.title;
+    document.getElementById('bookAuthor')!.textContent = currentBook.author;
+
+    // Update cover
+    const bookCover = document.getElementById('bookCover');
+    if (bookCover) {
+      if (currentBook.coverImageUrl) {
+        bookCover.innerHTML = `<img src="${currentBook.coverImageUrl}" alt="Cover of ${currentBook.title}" />`;
+      } else {
+        bookCover.innerHTML = `
+          <div class="book-cover-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            </svg>
+          </div>
+        `;
+      }
+    }
+
+    // Update stats
+    const bookStats = document.getElementById('bookStats');
+    if (bookStats) {
+      const highlights = allNotes.filter(note => note.type === 'highlight').length;
+      const notes = allNotes.filter(note => note.type === 'note').length;
+      const bookmarks = allNotes.filter(note => note.type === 'bookmark').length;
+
+      bookStats.innerHTML = `
+        <div class="stat-item">
+          <span class="stat-value">${allNotes.length}</span>
+          <span class="stat-label">Total</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">${highlights}</span>
+          <span class="stat-label">Highlights</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">${notes}</span>
+          <span class="stat-label">Notes</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">${bookmarks}</span>
+          <span class="stat-label">Bookmarks</span>
+        </div>
+      `;
+    }
+  }
+
+  function renderNotes() {
+    const notesList = document.getElementById('notesList');
+    if (!notesList) return;
+
+    if (filteredNotes.length === 0) {
+      if (currentFilter === 'all' && allNotes.length === 0) {
+        showEmptyState();
+        return;
+      }
+      
+      notesList.innerHTML = `
+        <div class="empty-filter-state">
+          <p>No ${currentFilter === 'all' ? '' : currentFilter + ' '}notes found.</p>
+          <button class="btn btn-sm btn-ghost" onclick="clearFilters()">Show All Notes</button>
+        </div>
+      `;
+      return;
+    }
+
+    notesList.innerHTML = '';
+
+    for (const note of filteredNotes) {
+      const noteElement = createNoteElement(note);
+      notesList.appendChild(noteElement);
+    }
+  }
+
+  function createNoteElement(note: any) {
+    const article = document.createElement('article');
+    article.className = `note-card note-type-${note.type}`;
+    
+    const formatDate = (date: Date) => {
+      return new Intl.DateTimeFormat('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: date.getFullYear() !== new Date().getFullYear() ? 'numeric' : undefined,
+        hour: 'numeric',
+        minute: '2-digit'
+      }).format(new Date(date));
+    };
+
+    const getTypeIcon = (type: string) => {
+      switch (type) {
+        case 'highlight':
+          return '<path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>';
+        case 'note':
+          return '<path d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 011-1h1a2 2 0 100-4H7a1 1 0 01-1-1V8a1 1 0 011-1h3a1 1 0 001-1V4z"/>';
+        case 'bookmark':
+          return '<path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>';
+        default:
+          return '';
+      }
+    };
+
+    article.innerHTML = `
+      <header class="note-header">
+        <div class="note-type">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            ${getTypeIcon(note.type)}
+          </svg>
+          <span class="note-type-label">${note.type}</span>
+        </div>
+        
+        <div class="note-meta">
+          ${note.page ? `<span class="note-page">Page ${note.page}</span>` : ''}
+          ${note.location ? `<span class="note-location">Location ${note.location}</span>` : ''}
+          <time class="note-date" datetime="${note.createdAt}">${formatDate(note.createdAt)}</time>
+        </div>
+      </header>
+
+      <div class="note-content">
+        ${note.type === 'bookmark' && !note.content
+          ? '<p class="bookmark-placeholder">Bookmark saved</p>'
+          : `<div class="note-text" data-note-id="${note.id}">${note.content}</div>`
+        }
+      </div>
+
+      <footer class="note-actions">
+        <button class="action-btn" onclick="copyNote('${note.id}')" title="Copy note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+          </svg>
+        </button>
+
+        <button class="action-btn" onclick="shareNote('${note.id}')" title="Share note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/>
+            <polyline points="16,6 12,2 8,6"/>
+            <line x1="12" y1="2" x2="12" y2="15"/>
+          </svg>
+        </button>
+      </footer>
+    `;
+    
+    return article;
+  }
+
+  function applyFilters() {
+    filteredNotes = allNotes.filter(note => {
+      return currentFilter === 'all' || note.type === currentFilter;
+    });
+
+    // Apply sorting
+    switch (currentSort) {
+      case 'recent':
+        filteredNotes.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        break;
+      case 'oldest':
+        filteredNotes.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+        break;
+      case 'page':
+        filteredNotes.sort((a, b) => (a.page || 0) - (b.page || 0));
+        break;
+    }
+
+    renderNotes();
+  }
+
+  function showLoading() {
+    document.getElementById('loadingState')!.style.display = 'flex';
+    document.getElementById('errorState')!.style.display = 'none';
+    document.getElementById('emptyState')!.style.display = 'none';
+    document.getElementById('bookContent')!.style.display = 'none';
+  }
+
+  function showError() {
+    document.getElementById('loadingState')!.style.display = 'none';
+    document.getElementById('errorState')!.style.display = 'block';
+    document.getElementById('emptyState')!.style.display = 'none';
+    document.getElementById('bookContent')!.style.display = 'none';
+  }
+
+  function showEmptyState() {
+    document.getElementById('loadingState')!.style.display = 'none';
+    document.getElementById('errorState')!.style.display = 'none';
+    document.getElementById('emptyState')!.style.display = 'block';
+    document.getElementById('bookContent')!.style.display = 'none';
+  }
+
+  function showContent() {
+    document.getElementById('loadingState')!.style.display = 'none';
+    document.getElementById('errorState')!.style.display = 'none';
+    document.getElementById('emptyState')!.style.display = 'none';
+    document.getElementById('bookContent')!.style.display = 'block';
+  }
+
+  // Global functions for note actions
+  window.copyNote = function(noteId: string) {
+    const noteElement = document.querySelector(`[data-note-id="${noteId}"]`);
+    if (noteElement) {
+      const text = noteElement.textContent || '';
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Note copied to clipboard!', 'success');
+      }).catch(() => {
+        showToast('Failed to copy note', 'error');
+      });
+    }
+  };
+
+  window.shareNote = function(noteId: string) {
+    const note = allNotes.find(n => n.id === noteId);
+    if (note) {
+      const shareData = {
+        title: `Note from "${currentBook?.title || 'Unknown Book'}"`,
+        text: note.content,
+        url: window.location.href
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch(console.error);
+      } else {
+        navigator.clipboard.writeText(`${shareData.text}\n\nFrom: ${shareData.title}\n${shareData.url}`).then(() => {
+          showToast('Note and link copied to clipboard!', 'success');
+        }).catch(console.error);
+      }
+    }
+  };
+
+  window.clearFilters = function() {
+    currentFilter = 'all';
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.type === 'all');
+    });
+    applyFilters();
+  };
+
+  function showToast(message: string, type: 'success' | 'error') {
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.textContent = message;
+    toast.style.cssText = `
+      position: fixed; 
+      top: 20px; 
+      right: 20px; 
+      padding: 12px 16px; 
+      border-radius: 8px; 
+      z-index: 1000;
+      background: ${type === 'success' ? '#10b981' : '#ef4444'};
+      color: white;
+      font-family: var(--font-family-secondary);
+      font-size: var(--font-size-sm);
+    `;
+    
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+  }
+
+  // Event handlers
+  document.addEventListener('DOMContentLoaded', () => {
+    initializeBookDetail();
+
+    // Sort toggle
+    document.getElementById('sortToggle')?.addEventListener('click', () => {
+      const sortOptions = ['recent', 'oldest', 'page'];
+      const currentIndex = sortOptions.indexOf(currentSort);
+      currentSort = sortOptions[(currentIndex + 1) % sortOptions.length];
+      
+      const sortToggle = document.getElementById('sortToggle');
+      if (sortToggle) {
+        const labels = { recent: 'Recent', oldest: 'Oldest', page: 'Page' };
+        sortToggle.innerHTML = `
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 6h18M7 12h10m-7 6h4"/>
+          </svg>
+          Sort: ${labels[currentSort]}
+        `;
+      }
+      
+      applyFilters();
+    });
+
+    // Filter toggle
+    document.getElementById('filterToggle')?.addEventListener('click', () => {
+      const filtersSection = document.getElementById('filtersSection');
+      if (filtersSection) {
+        filtersSection.style.display = filtersSection.style.display === 'none' ? 'block' : 'none';
+      }
+    });
+
+    // Filter buttons
+    document.addEventListener('click', (e) => {
+      const filterBtn = (e.target as HTMLElement).closest('.filter-btn');
+      if (filterBtn) {
+        const type = (filterBtn as HTMLElement).dataset.type;
+        if (type) {
+          currentFilter = type;
+          document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.type === type);
+          });
+          applyFilters();
+        }
+      }
+    });
+  });
+</script>
+
+<style>
+  .book-detail {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+  }
+
+  .loading-container, .error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+  }
+
+  .book-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: var(--space-xl);
+    padding-bottom: var(--space-lg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .book-info {
+    display: flex;
+    gap: var(--space-lg);
+    align-items: flex-start;
+    flex: 1;
+  }
+
+  .book-cover {
+    width: 120px;
+    height: 180px;
+    flex-shrink: 0;
+  }
+
+  .book-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--border-radius-md);
+  }
+
+  .book-cover-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+  }
+
+  .book-cover-placeholder svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  .book-details {
+    flex: 1;
+  }
+
+  .breadcrumb {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-sm);
+  }
+
+  .breadcrumb a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .breadcrumb-separator {
+    margin: 0 var(--space-xs);
+  }
+
+  .book-title {
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-sm);
+  }
+
+  .book-author {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-lg);
+  }
+
+  .book-stats {
+    display: flex;
+    gap: var(--space-lg);
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-value {
+    display: block;
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+  }
+
+  .stat-label {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+  }
+
+  .book-actions {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: center;
+  }
+
+  .book-actions .btn svg {
+    margin-right: var(--space-xs);
+  }
+
+  .filters {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-md);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-xl);
+  }
+
+  .filter-group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .filter-group label {
+    font-family: var(--font-family-secondary);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+  }
+
+  .filter-buttons {
+    display: flex;
+    gap: var(--space-xs);
+  }
+
+  .filter-btn {
+    padding: var(--space-xs) var(--space-sm);
+    border: 1px solid var(--color-border);
+    background: white;
+    border-radius: var(--border-radius-sm);
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: all 0.2s var(--easing-ease-out);
+  }
+
+  .filter-btn:hover {
+    background: var(--color-surface-hover);
+    border-color: var(--color-primary);
+  }
+
+  .filter-btn.active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+  }
+
+  .notes-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .empty-filter-state {
+    text-align: center;
+    padding: var(--space-xl);
+    color: var(--color-text-muted);
+  }
+
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .book-detail {
+      padding: 0 var(--space-md);
+    }
+
+    .book-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-lg);
+    }
+
+    .book-info {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .book-cover {
+      width: 100px;
+      height: 150px;
+    }
+
+    .book-stats {
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+
+    .book-actions {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .filter-group {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-sm);
+    }
+
+    .filter-buttons {
+      flex-wrap: wrap;
+    }
+  }
+</style>

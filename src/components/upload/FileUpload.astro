@@ -109,6 +109,33 @@ const {
   const errorResult = document.getElementById('resultError');
   
   let isUploading = false;
+  
+  // Services will be dynamically imported
+  let db = null;
+  let sessionService = null;
+  let parserService = null;
+  
+  // Initialize services when DOM is ready
+  async function initializeServices() {
+    try {
+      // Dynamic imports to handle browser module loading
+      const { KindleNotesDatabase } = await import('../../lib/storage/database');
+      const { ImportSessionService } = await import('../../lib/storage/import-session-service');
+      const { TextFileParserService } = await import('../../lib/parsers/text-file-parser-service');
+      
+      db = new KindleNotesDatabase();
+      await db.open();
+      sessionService = new ImportSessionService(db);
+      parserService = new TextFileParserService(db, sessionService);
+      console.log('Services initialized successfully');
+    } catch (error) {
+      console.error('Failed to initialize services:', error);
+      showError('Failed to initialize application. Please refresh the page.');
+    }
+  }
+  
+  // Initialize when component loads
+  document.addEventListener('DOMContentLoaded', initializeServices);
 
   // Drag and drop handlers
   uploadArea?.addEventListener('dragover', (e) => {
@@ -203,6 +230,11 @@ const {
   }
 
   async function processFile(file: File) {
+    if (!parserService || !sessionService) {
+      showError('Services not initialized. Please refresh the page.');
+      return;
+    }
+
     // Show progress
     showProgress(file.name, file.size);
     updateProgress(0, 'Reading file...');
@@ -210,49 +242,50 @@ const {
     try {
       // Read file content
       const content = await readFileAsText(file);
-      updateProgress(25, 'Validating file...');
+      updateProgress(10, 'Validating file format...');
 
-      // Import to backend
-      const response = await fetch('/api/import', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          fileName: file.name,
-          fileSize: file.size,
-          content: content
-        })
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Upload failed');
-      }
-
-      updateProgress(75, 'Processing entries...');
-
-      // Simulate processing progress
-      let progress = 75;
-      const progressInterval = setInterval(() => {
-        progress += 5;
-        if (progress >= 100) {
-          clearInterval(progressInterval);
-          return;
+      // Parse using client-side service with progress tracking
+      const result = await parserService.parseTextFile(
+        file.name,
+        content,
+        {
+          strictMode: false,
+          deduplicateWithin: 'session',
+          onProgress: (progress) => {
+            const progressMap = {
+              'validating': { start: 10, end: 20, label: 'Validating content...' },
+              'parsing': { start: 20, end: 60, label: 'Parsing entries...' },
+              'deduplicating': { start: 60, end: 80, label: 'Removing duplicates...' },
+              'storing': { start: 80, end: 95, label: 'Saving to database...' },
+              'completed': { start: 100, end: 100, label: 'Complete!' }
+            };
+            
+            const stage = progressMap[progress.stage];
+            if (stage) {
+              const stageProgress = stage.start + (stage.end - stage.start) * (progress.stageProgress / 100);
+              updateProgress(stageProgress, stage.label);
+            }
+          }
         }
-        updateProgress(progress, 'Processing entries...');
-      }, 200);
-
-      const result = await response.json();
-      clearInterval(progressInterval);
+      );
       
       updateProgress(100, 'Complete!');
       
+      // Show success with import statistics
       setTimeout(() => {
-        showSuccess(result);
+        showSuccess({
+          sessionId: result.sessionId,
+          entriesProcessed: result.statistics.entriesProcessed,
+          booksCreated: result.statistics.booksCreated,
+          notesImported: result.statistics.notesImported,
+          highlightsImported: result.statistics.highlightsImported,
+          duplicatesSkipped: result.statistics.duplicatesSkipped,
+          processingTime: result.statistics.processingTimeMs
+        });
       }, 500);
 
     } catch (error) {
+      console.error('File processing error:', error);
       showError(error instanceof Error ? error.message : 'Failed to process file');
     }
   }
@@ -296,10 +329,16 @@ const {
 
     const messageEl = document.getElementById('successMessage');
     if (messageEl) {
+      const totalNotes = (result.notesImported || 0) + (result.highlightsImported || 0);
+      const processingTimeSeconds = result.processingTime ? (result.processingTime / 1000).toFixed(1) : '0.0';
+      
       messageEl.innerHTML = `
-        Created <strong>${result.booksCreated || 0} books</strong> 
-        and <strong>${result.notesCreated || 0} notes</strong>
-        ${result.duplicatesSkipped ? `<br><small>Skipped ${result.duplicatesSkipped} duplicates</small>` : ''}
+        Successfully imported <strong>${result.entriesProcessed || 0} entries</strong>:
+        <br>📚 <strong>${result.booksCreated || 0} books</strong>
+        <br>📝 <strong>${result.notesImported || 0} notes</strong>
+        <br>🖍️ <strong>${result.highlightsImported || 0} highlights</strong>
+        ${result.duplicatesSkipped ? `<br>⚠️ <small>Skipped ${result.duplicatesSkipped} duplicates</small>` : ''}
+        <br><small style="color: #666;">Processed in ${processingTimeSeconds}s</small>
       `;
     }
   }

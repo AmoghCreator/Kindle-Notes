@@ -10,6 +10,9 @@ export default defineConfig({
     vite: {
         optimizeDeps: {
             include: ['dexie', 'minisearch']
+        },
+        worker: {
+            format: 'es'
         }
     }
 });

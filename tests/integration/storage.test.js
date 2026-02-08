@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { DatabaseService } from '../../src/lib/storage/database';
+import { KindleNotesDatabase } from '../../src/lib/storage/database';
 import { BooksStorage } from '../../src/lib/storage/books';
 import { NotesStorage } from '../../src/lib/storage/notes';
 import { UploadsStorage } from '../../src/lib/storage/uploads';
@@ -9,14 +9,14 @@ import type { Book, Note, Upload } from '../../src/lib/types';
 import 'fake-indexeddb/auto';
 
 describe('Storage Integration Tests', () => {
-    let db: DatabaseService;
+    let db: KindleNotesDatabase;
     let booksStorage: BooksStorage;
     let notesStorage: NotesStorage;
     let uploadsStorage: UploadsStorage;
 
     beforeEach(async () => {
-        db = new DatabaseService();
-        await db.initialize();
+        db = new KindleNotesDatabase();
+        await db.open();
 
         booksStorage = new BooksStorage(db);
         notesStorage = new NotesStorage(db);
