@@ -1,0 +1,219 @@
+// Core data types for Kindle Notes Website
+// Based on data-model.md specifications
+
+export interface User {
+    id: string;
+    email?: string;
+    displayName?: string;
+    preferences: UserPreferences;
+    createdAt: Date;
+    lastActiveAt: Date;
+}
+
+export interface UserPreferences {
+    theme: 'light' | 'dark' | 'auto';
+    defaultShareAttribution: boolean;
+    defaultSharePrivacy: 'private' | 'public';
+    importDupeHandling: 'skip' | 'replace' | 'merge';
+    searchResultsPerPage: number;
+}
+
+export interface Book {
+    id: string;
+    title: string;
+    author?: string;
+    isbn?: string;
+    cover?: string;
+    noteCount: number;
+    tags: string[];
+    importSource: string;
+    createdAt: Date;
+    lastModifiedAt: Date;
+}
+
+export interface Note {
+    id: string;
+    bookId: string;
+    text: string;
+    location?: NoteLocation;
+    type: 'highlight' | 'note' | 'bookmark';
+    tags: string[];
+    userNote?: string;
+    createdAt: Date;
+    lastModifiedAt: Date;
+    importSource: UploadMeta;
+    shareHistory: ShareRecord[];
+}
+
+export interface NoteLocation {
+    page?: number;
+    location?: number;
+    chapter?: string;
+    position?: string;
+}
+
+export interface ShareRecord {
+    platform: 'twitter' | 'instagram';
+    sharedAt: Date;
+    format: 'text' | 'image';
+    attribution: boolean;
+}
+
+export interface Upload {
+    id: string;
+    filename: string;
+    fileSize: number;
+    format: 'kindle-txt' | 'csv' | 'json';
+    status: UploadStatus;
+    counts: UploadCounts;
+    errors: ParseError[];
+    startedAt: Date;
+    completedAt?: Date;
+    userId?: string;
+}
+
+export type UploadStatus = 'pending' | 'parsing' | 'processed' | 'failed';
+
+export interface UploadCounts {
+    totalLines: number;
+    notesCreated: number;
+    booksCreated: number;
+    duplicatesSkipped: number;
+    errorsEncountered: number;
+}
+
+export interface ParseError {
+    line: number;
+    message: string;
+    context: string;
+}
+
+export interface UploadMeta {
+    uploadId: string;
+    filename: string;
+    importedAt: Date;
+}
+
+// Share-related types
+export interface ShareRequest {
+    noteId: string;
+    platform: 'twitter' | 'instagram';
+    format: 'text' | 'image';
+    attribution: AttributionSettings;
+    generatedAt: Date;
+    payload: SharePayload;
+}
+
+export interface AttributionSettings {
+    includeBook: boolean;
+    includeAuthor: boolean;
+    customPrefix?: string;
+}
+
+export type SharePayload = TwitterPayload | InstagramPayload;
+
+export interface TwitterPayload {
+    text: string;
+    truncated: boolean;
+    charCount: number;
+}
+
+export interface InstagramPayload {
+    imageDataUrl: string;
+    dimensions: { width: number; height: number };
+    textLines: string[];
+}
+
+// Parser interface types
+export interface ParseResult {
+    books: BookData[];
+    notes: NoteData[];
+    errors: ParseError[];
+    summary: {
+        totalLines: number;
+        booksFound: number;
+        notesFound: number;
+        duplicatesDetected: number;
+    };
+}
+
+export interface BookData {
+    title: string;
+    author?: string;
+    isbn?: string;
+}
+
+export interface NoteData {
+    text: string;
+    bookTitle: string;
+    location?: {
+        page?: number;
+        position?: string;
+    };
+    type: 'highlight' | 'note' | 'bookmark';
+    timestamp?: Date;
+}
+
+export interface FileFormat {
+    name: string;
+    extensions: string[];
+    mimeTypes: string[];
+    description: string;
+}
+
+// Search-related types
+export interface SearchQuery {
+    text?: string;
+    bookIds?: string[];
+    tags?: string[];
+    dateRange?: {
+        start: Date;
+        end: Date;
+    };
+    limit?: number;
+    offset?: number;
+}
+
+export interface SearchResult {
+    notes: Note[];
+    totalCount: number;
+    hasMore: boolean;
+    suggestions?: string[];
+}
+
+// Export options
+export interface TwitterOptions {
+    includeAttribution: boolean;
+    customPrefix?: string;
+    maxLength?: number;
+}
+
+export interface InstagramOptions {
+    includeAttribution: boolean;
+    theme: 'light' | 'dark' | 'kindle';
+    dimensions: {
+        width: number;
+        height: number;
+    };
+    font?: {
+        family: string;
+        size: number;
+    };
+}
+
+export interface TwitterExport {
+    text: string;
+    charCount: number;
+    truncated: boolean;
+    hashtags: string[];
+}
+
+export interface InstagramExport {
+    imageDataUrl: string;
+    dimensions: { width: number; height: number };
+    metadata: {
+        text: string;
+        attribution: string;
+        theme: string;
+    };
+}

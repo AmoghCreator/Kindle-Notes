@@ -1,0 +1,112 @@
+---
+// Site footer with minimal information
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-info">
+        <p class="footer-text">
+          Built for book lovers who want to organize and share their reading insights.
+        </p>
+      </div>
+      
+      <div class="footer-links">
+        <a href="/about" class="footer-link">About</a>
+        <a href="/privacy" class="footer-link">Privacy</a>
+        <a href="https://github.com" class="footer-link" target="_blank" rel="noopener">
+          Source
+        </a>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p class="copyright">
+        &copy; 2026 Kindle Notes. Made with ❤️ for readers.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface);
+    margin-top: auto;
+    padding: var(--space-2xl) 0 var(--space-lg) 0;
+  }
+  
+  .footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-lg);
+  }
+  
+  .footer-info {
+    flex: 1;
+    max-width: 400px;
+  }
+  
+  .footer-text {
+    color: var(--color-text-secondary);
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-relaxed);
+    margin: 0;
+  }
+  
+  .footer-links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+  
+  .footer-link {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+  
+  .footer-link:hover {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+  
+  .footer-bottom {
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--color-border);
+  }
+  
+  .copyright {
+    text-align: center;
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+  
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .site-footer {
+      padding: var(--space-xl) 0 var(--space-md) 0;
+    }
+    
+    .footer-content {
+      flex-direction: column;
+      gap: var(--space-lg);
+      text-align: center;
+    }
+    
+    .footer-info {
+      max-width: none;
+    }
+    
+    .footer-links {
+      justify-content: center;
+      gap: var(--space-md);
+    }
+  }
+</style>

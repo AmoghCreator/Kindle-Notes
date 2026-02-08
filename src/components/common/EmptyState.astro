@@ -1,0 +1,107 @@
+---
+// Empty state component for displaying when no data is available
+export interface Props {
+  title?: string;
+  message?: string;
+  icon?: 'notes' | 'search' | 'books' | 'upload';
+  action?: {
+    text: string;
+    href?: string;
+    onClick?: string;
+  };
+  class?: string;
+}
+
+const {
+  title = 'No Items Found',
+  message = 'There are no items to display.',
+  icon = 'notes',
+  action,
+  class: className = ''
+} = Astro.props;
+
+// Icon mapping for different empty states
+const iconMap = {
+  notes: 'M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2',
+  search: 'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z',
+  books: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253',
+  upload: 'M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12'
+};
+---
+
+<div class={`empty-state ${className}`}>
+  <div class="empty-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d={iconMap[icon]} />
+    </svg>
+  </div>
+  
+  <h3 class="empty-title">{title}</h3>
+  <p class="empty-message">{message}</p>
+  
+  {action && (
+    action.href ? (
+      <a href={action.href} class="btn btn-primary empty-action">
+        {action.text}
+      </a>
+    ) : (
+      <button 
+        class="btn btn-primary empty-action"
+        onclick={action.onClick}
+      >
+        {action.text}
+      </button>
+    )
+  )}
+</div>
+
+<style>
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-2xl);
+    gap: var(--space-md);
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .empty-icon {
+    color: var(--color-text-muted);
+    width: 64px;
+    height: 64px;
+    opacity: 0.6;
+  }
+  
+  .empty-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .empty-title {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+  
+  .empty-message {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin: 0;
+  }
+  
+  .empty-action {
+    margin-top: var(--space-sm);
+  }
+  
+  /* Dark mode adjustments */
+  :global(.dark) .empty-icon {
+    opacity: 0.4;
+  }
+</style>

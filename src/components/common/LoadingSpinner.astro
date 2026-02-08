@@ -1,0 +1,65 @@
+---
+// Loading spinner component for async operations
+export interface Props {
+  size?: 'sm' | 'md' | 'lg';
+  text?: string;
+  class?: string;
+}
+
+const { 
+  size = 'md', 
+  text = 'Loading...', 
+  class: className = '' 
+} = Astro.props;
+---
+
+<div class={`loading-wrapper ${className}`}>
+  <div class={`loading loading-${size}`} aria-hidden="true"></div>
+  {text && <p class="loading-text">{text}</p>}
+</div>
+
+<style>
+  .loading-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+  }
+  
+  .loading {
+    border: 2px solid var(--color-border);
+    border-top-color: var(--color-accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  .loading-sm {
+    width: 1rem;
+    height: 1rem;
+  }
+  
+  .loading-md {
+    width: 2rem;
+    height: 2rem;
+  }
+  
+  .loading-lg {
+    width: 3rem;
+    height: 3rem;
+  }
+  
+  .loading-text {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>

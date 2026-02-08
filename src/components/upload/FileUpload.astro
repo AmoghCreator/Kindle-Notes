@@ -1,0 +1,565 @@
+---
+// File upload component with drag & drop support
+export interface Props {
+  accept?: string;
+  maxSize?: number; // in bytes
+  multiple?: boolean;
+  onUpload?: (files: FileList) => void;
+  disabled?: boolean;
+  class?: string;
+}
+
+const {
+  accept = '.txt',
+  maxSize = 10 * 1024 * 1024, // 10MB default
+  multiple = true,
+  disabled = false,
+  class: className = ''
+} = Astro.props;
+---
+
+<div 
+  class={`file-upload ${className}`}
+  data-testid="file-upload"
+>
+  <div class="upload-area" id="uploadArea">
+    <div class="upload-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+        <polyline points="7,10 12,15 17,10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+    </div>
+    
+    <div class="upload-text">
+      <h3 class="upload-title">Drop your Kindle files here</h3>
+      <p class="upload-description">
+        or <button class="upload-browse" onclick="document.getElementById('fileInput').click()">browse files</button>
+      </p>
+      <p class="upload-hint">
+        Supports: My Clippings.txt • Max size: {(maxSize / (1024 * 1024)).toFixed(0)}MB
+      </p>
+    </div>
+    
+    <input
+      type="file"
+      id="fileInput"
+      accept={accept}
+      multiple={multiple}
+      disabled={disabled}
+      style="display: none;"
+    />
+  </div>
+
+  <!-- Upload Progress -->
+  <div class="upload-progress" id="uploadProgress" style="display: none;">
+    <div class="progress-info">
+      <span class="progress-filename" id="progressFilename"></span>
+      <span class="progress-size" id="progressSize"></span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+    </div>
+    <div class="progress-text">
+      <span id="progressText">Uploading...</span>
+      <span id="progressPercent">0%</span>
+    </div>
+  </div>
+
+  <!-- Upload Results -->
+  <div class="upload-results" id="uploadResults" style="display: none;">
+    <div class="result-success" id="resultSuccess" style="display: none;">
+      <div class="result-icon success-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+      </div>
+      <div class="result-content">
+        <h4>Upload Successful!</h4>
+        <p id="successMessage"></p>
+        <button class="btn btn-primary" onclick="window.location.href='/library'">
+          View Library
+        </button>
+      </div>
+    </div>
+
+    <div class="result-error" id="resultError" style="display: none;">
+      <div class="result-icon error-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+      </div>
+      <div class="result-content">
+        <h4>Upload Failed</h4>
+        <p id="errorMessage"></p>
+        <button class="btn btn-secondary" onclick="resetUpload()">
+          Try Again
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const uploadArea = document.getElementById('uploadArea');
+  const fileInput = document.getElementById('fileInput');
+  const progressSection = document.getElementById('uploadProgress');
+  const resultsSection = document.getElementById('uploadResults');
+  const successResult = document.getElementById('resultSuccess');
+  const errorResult = document.getElementById('resultError');
+  
+  let isUploading = false;
+
+  // Drag and drop handlers
+  uploadArea?.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!isUploading) {
+      uploadArea.classList.add('drag-over');
+    }
+  });
+
+  uploadArea?.addEventListener('dragleave', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.relatedTarget && !uploadArea.contains(e.relatedTarget as Node)) {
+      uploadArea.classList.remove('drag-over');
+    }
+  });
+
+  uploadArea?.addEventListener('drop', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    uploadArea.classList.remove('drag-over');
+    
+    if (isUploading) return;
+    
+    const files = e.dataTransfer?.files;
+    if (files && files.length > 0) {
+      handleFileUpload(files);
+    }
+  });
+
+  // File input change handler
+  fileInput?.addEventListener('change', (e) => {
+    const files = (e.target as HTMLInputElement).files;
+    if (files && files.length > 0) {
+      handleFileUpload(files);
+    }
+  });
+
+  function validateFile(file: File): { isValid: boolean; error?: string } {
+    // Check file type
+    const validTypes = ['.txt', 'text/plain'];
+    const isValidType = validTypes.some(type => 
+      file.type === type || file.name.toLowerCase().endsWith(type)
+    );
+    
+    if (!isValidType) {
+      return { isValid: false, error: 'Please select a valid text file (.txt)' };
+    }
+
+    // Check file size (10MB max by default)
+    const maxSizeBytes = 10 * 1024 * 1024;
+    if (file.size > maxSizeBytes) {
+      return { isValid: false, error: `File too large. Maximum size is ${(maxSizeBytes / (1024 * 1024)).toFixed(0)}MB` };
+    }
+
+    // Check for Kindle clippings file
+    if (!file.name.toLowerCase().includes('clipping')) {
+      console.warn('File name does not suggest it is a Kindle clippings file');
+    }
+
+    return { isValid: true };
+  }
+
+  async function handleFileUpload(files: FileList) {
+    if (isUploading) return;
+
+    // Validate files
+    for (const file of Array.from(files)) {
+      const validation = validateFile(file);
+      if (!validation.isValid) {
+        showError(validation.error || 'Invalid file');
+        return;
+      }
+    }
+
+    isUploading = true;
+    
+    try {
+      await processFiles(Array.from(files));
+    } catch (error) {
+      showError(error instanceof Error ? error.message : 'Upload failed');
+    } finally {
+      isUploading = false;
+    }
+  }
+
+  async function processFiles(files: File[]) {
+    for (const file of files) {
+      await processFile(file);
+    }
+  }
+
+  async function processFile(file: File) {
+    // Show progress
+    showProgress(file.name, file.size);
+    updateProgress(0, 'Reading file...');
+
+    try {
+      // Read file content
+      const content = await readFileAsText(file);
+      updateProgress(25, 'Validating file...');
+
+      // Import to backend
+      const response = await fetch('/api/import', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          fileName: file.name,
+          fileSize: file.size,
+          content: content
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Upload failed');
+      }
+
+      updateProgress(75, 'Processing entries...');
+
+      // Simulate processing progress
+      let progress = 75;
+      const progressInterval = setInterval(() => {
+        progress += 5;
+        if (progress >= 100) {
+          clearInterval(progressInterval);
+          return;
+        }
+        updateProgress(progress, 'Processing entries...');
+      }, 200);
+
+      const result = await response.json();
+      clearInterval(progressInterval);
+      
+      updateProgress(100, 'Complete!');
+      
+      setTimeout(() => {
+        showSuccess(result);
+      }, 500);
+
+    } catch (error) {
+      showError(error instanceof Error ? error.message : 'Failed to process file');
+    }
+  }
+
+  function readFileAsText(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = () => reject(new Error('Failed to read file'));
+      reader.readAsText(file);
+    });
+  }
+
+  function showProgress(fileName: string, fileSize: number) {
+    if (uploadArea) uploadArea.style.display = 'none';
+    if (resultsSection) resultsSection.style.display = 'none';
+    if (progressSection) progressSection.style.display = 'block';
+
+    const filenameEl = document.getElementById('progressFilename');
+    const sizeEl = document.getElementById('progressSize');
+    
+    if (filenameEl) filenameEl.textContent = fileName;
+    if (sizeEl) sizeEl.textContent = formatFileSize(fileSize);
+  }
+
+  function updateProgress(percent: number, message: string) {
+    const fillEl = document.getElementById('progressFill');
+    const textEl = document.getElementById('progressText');
+    const percentEl = document.getElementById('progressPercent');
+    
+    if (fillEl) fillEl.style.width = `${percent}%`;
+    if (textEl) textEl.textContent = message;
+    if (percentEl) percentEl.textContent = `${Math.round(percent)}%`;
+  }
+
+  function showSuccess(result: any) {
+    if (progressSection) progressSection.style.display = 'none';
+    if (resultsSection) resultsSection.style.display = 'block';
+    if (successResult) successResult.style.display = 'block';
+    if (errorResult) errorResult.style.display = 'none';
+
+    const messageEl = document.getElementById('successMessage');
+    if (messageEl) {
+      messageEl.innerHTML = `
+        Created <strong>${result.booksCreated || 0} books</strong> 
+        and <strong>${result.notesCreated || 0} notes</strong>
+        ${result.duplicatesSkipped ? `<br><small>Skipped ${result.duplicatesSkipped} duplicates</small>` : ''}
+      `;
+    }
+  }
+
+  function showError(message: string) {
+    if (uploadArea) uploadArea.style.display = 'none';
+    if (progressSection) progressSection.style.display = 'none';
+    if (resultsSection) resultsSection.style.display = 'block';
+    if (successResult) successResult.style.display = 'none';
+    if (errorResult) errorResult.style.display = 'block';
+
+    const errorEl = document.getElementById('errorMessage');
+    if (errorEl) errorEl.textContent = message;
+  }
+
+  function resetUpload() {
+    isUploading = false;
+    
+    if (uploadArea) uploadArea.style.display = 'block';
+    if (progressSection) progressSection.style.display = 'none';
+    if (resultsSection) resultsSection.style.display = 'none';
+    
+    // Reset file input
+    if (fileInput) fileInput.value = '';
+  }
+
+  function formatFileSize(bytes: number): string {
+    if (bytes === 0) return '0 B';
+    
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+  }
+
+  // Global function for retry button
+  window.resetUpload = resetUpload;
+</script>
+
+<style>
+  .file-upload {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .upload-area {
+    border: 2px dashed var(--color-border);
+    border-radius: var(--border-radius-lg);
+    padding: var(--space-2xl);
+    text-align: center;
+    background: var(--color-surface);
+    transition: all 0.3s var(--easing-ease-out);
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .upload-area:hover {
+    border-color: var(--color-primary);
+    background: var(--color-surface-hover);
+  }
+  
+  .upload-area.drag-over {
+    border-color: var(--color-primary);
+    background: rgba(var(--color-primary-rgb), 0.05);
+    transform: scale(1.02);
+  }
+  
+  .upload-icon {
+    width: 64px;
+    height: 64px;
+    color: var(--color-text-muted);
+    margin: 0 auto var(--space-lg);
+    opacity: 0.7;
+  }
+  
+  .upload-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .upload-title {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-sm);
+  }
+  
+  .upload-description {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-sm);
+  }
+  
+  .upload-browse {
+    background: none;
+    border: none;
+    color: var(--color-primary);
+    text-decoration: underline;
+    cursor: pointer;
+    font: inherit;
+  }
+  
+  .upload-browse:hover {
+    color: var(--color-primary-dark);
+  }
+  
+  .upload-hint {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+  
+  .upload-progress {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    padding: var(--space-xl);
+    margin-top: var(--space-lg);
+  }
+  
+  .progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-md);
+  }
+  
+  .progress-filename {
+    font-family: var(--font-family-secondary);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+  }
+  
+  .progress-size {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+  }
+  
+  .progress-bar {
+    background: var(--color-surface-hover);
+    border-radius: var(--border-radius-sm);
+    height: 8px;
+    margin-bottom: var(--space-sm);
+    overflow: hidden;
+  }
+  
+  .progress-fill {
+    background: var(--color-primary);
+    height: 100%;
+    transition: width 0.3s var(--easing-ease-out);
+    border-radius: var(--border-radius-sm);
+  }
+  
+  .progress-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+  }
+  
+  .upload-results {
+    margin-top: var(--space-lg);
+  }
+  
+  .result-success,
+  .result-error {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    padding: var(--space-xl);
+  }
+  
+  .result-success {
+    border-color: var(--color-success);
+    background: rgba(var(--color-success-rgb), 0.05);
+  }
+  
+  .result-error {
+    border-color: var(--color-error);
+    background: rgba(var(--color-error-rgb), 0.05);
+  }
+  
+  .result-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+  }
+  
+  .success-icon {
+    color: var(--color-success);
+  }
+  
+  .error-icon {
+    color: var(--color-error);
+  }
+  
+  .result-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .result-content {
+    flex: 1;
+  }
+  
+  .result-content h4 {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-sm);
+  }
+  
+  .result-content p {
+    font-family: var(--font-family-secondary);
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-md);
+    line-height: var(--line-height-relaxed);
+  }
+  
+  .result-content .btn {
+    margin-top: var(--space-sm);
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .upload-area {
+      padding: var(--space-xl);
+    }
+    
+    .upload-icon {
+      width: 48px;
+      height: 48px;
+    }
+    
+    .progress-info {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-xs);
+    }
+    
+    .result-success,
+    .result-error {
+      flex-direction: column;
+      text-align: center;
+    }
+    
+    .result-icon {
+      margin-bottom: var(--space-sm);
+    }
+  }
+</style>

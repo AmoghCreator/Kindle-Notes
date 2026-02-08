@@ -1,0 +1,83 @@
+---
+// Error boundary component for displaying user-friendly errors
+export interface Props {
+  error?: string;
+  title?: string;
+  retry?: boolean;
+  class?: string;
+}
+
+const {
+  error = 'Something went wrong',
+  title = 'Error',
+  retry = false,
+  class: className = ''
+} = Astro.props;
+---
+
+<div class={`error-boundary ${className}`}>
+  <div class="error-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="12" y1="8" x2="12" y2="12"/>
+      <line x1="12" y1="16" x2="12.01" y2="16"/>
+    </svg>
+  </div>
+  
+  <h3 class="error-title">{title}</h3>
+  <p class="error-message">{error}</p>
+  
+  {retry && (
+    <button class="btn btn-primary retry-button" onclick="window.location.reload()">
+      Try Again
+    </button>
+  )}
+</div>
+
+<style>
+  .error-boundary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-2xl);
+    gap: var(--space-md);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .error-icon {
+    color: var(--color-error);
+    width: 48px;
+    height: 48px;
+  }
+  
+  .error-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .error-title {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+  
+  .error-message {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin: 0;
+  }
+  
+  .retry-button {
+    margin-top: var(--space-sm);
+  }
+</style>

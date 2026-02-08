@@ -1,0 +1,279 @@
+---
+// Modal component for dialogs and overlays
+export interface Props {
+  title?: string;
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  showClose?: boolean;
+  backdrop?: 'blur' | 'dark' | 'none';
+  class?: string;
+}
+
+const {
+  title,
+  size = 'md',
+  showClose = true,
+  backdrop = 'blur',
+  class: className = ''
+} = Astro.props;
+---
+
+<div class={`modal-overlay modal-backdrop-${backdrop}`} data-modal-overlay>
+  <div class={`modal modal-${size} ${className}`} data-modal>
+    {title && (
+      <div class="modal-header">
+        <h2 class="modal-title">{title}</h2>
+        {showClose && (
+          <button class="modal-close" aria-label="Close modal" data-modal-close>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        )}
+      </div>
+    )}
+    
+    <div class="modal-body">
+      <slot />
+    </div>
+  </div>
+</div>
+
+<script>
+  // Modal functionality
+  document.querySelectorAll('[data-modal-overlay]').forEach(overlay => {
+    const modal = overlay.querySelector('[data-modal]');
+    const closeButton = overlay.querySelector('[data-modal-close]');
+    
+    // Close on overlay click
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        closeModal(overlay);
+      }
+    });
+    
+    // Close on close button click
+    closeButton?.addEventListener('click', () => {
+      closeModal(overlay);
+    });
+    
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !overlay.hidden) {
+        closeModal(overlay);
+      }
+    });
+  });
+  
+  function closeModal(overlay: Element) {
+    overlay.classList.add('modal-closing');
+    setTimeout(() => {
+      overlay.remove();
+    }, 300);
+  }
+  
+  // Focus trap
+  function trapFocus(modal: Element) {
+    const focusableElements = modal.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    const firstElement = focusableElements[0] as HTMLElement;
+    const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+    
+    modal.addEventListener('keydown', (e) => {
+      if (e.key === 'Tab') {
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            lastElement.focus();
+            e.preventDefault();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            firstElement.focus();
+            e.preventDefault();
+          }
+        }
+      }
+    });
+    
+    firstElement?.focus();
+  }
+  
+  // Initialize focus trap for each modal
+  document.querySelectorAll('[data-modal]').forEach(modal => {
+    trapFocus(modal);
+  });
+</script>
+
+<style>
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+    animation: modalFadeIn 0.3s var(--easing-ease-out);
+  }
+  
+  .modal-backdrop-blur {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(4px);
+  }
+  
+  .modal-backdrop-dark {
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-backdrop-none {
+    background: transparent;
+  }
+  
+  .modal {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-xl);
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: scale(1);
+    animation: modalSlideIn 0.3s var(--easing-ease-out);
+  }
+  
+  .modal-sm {
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .modal-md {
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  .modal-lg {
+    width: 100%;
+    max-width: 700px;
+  }
+  
+  .modal-xl {
+    width: 100%;
+    max-width: 900px;
+  }
+  
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-lg);
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  .modal-title {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+  
+  .modal-close {
+    background: none;
+    border: none;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    padding: var(--space-xs);
+    border-radius: var(--border-radius-sm);
+    transition: all 0.2s var(--easing-ease-out);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modal-close:hover {
+    background: var(--color-surface-hover);
+    color: var(--color-text-primary);
+  }
+  
+  .modal-close svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .modal-body {
+    padding: var(--space-lg);
+  }
+  
+  /* Closing animation */
+  .modal-closing .modal {
+    animation: modalSlideOut 0.3s var(--easing-ease-in) forwards;
+  }
+  
+  .modal-closing {
+    animation: modalFadeOut 0.3s var(--easing-ease-in) forwards;
+  }
+  
+  @keyframes modalFadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes modalFadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  
+  @keyframes modalSlideIn {
+    from {
+      transform: scale(0.9) translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes modalSlideOut {
+    from {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+    to {
+      transform: scale(0.9) translateY(-20px);
+      opacity: 0;
+    }
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .modal-overlay {
+      padding: var(--space-sm);
+    }
+    
+    .modal {
+      max-height: 95vh;
+    }
+    
+    .modal-header {
+      padding: var(--space-md);
+    }
+    
+    .modal-body {
+      padding: var(--space-md);
+    }
+  }
+</style>

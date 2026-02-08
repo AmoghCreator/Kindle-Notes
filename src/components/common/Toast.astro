@@ -1,0 +1,184 @@
+---
+// Toast notification component for success/error messages
+export interface Props {
+  type: 'success' | 'error' | 'warning' | 'info';
+  message: string;
+  duration?: number;
+  dismissible?: boolean;
+  class?: string;
+}
+
+const {
+  type,
+  message,
+  duration = 5000,
+  dismissible = true,
+  class: className = ''
+} = Astro.props;
+
+// Icon mapping for different toast types
+const iconMap = {
+  success: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
+  error: 'M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z',
+  warning: 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z',
+  info: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+};
+---
+
+<div 
+  class={`toast toast-${type} ${className}`}
+  data-duration={duration}
+  data-dismissible={dismissible}
+>
+  <div class="toast-icon">
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d={iconMap[type]} />
+    </svg>
+  </div>
+  
+  <div class="toast-content">
+    <p class="toast-message">{message}</p>
+  </div>
+  
+  {dismissible && (
+    <button class="toast-close" aria-label="Dismiss notification">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  )}
+</div>
+
+<script>
+  // Auto-dismiss toasts after duration
+  document.querySelectorAll('.toast[data-dismissible="true"]').forEach(toast => {
+    const duration = parseInt(toast.getAttribute('data-duration') || '5000');
+    
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(100%)';
+      setTimeout(() => toast.remove(), 300);
+    }, duration);
+  });
+  
+  // Manual dismiss functionality
+  document.querySelectorAll('.toast-close').forEach(button => {
+    button.addEventListener('click', () => {
+      const toast = button.closest('.toast');
+      if (toast) {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        setTimeout(() => toast.remove(), 300);
+      }
+    });
+  });
+</script>
+
+<style>
+  .toast {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    margin: var(--space-sm) 0;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+    backdrop-filter: blur(8px);
+    transition: all 0.3s var(--easing-ease-out);
+    max-width: 400px;
+  }
+  
+  .toast-success {
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    color: #059669;
+  }
+  
+  .toast-error {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #dc2626;
+  }
+  
+  .toast-warning {
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    color: #d97706;
+  }
+  
+  .toast-info {
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: #2563eb;
+  }
+  
+  .toast-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+  }
+  
+  .toast-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .toast-content {
+    flex: 1;
+  }
+  
+  .toast-message {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-tight);
+    margin: 0;
+  }
+  
+  .toast-close {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    background: none;
+    border: none;
+    color: currentColor;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s var(--easing-ease-out);
+  }
+  
+  .toast-close:hover {
+    opacity: 1;
+  }
+  
+  .toast-close svg {
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Dark mode adjustments */
+  :global(.dark) .toast-success {
+    background: rgba(34, 197, 94, 0.15);
+    border-color: rgba(34, 197, 94, 0.4);
+    color: #10b981;
+  }
+  
+  :global(.dark) .toast-error {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #ef4444;
+  }
+  
+  :global(.dark) .toast-warning {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.4);
+    color: #f59e0b;
+  }
+  
+  :global(.dark) .toast-info {
+    background: rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.4);
+    color: #3b82f6;
+  }
+</style>
