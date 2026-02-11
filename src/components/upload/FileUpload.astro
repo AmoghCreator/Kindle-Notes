@@ -109,33 +109,6 @@ const {
   const errorResult = document.getElementById('resultError');
   
   let isUploading = false;
-  
-  // Services will be dynamically imported
-  let db = null;
-  let sessionService = null;
-  let parserService = null;
-  
-  // Initialize services when DOM is ready
-  async function initializeServices() {
-    try {
-      // Dynamic imports to handle browser module loading
-      const { KindleNotesDatabase } = await import('../../lib/storage/database');
-      const { ImportSessionService } = await import('../../lib/storage/import-session-service');
-      const { TextFileParserService } = await import('../../lib/parsers/text-file-parser-service');
-      
-      db = new KindleNotesDatabase();
-      await db.open();
-      sessionService = new ImportSessionService(db);
-      parserService = new TextFileParserService(db, sessionService);
-      console.log('Services initialized successfully');
-    } catch (error) {
-      console.error('Failed to initialize services:', error);
-      showError('Failed to initialize application. Please refresh the page.');
-    }
-  }
-  
-  // Initialize when component loads
-  document.addEventListener('DOMContentLoaded', initializeServices);
 
   // Drag and drop handlers
   uploadArea?.addEventListener('dragover', (e) => {
@@ -230,73 +203,48 @@ const {
   }
 
   async function processFile(file: File) {
-    if (!parserService || !sessionService) {
-      showError('Services not initialized. Please refresh the page.');
-      return;
-    }
-
     // Show progress
     showProgress(file.name, file.size);
-    updateProgress(0, 'Reading file...');
+    updateProgress(20, 'Uploading file...');
 
     try {
-      // Read file content
-      const content = await readFileAsText(file);
-      updateProgress(10, 'Validating file format...');
+      // Create form data and upload to server
+      const formData = new FormData();
+      formData.append('file', file);
 
-      // Parse using client-side service with progress tracking
-      const result = await parserService.parseTextFile(
-        file.name,
-        content,
-        {
-          strictMode: false,
-          deduplicateWithin: 'session',
-          onProgress: (progress) => {
-            const progressMap = {
-              'validating': { start: 10, end: 20, label: 'Validating content...' },
-              'parsing': { start: 20, end: 60, label: 'Parsing entries...' },
-              'deduplicating': { start: 60, end: 80, label: 'Removing duplicates...' },
-              'storing': { start: 80, end: 95, label: 'Saving to database...' },
-              'completed': { start: 100, end: 100, label: 'Complete!' }
-            };
-            
-            const stage = progressMap[progress.stage];
-            if (stage) {
-              const stageProgress = stage.start + (stage.end - stage.start) * (progress.stageProgress / 100);
-              updateProgress(stageProgress, stage.label);
-            }
-          }
-        }
-      );
+      updateProgress(40, 'Processing clippings...');
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+      });
+
+      updateProgress(80, 'Saving notes...');
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || error.details || 'Upload failed');
+      }
+
+      const result = await response.json();
       
       updateProgress(100, 'Complete!');
       
-      // Show success with import statistics
+      // Show success with upload statistics
       setTimeout(() => {
         showSuccess({
           sessionId: result.sessionId,
-          entriesProcessed: result.statistics.entriesProcessed,
-          booksCreated: result.statistics.booksCreated,
-          notesImported: result.statistics.notesImported,
-          highlightsImported: result.statistics.highlightsImported,
-          duplicatesSkipped: result.statistics.duplicatesSkipped,
-          processingTime: result.statistics.processingTimeMs
+          booksAdded: result.stats.booksAdded,
+          notesAdded: result.stats.notesAdded,
+          notesSkipped: result.stats.notesSkipped,
+          message: result.message
         });
       }, 500);
 
     } catch (error) {
-      console.error('File processing error:', error);
-      showError(error instanceof Error ? error.message : 'Failed to process file');
+      console.error('File upload error:', error);
+      showError(error instanceof Error ? error.message : 'Failed to upload file');
     }
-  }
-
-  function readFileAsText(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = () => reject(new Error('Failed to read file'));
-      reader.readAsText(file);
-    });
   }
 
   function showProgress(fileName: string, fileSize: number) {
@@ -329,16 +277,11 @@ const {
 
     const messageEl = document.getElementById('successMessage');
     if (messageEl) {
-      const totalNotes = (result.notesImported || 0) + (result.highlightsImported || 0);
-      const processingTimeSeconds = result.processingTime ? (result.processingTime / 1000).toFixed(1) : '0.0';
-      
       messageEl.innerHTML = `
-        Successfully imported <strong>${result.entriesProcessed || 0} entries</strong>:
-        <br>📚 <strong>${result.booksCreated || 0} books</strong>
-        <br>📝 <strong>${result.notesImported || 0} notes</strong>
-        <br>🖍️ <strong>${result.highlightsImported || 0} highlights</strong>
-        ${result.duplicatesSkipped ? `<br>⚠️ <small>Skipped ${result.duplicatesSkipped} duplicates</small>` : ''}
-        <br><small style="color: #666;">Processed in ${processingTimeSeconds}s</small>
+        <strong>${result.message || 'Upload successful!'}</strong>
+        <br>📚 <strong>${result.booksAdded || 0} books</strong> added
+        <br>📝 <strong>${result.notesAdded || 0} new notes</strong> imported
+        ${result.notesSkipped ? `<br>⚠️ <small>${result.notesSkipped} duplicate notes skipped</small>` : ''}
       `;
     }
   }

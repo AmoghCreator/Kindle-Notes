@@ -4,11 +4,42 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import BookCard from '../components/notes/BookCard.astro';
 import NoteCard from '../components/notes/NoteCard.astro';
 import EmptyState from '../components/common/EmptyState.astro';
-import LoadingSpinner from '../components/common/LoadingSpinner.astro';
+import { getAllBooks, getAllNotes } from '../lib/server/storage';
 
-// This will be populated by client-side JavaScript
-const books = [];
-const recentNotes = [];
+// Load all data at build time
+const allBooks = await getAllBooks();
+const allNotes = await getAllNotes();
+
+// Compute note counts per book
+const noteCountMap = new Map<string, number>();
+for (const note of allNotes) {
+  noteCountMap.set(note.bookId, (noteCountMap.get(note.bookId) || 0) + 1);
+}
+
+// Add note counts to books and sort by most recent first
+const booksWithCounts = allBooks.map(book => ({
+  ...book,
+  noteCount: noteCountMap.get(book.id) || 0
+})).sort((a, b) => {
+  const dateA = new Date(a.lastModifiedAt || a.createdAt).getTime();
+  const dateB = new Date(b.lastModifiedAt || b.createdAt).getTime();
+  return dateB - dateA;
+});
+
+// Get recent notes (last 10)
+const recentNotes = [...allNotes]
+  .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+  .slice(0, 10);
+
+// Compute statistics
+const stats = {
+  totalBooks: allBooks.length,
+  totalNotes: allNotes.length,
+  totalHighlights: allNotes.filter(n => n.type === 'highlight').length,
+  favoriteNotes: 0 // Future feature
+};
+
+const hasContent = allBooks.length > 0;
 ---
 
 <BaseLayout 
@@ -25,16 +56,6 @@ const recentNotes = [];
       </div>
       
       <div class="header-actions">
-        <button class="btn btn-ghost" id="viewToggle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="7" height="7"/>
-            <rect x="14" y="3" width="7" height="7"/>
-            <rect x="14" y="14" width="7" height="7"/>
-            <rect x="3" y="14" width="7" height="7"/>
-          </svg>
-          Grid View
-        </button>
-        
         <a href="/search" class="btn btn-primary">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="11" cy="11" r="8"/>
@@ -45,33 +66,29 @@ const recentNotes = [];
       </div>
     </header>
 
-    <div class="library-stats" id="libraryStats" style="display: none;">
-      <div class="stat">
-        <div class="stat-value" id="totalBooks">0</div>
-        <div class="stat-label">Books</div>
+    {hasContent && (
+      <div class="library-stats">
+        <div class="stat">
+          <div class="stat-value">{stats.totalBooks}</div>
+          <div class="stat-label">Books</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">{stats.totalNotes}</div>
+          <div class="stat-label">Notes</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">{stats.totalHighlights}</div>
+          <div class="stat-label">Highlights</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">{stats.favoriteNotes}</div>
+          <div class="stat-label">Favorites</div>
+        </div>
       </div>
-      <div class="stat">
-        <div class="stat-value" id="totalNotes">0</div>
-        <div class="stat-label">Notes</div>
-      </div>
-      <div class="stat">
-        <div class="stat-value" id="totalHighlights">0</div>
-        <div class="stat-label">Highlights</div>
-      </div>
-      <div class="stat">
-        <div class="stat-value" id="favoriteNotes">0</div>
-        <div class="stat-label">Favorites</div>
-      </div>
-    </div>
+    )}
 
     <div class="library-content">
-      <!-- Loading state -->
-      <div id="loadingState" class="loading-container">
-        <LoadingSpinner size="lg" message="Loading your library..." />
-      </div>
-
-      <!-- Empty state -->
-      <div id="emptyState" style="display: none;">
+      {!hasContent ? (
         <EmptyState
           title="No Books Yet"
           message="Start building your library by importing your Kindle clippings file."
@@ -81,345 +98,45 @@ const recentNotes = [];
             href: "/"
           }}
         />
-      </div>
+      ) : (
+        <>
+          {/* Books section */}
+          <section class="books-section">
+            <div class="section-header">
+              <h2 class="section-title">My Books</h2>
+              <div class="section-actions">
+                <span class="book-count">{stats.totalBooks} {stats.totalBooks === 1 ? 'book' : 'books'}</span>
+              </div>
+            </div>
 
-      <!-- Books section -->
-      <section class="books-section" id="booksSection" style="display: none;">
-        <div class="section-header">
-          <h2 class="section-title">My Books</h2>
-          <div class="section-actions">
-            <select class="sort-select" id="bookSort">
-              <option value="recent">Recently Added</option>
-              <option value="title">Title A-Z</option>
-              <option value="author">Author A-Z</option>
-              <option value="notes">Most Notes</option>
-            </select>
-          </div>
-        </div>
+            <div class="books-grid">
+              {booksWithCounts.map(book => (
+                <BookCard book={book} noteCount={book.noteCount} />
+              ))}
+            </div>
+          </section>
 
-        <div class="books-grid" id="booksGrid">
-          <!-- Books will be populated by JavaScript -->
-        </div>
+          {/* Recent notes section */}
+          {recentNotes.length > 0 && (
+            <section class="notes-section">
+              <div class="section-header">
+                <h2 class="section-title">Recent Notes</h2>
+                <a href="/search?type=notes" class="section-link">View All</a>
+              </div>
 
-        <button class="load-more-btn" id="loadMoreBooks" style="display: none;">
-          Load More Books
-        </button>
-      </section>
-
-      <!-- Recent notes section -->
-      <section class="notes-section" id="notesSection" style="display: none;">
-        <div class="section-header">
-          <h2 class="section-title">Recent Notes</h2>
-          <a href="/search?type=notes" class="section-link">View All</a>
-        </div>
-
-        <div class="notes-list" id="notesList">
-          <!-- Recent notes will be populated by JavaScript -->
-        </div>
-      </section>
+              <div class="notes-list">
+                {recentNotes.map(note => {
+                  const book = allBooks.find(b => b.id === note.bookId);
+                  return <NoteCard note={note} bookTitle={book?.title} />;
+                })}
+              </div>
+            </section>
+          )}
+        </>
+      )}
     </div>
   </main>
 </BaseLayout>
-
-<script>
-  import { KindleNotesDatabase } from '../lib/storage/database';
-  import { BooksStorage } from '../lib/storage/books';
-  import { NotesStorage } from '../lib/storage/notes';
-
-  interface LibraryData {
-    books: any[];
-    recentNotes: any[];
-    stats: {
-      totalBooks: number;
-      totalNotes: number;
-      totalHighlights: number;
-      favoriteNotes: number;
-    };
-  }
-
-  let db: KindleNotesDatabase;
-  let booksStorage: BooksStorage;
-  let notesStorage: NotesStorage;
-  let currentView = 'grid';
-  let currentSort = 'recent';
-
-  async function initializeLibrary() {
-    try {
-      // Initialize database
-      db = new KindleNotesDatabase();
-      await db.open();
-      
-      booksStorage = new BooksStorage(db);
-      notesStorage = new NotesStorage(db);
-
-      // Load library data
-      await loadLibraryData();
-    } catch (error) {
-      console.error('Failed to initialize library:', error);
-      showError('Failed to load library');
-    }
-  }
-
-  async function loadLibraryData() {
-    showLoading();
-
-    try {
-      // Load books and notes in parallel
-      const [books, recentNotes, bookStats, noteStats] = await Promise.all([
-        booksStorage.findAll(),
-        notesStorage.getRecentNotes(10),
-        booksStorage.getStatistics(),
-        notesStorage.getStatistics()
-      ]);
-
-      const libraryData: LibraryData = {
-        books,
-        recentNotes,
-        stats: {
-          totalBooks: bookStats.totalBooks,
-          totalNotes: noteStats.totalNotes,
-          totalHighlights: noteStats.notesByType.find(type => type.type === 'highlight')?.count || 0,
-          favoriteNotes: 0 // Will be implemented later
-        }
-      };
-
-      if (libraryData.books.length === 0) {
-        showEmptyState();
-      } else {
-        await renderLibrary(libraryData);
-        showLibrary();
-      }
-    } catch (error) {
-      console.error('Error loading library data:', error);
-      showError('Failed to load library data');
-    }
-  }
-
-  async function renderLibrary(data: LibraryData) {
-    // Update stats
-    updateStats(data.stats);
-
-    // Render books
-    await renderBooks(data.books);
-
-    // Render recent notes
-    await renderRecentNotes(data.recentNotes);
-  }
-
-  function updateStats(stats: LibraryData['stats']) {
-    const statsContainer = document.getElementById('libraryStats');
-    if (statsContainer) {
-      document.getElementById('totalBooks')!.textContent = stats.totalBooks.toString();
-      document.getElementById('totalNotes')!.textContent = stats.totalNotes.toString();
-      document.getElementById('totalHighlights')!.textContent = stats.totalHighlights.toString();
-      document.getElementById('favoriteNotes')!.textContent = stats.favoriteNotes.toString();
-      statsContainer.style.display = 'flex';
-    }
-  }
-
-  async function renderBooks(books: any[]) {
-    const booksGrid = document.getElementById('booksGrid');
-    if (!booksGrid) return;
-
-    booksGrid.innerHTML = '';
-
-    for (const book of books) {
-      // Get notes count for this book
-      const notes = await notesStorage.findByBookId(book.id);
-      const notesCount = notes.length;
-
-      const bookElement = createBookElement(book, notesCount);
-      booksGrid.appendChild(bookElement);
-    }
-  }
-
-  function createBookElement(book: any, notesCount: number) {
-    const article = document.createElement('article');
-    article.className = 'book-card';
-    
-    article.innerHTML = `
-      <div class="book-cover">
-        ${book.coverImageUrl 
-          ? `<img src="${book.coverImageUrl}" alt="Cover of ${book.title}" loading="lazy" />`
-          : `<div class="book-cover-placeholder">
-               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                 <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                 <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-               </svg>
-             </div>`
-        }
-      </div>
-      <div class="book-content">
-        <header class="book-header">
-          <h3 class="book-title">
-            <a href="/book?id=${book.id}">${book.title}</a>
-          </h3>
-          <p class="book-author">${book.author}</p>
-        </header>
-        
-        ${book.description ? `
-          <div class="book-details">
-            <p class="book-description">${book.description}</p>
-          </div>
-        ` : ''}
-        
-        <div class="book-stats">
-          <span class="notes-count">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
-              <path d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-            </svg>
-            ${notesCount} ${notesCount === 1 ? 'note' : 'notes'}
-          </span>
-        </div>
-        
-        <div class="book-actions">
-          <a href="/book?id=${book.id}" class="btn btn-sm btn-primary">View Notes</a>
-        </div>
-      </div>
-    `;
-    
-    return article;
-  }
-
-  async function renderRecentNotes(notes: any[]) {
-    const notesList = document.getElementById('notesList');
-    if (!notesList) return;
-
-    notesList.innerHTML = '';
-
-    for (const note of notes) {
-      // Get book info for the note
-      const book = await booksStorage.findById(note.bookId);
-      const noteElement = createNoteElement(note, book?.title);
-      notesList.appendChild(noteElement);
-    }
-  }
-
-  function createNoteElement(note: any, bookTitle?: string) {
-    const article = document.createElement('article');
-    article.className = `note-card note-type-${note.type} note-card-compact`;
-    
-    const formatDate = (date: Date) => {
-      return new Intl.DateTimeFormat('en-US', {
-        month: 'short',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: '2-digit'
-      }).format(new Date(date));
-    };
-
-    article.innerHTML = `
-      <header class="note-header">
-        <div class="note-type">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            ${getTypeIconPath(note.type)}
-          </svg>
-          <span class="note-type-label">${note.type}</span>
-        </div>
-        <div class="note-meta">
-          ${note.page ? `<span class="note-page">Page ${note.page}</span>` : ''}
-          <time class="note-date">${formatDate(note.createdAt)}</time>
-        </div>
-      </header>
-      
-      ${bookTitle ? `
-        <div class="note-book-info">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
-            <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-          </svg>
-          <span class="book-title">${bookTitle}</span>
-        </div>
-      ` : ''}
-      
-      <div class="note-content">
-        ${note.type === 'bookmark' 
-          ? '<p class="bookmark-placeholder">Bookmark saved</p>'
-          : `<div class="note-text">${note.content}</div>`
-        }
-      </div>
-    `;
-    
-    return article;
-  }
-
-  function getTypeIconPath(type: string): string {
-    switch (type) {
-      case 'highlight':
-        return '<path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>';
-      case 'note':
-        return '<path d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 011-1h1a2 2 0 100-4H7a1 1 0 01-1-1V8a1 1 0 011-1h3a1 1 0 001-1V4z"/>';
-      case 'bookmark':
-        return '<path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>';
-      default:
-        return '';
-    }
-  }
-
-  function showLoading() {
-    document.getElementById('loadingState')!.style.display = 'flex';
-    document.getElementById('emptyState')!.style.display = 'none';
-    document.getElementById('booksSection')!.style.display = 'none';
-    document.getElementById('notesSection')!.style.display = 'none';
-  }
-
-  function showEmptyState() {
-    document.getElementById('loadingState')!.style.display = 'none';
-    document.getElementById('emptyState')!.style.display = 'block';
-    document.getElementById('booksSection')!.style.display = 'none';
-    document.getElementById('notesSection')!.style.display = 'none';
-  }
-
-  function showLibrary() {
-    document.getElementById('loadingState')!.style.display = 'none';
-    document.getElementById('emptyState')!.style.display = 'none';
-    document.getElementById('booksSection')!.style.display = 'block';
-    document.getElementById('notesSection')!.style.display = 'block';
-  }
-
-  function showError(message: string) {
-    // Simple error display - could be enhanced with proper error component
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'error-message';
-    errorDiv.textContent = message;
-    errorDiv.style.cssText = `
-      background: var(--color-error);
-      color: white;
-      padding: var(--space-md);
-      border-radius: var(--border-radius-md);
-      margin: var(--space-lg) 0;
-      text-align: center;
-    `;
-    
-    document.querySelector('.library-content')?.appendChild(errorDiv);
-  }
-
-  // Event handlers
-  document.addEventListener('DOMContentLoaded', () => {
-    initializeLibrary();
-
-    // Sort change handler
-    document.getElementById('bookSort')?.addEventListener('change', async (e) => {
-      currentSort = (e.target as HTMLSelectElement).value;
-      await loadLibraryData();
-    });
-
-    // View toggle handler
-    document.getElementById('viewToggle')?.addEventListener('click', () => {
-      const grid = document.getElementById('booksGrid');
-      if (grid) {
-        currentView = currentView === 'grid' ? 'list' : 'grid';
-        grid.className = currentView === 'grid' ? 'books-grid' : 'books-list';
-        
-        const button = document.getElementById('viewToggle');
-        if (button) {
-          button.innerHTML = currentView === 'grid' 
-            ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>List View'
-            : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Grid View';
-        }
-      }
-    });
-  });
-</script>
 
 <style>
   .library {
@@ -463,6 +180,8 @@ const recentNotes = [];
   }
 
   .header-actions .btn svg {
+    width: 20px;
+    height: 20px;
     margin-right: var(--space-xs);
   }
 
@@ -478,6 +197,7 @@ const recentNotes = [];
 
   .stat {
     text-align: center;
+    flex: 1;
   }
 
   .stat-value {
@@ -493,13 +213,6 @@ const recentNotes = [];
     font-size: var(--font-size-sm);
     color: var(--color-text-secondary);
     margin-top: var(--space-xs);
-  }
-
-  .loading-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 400px;
   }
 
   .section-header {
@@ -523,6 +236,13 @@ const recentNotes = [];
     align-items: center;
   }
 
+  .book-count {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
+  }
+
   .section-link {
     font-family: var(--font-family-secondary);
     color: var(--color-primary);
@@ -535,32 +255,11 @@ const recentNotes = [];
     color: var(--color-primary-dark);
   }
 
-  .sort-select {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius-sm);
-    padding: var(--space-sm) var(--space-md);
-    font-family: var(--font-family-secondary);
-    color: var(--color-text-primary);
-    cursor: pointer;
-  }
-
   .books-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: var(--space-lg);
     margin-bottom: var(--space-2xl);
-  }
-
-  .books-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    margin-bottom: var(--space-2xl);
-  }
-
-  .books-list .book-card {
-    max-width: none;
   }
 
   .notes-list {
@@ -569,22 +268,8 @@ const recentNotes = [];
     gap: var(--space-md);
   }
 
-  .load-more-btn {
-    display: block;
-    margin: var(--space-xl) auto 0;
-    padding: var(--space-md) var(--space-xl);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius-md);
-    font-family: var(--font-family-secondary);
-    color: var(--color-text-primary);
-    cursor: pointer;
-    transition: all 0.2s var(--easing-ease-out);
-  }
-
-  .load-more-btn:hover {
-    background: var(--color-surface-hover);
-    border-color: var(--color-primary);
+  .notes-section {
+    margin-top: var(--space-2xl);
   }
 
   /* Responsive design */
@@ -601,12 +286,12 @@ const recentNotes = [];
 
     .header-actions {
       width: 100%;
-      justify-content: space-between;
     }
 
     .library-stats {
       grid-template-columns: repeat(2, 1fr);
       gap: var(--space-lg);
+      flex-wrap: wrap;
     }
 
     .books-grid {

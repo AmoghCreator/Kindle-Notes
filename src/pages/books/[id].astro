@@ -1,0 +1,330 @@
+---
+// Book detail page showing notes for a specific book
+// Uses getStaticPaths() for build-time static generation
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NoteCard from '../../components/notes/NoteCard.astro';
+import EmptyState from '../../components/common/EmptyState.astro';
+import { getAllBooks, getNotesByBookId } from '../../lib/server/storage';
+
+// Generate static paths for all books at build time
+export async function getStaticPaths() {
+  const books = await getAllBooks();
+  
+  return books.map(book => ({
+    params: { id: book.id },
+    props: { book }
+  }));
+}
+
+// Get book from props (passed by getStaticPaths)
+const { book } = Astro.props;
+
+// Load notes for this book
+const allNotes = await getNotesByBookId(book.id);
+
+// Sort notes by location (start) then by date
+const sortedNotes = [...allNotes].sort((a, b) => {
+  // First sort by location if both have it
+  if (a.location?.start && b.location?.start) {
+    return a.location.start - b.location.start;
+  }
+  // If one has location and other doesn't, prioritize location
+  if (a.location?.start) return -1;
+  if (b.location?.start) return 1;
+  // Fall back to date sort
+  return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+});
+
+// Compute statistics
+const stats = {
+  totalNotes: allNotes.length,
+  highlights: allNotes.filter(n => n.type === 'highlight').length,
+  notes: allNotes.filter(n => n.type === 'note').length,
+  bookmarks: allNotes.filter(n => n.type === 'bookmark').length
+};
+
+const hasNotes = allNotes.length > 0;
+---
+
+<BaseLayout 
+  title={`${book.title} - Book Notes`}
+  description={`View notes and highlights for ${book.title}${book.author ? ` by ${book.author}` : ''}`}
+>
+  <main class="book-detail">
+    {!hasNotes ? (
+      <div class="empty-container">
+        <EmptyState
+          title="No Notes Yet"
+          message="This book doesn't have any notes or highlights yet."
+          icon="notes"
+          action={{
+            text: "Back to Library",
+            href: "/library"
+          }}
+        />
+      </div>
+    ) : (
+      <>
+        <!-- Book header -->
+        <header class="book-header">
+          <div class="book-info">
+            <div class="book-cover">
+              {book.coverUrl ? (
+                <img src={book.coverUrl} alt={`${book.title} cover`} />
+              ) : (
+                <div class="book-cover-placeholder">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                  </svg>
+                </div>
+              )}
+            </div>
+            <div class="book-details">
+              <nav class="breadcrumb">
+                <a href="/library">Library</a>
+                <span class="breadcrumb-separator">›</span>
+                <span class="current-book">{book.title}</span>
+              </nav>
+              <h1 class="book-title">{book.title}</h1>
+              {book.author && (
+                <p class="book-author">{book.author}</p>
+              )}
+              <div class="book-stats">
+                <span class="stat-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                  </svg>
+                  {stats.highlights} {stats.highlights === 1 ? 'highlight' : 'highlights'}
+                </span>
+                <span class="stat-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 011-1h1a2 2 0 100-4H7a1 1 0 01-1-1V8a1 1 0 011-1h3a1 1 0 001-1V4z"/>
+                  </svg>
+                  {stats.notes} {stats.notes === 1 ? 'note' : 'notes'}
+                </span>
+                <span class="stat-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+                  </svg>
+                  {stats.bookmarks} {stats.bookmarks === 1 ? 'bookmark' : 'bookmarks'}
+                </span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Notes list -->
+        <section class="notes-section">
+          <div class="section-header">
+            <h2 class="section-title">Notes & Highlights</h2>
+            <span class="note-count">{stats.totalNotes} total</span>
+          </div>
+
+          <div class="notes-list">
+            {sortedNotes.map(note => (
+              <NoteCard note={note} />
+            ))}
+          </div>
+        </section>
+      </>
+    )}
+  </main>
+</BaseLayout>
+
+<style>
+  .book-detail {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: var(--space-lg);
+  }
+
+  .empty-container {
+    padding-top: var(--space-2xl);
+  }
+
+  .book-header {
+    margin-bottom: var(--space-2xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: 2px solid var(--color-border);
+  }
+
+  .book-info {
+    display: flex;
+    gap: var(--space-xl);
+    margin-bottom: var(--space-lg);
+  }
+
+  .book-cover {
+    flex-shrink: 0;
+    width: 160px;
+    height: 240px;
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--color-surface);
+  }
+
+  .book-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .book-cover-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-surface-hover) 0%, var(--color-border) 100%);
+    color: var(--color-text-muted);
+  }
+
+  .book-cover-placeholder svg {
+    width: 64px;
+    height: 64px;
+  }
+
+  .book-details {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .breadcrumb {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-md);
+  }
+
+  .breadcrumb a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.2s ease-out;
+  }
+
+  .breadcrumb a:hover {
+    color: var(--color-primary-dark);
+  }
+
+  .breadcrumb-separator {
+    margin: 0 var(--space-sm);
+  }
+
+  .current-book {
+    color: var(--color-text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    max-width: 300px;
+    vertical-align: bottom;
+  }
+
+  .book-title {
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-sm);
+    line-height: var(--line-height-tight);
+  }
+
+  .book-author {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-lg);
+  }
+
+  .book-stats {
+    display: flex;
+    gap: var(--space-xl);
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .stat-item svg {
+    width: 18px;
+    height: 18px;
+    color: var(--color-primary);
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-lg);
+  }
+
+  .section-title {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  .note-count {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .notes-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .book-detail {
+      padding: var(--space-md);
+    }
+
+    .book-info {
+      flex-direction: column;
+      gap: var(--space-lg);
+      align-items: center;
+      text-align: center;
+    }
+
+    .book-cover {
+      width: 120px;
+      height: 180px;
+    }
+
+    .book-details {
+      width: 100%;
+    }
+
+    .breadcrumb {
+      text-align: center;
+    }
+
+    .current-book {
+      max-width: 200px;
+    }
+
+    .book-stats {
+      justify-content: center;
+      gap: var(--space-md);
+    }
+
+    .section-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-sm);
+    }
+  }
+</style>

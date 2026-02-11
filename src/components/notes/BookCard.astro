@@ -19,6 +19,9 @@ const {
 } = Astro.props;
 
 const bookUrl = `/books/${book.id}`;
+
+// Convert date strings to Date objects (JSON deserialization gives us strings)
+const createdAtDate = book.createdAt ? new Date(book.createdAt) : null;
 ---
 
 <article class={`book-card ${compact ? 'book-card-compact' : ''} ${className}`}>
@@ -75,13 +78,13 @@ const bookUrl = `/books/${book.id}`;
         {notesCount} {notesCount === 1 ? 'note' : 'notes'}
       </span>
       
-      {!compact && book.createdAt && (
+      {!compact && createdAtDate && (
         <span class="added-date">
           Added {new Intl.DateTimeFormat('en-US', { 
             month: 'short', 
             day: 'numeric',
-            year: book.createdAt.getFullYear() !== new Date().getFullYear() ? 'numeric' : undefined
-          }).format(book.createdAt)}
+            year: createdAtDate.getFullYear() !== new Date().getFullYear() ? 'numeric' : undefined
+          }).format(createdAtDate)}
         </span>
       )}
     </div>

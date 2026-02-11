@@ -1,0 +1,17 @@
+[
+  {
+    "id": "upload-1770841118795-3a26a34a",
+    "filename": "My Clippings.txt",
+    "fileSize": 105520,
+    "status": "completed",
+    "startedAt": "2026-02-11T20:18:38.795Z",
+    "stats": {
+      "booksAdded": 8,
+      "booksUpdated": 0,
+      "notesAdded": 275,
+      "notesSkipped": 47,
+      "parseErrors": 0
+    },
+    "completedAt": "2026-02-11T20:18:38.871Z"
+  }
+]

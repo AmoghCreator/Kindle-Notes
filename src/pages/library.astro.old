@@ -1,0 +1,893 @@
+---
+// Library page showing organized books and notes
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BookCard from '../components/notes/BookCard.astro';
+import NoteCard from '../components/notes/NoteCard.astro';
+import EmptyState from '../components/common/EmptyState.astro';
+import LoadingSpinner from '../components/common/LoadingSpinner.astro';
+
+// This will be populated by client-side JavaScript
+const books = [];
+const recentNotes = [];
+---
+
+<BaseLayout 
+  title="My Library" 
+  description="Browse and organize your Kindle highlights, notes, and bookmarks"
+>
+  <main class="library">
+    <header class="library-header">
+      <div class="header-content">
+        <h1 class="library-title">My Library</h1>
+        <p class="library-description">
+          Your collection of books, highlights, and insights
+        </p>
+      </div>
+      
+      <div class="header-actions">
+        <button class="btn btn-ghost" id="viewToggle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"/>
+            <rect x="14" y="3" width="7" height="7"/>
+            <rect x="14" y="14" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/>
+          </svg>
+          Grid View
+        </button>
+        
+        <a href="/search" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="M21 21l-4.35-4.35"/>
+          </svg>
+          Search
+        </a>
+      </div>
+    </header>
+
+    <div class="library-stats" id="libraryStats" style="display: none;">
+      <div class="stat">
+        <div class="stat-value" id="totalBooks">0</div>
+        <div class="stat-label">Books</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="totalNotes">0</div>
+        <div class="stat-label">Notes</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="totalHighlights">0</div>
+        <div class="stat-label">Highlights</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="favoriteNotes">0</div>
+        <div class="stat-label">Favorites</div>
+      </div>
+    </div>
+
+    <div class="library-content">
+      <!-- Loading state -->
+      <div id="loadingState" class="loading-container">
+        <LoadingSpinner size="lg" message="Loading your library..." />
+      </div>
+
+      <!-- Empty state -->
+      <div id="emptyState" style="display: none;">
+        <EmptyState
+          title="No Books Yet"
+          message="Start building your library by importing your Kindle clippings file."
+          icon="books"
+          action={{
+            text: "Import Books",
+            href: "/"
+          }}
+        />
+      </div>
+
+      <!-- Books section -->
+      <section class="books-section" id="booksSection" style="display: none;">
+        <div class="section-header">
+          <h2 class="section-title">My Books</h2>
+          <div class="section-actions">
+            <select class="sort-select" id="bookSort">
+              <option value="recent">Recently Added</option>
+              <option value="title">Title A-Z</option>
+              <option value="author">Author A-Z</option>
+              <option value="notes">Most Notes</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="books-grid" id="booksGrid">
+          <!-- Books will be populated by JavaScript -->
+        </div>
+
+        <button class="load-more-btn" id="loadMoreBooks" style="display: none;">
+          Load More Books
+        </button>
+      </section>
+
+      <!-- Recent notes section -->
+      <section class="notes-section" id="notesSection" style="display: none;">
+        <div class="section-header">
+          <h2 class="section-title">Recent Notes</h2>
+          <a href="/search?type=notes" class="section-link">View All</a>
+        </div>
+
+        <div class="notes-list" id="notesList">
+          <!-- Recent notes will be populated by JavaScript -->
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  import { KindleNotesDatabase } from '../lib/storage/database';
+  import { BooksStorage } from '../lib/storage/books';
+  import { NotesStorage } from '../lib/storage/notes';
+
+  interface LibraryData {
+    books: any[];
+    recentNotes: any[];
+    stats: {
+      totalBooks: number;
+      totalNotes: number;
+      totalHighlights: number;
+      favoriteNotes: number;
+    };
+  }
+
+  let db: KindleNotesDatabase;
+  let booksStorage: BooksStorage;
+  let notesStorage: NotesStorage;
+  let currentView = 'grid';
+  let currentSort = 'recent';
+
+  async function initializeLibrary() {
+    try {
+      // Initialize database
+      db = new KindleNotesDatabase();
+      await db.open();
+      
+      booksStorage = new BooksStorage(db);
+      notesStorage = new NotesStorage(db);
+
+      // Load library data
+      await loadLibraryData();
+    } catch (error) {
+      console.error('Failed to initialize library:', error);
+      showError('Failed to load library');
+    }
+  }
+
+  async function loadLibraryData() {
+    showLoading();
+
+    try {
+      // Load books and notes in parallel
+      const [books, recentNotes, bookStats, noteStats] = await Promise.all([
+        booksStorage.findAll(),
+        notesStorage.getRecentNotes(10),
+        booksStorage.getStatistics(),
+        notesStorage.getStatistics()
+      ]);
+
+      const libraryData: LibraryData = {
+        books,
+        recentNotes,
+        stats: {
+          totalBooks: bookStats.totalBooks,
+          totalNotes: noteStats.totalNotes,
+          totalHighlights: noteStats.notesByType.find(type => type.type === 'highlight')?.count || 0,
+          favoriteNotes: 0 // Will be implemented later
+        }
+      };
+
+      if (libraryData.books.length === 0) {
+        showEmptyState();
+      } else {
+        await renderLibrary(libraryData);
+        showLibrary();
+      }
+    } catch (error) {
+      console.error('Error loading library data:', error);
+      showError('Failed to load library data');
+    }
+  }
+
+  async function renderLibrary(data: LibraryData) {
+    // Update stats
+    updateStats(data.stats);
+
+    // Render books
+    await renderBooks(data.books);
+
+    // Render recent notes
+    await renderRecentNotes(data.recentNotes);
+  }
+
+  function updateStats(stats: LibraryData['stats']) {
+    const statsContainer = document.getElementById('libraryStats');
+    if (statsContainer) {
+      document.getElementById('totalBooks')!.textContent = stats.totalBooks.toString();
+      document.getElementById('totalNotes')!.textContent = stats.totalNotes.toString();
+      document.getElementById('totalHighlights')!.textContent = stats.totalHighlights.toString();
+      document.getElementById('favoriteNotes')!.textContent = stats.favoriteNotes.toString();
+      statsContainer.style.display = 'flex';
+    }
+  }
+
+  async function renderBooks(books: any[]) {
+    const booksGrid = document.getElementById('booksGrid');
+    if (!booksGrid) return;
+
+    booksGrid.innerHTML = '';
+
+    for (const book of books) {
+      // Get notes count for this book
+      const notes = await notesStorage.findByBookId(book.id);
+      const notesCount = notes.length;
+
+      const bookElement = createBookElement(book, notesCount);
+      booksGrid.appendChild(bookElement);
+    }
+  }
+
+  function createBookElement(book: any, notesCount: number) {
+    const article = document.createElement('article');
+    article.className = 'book-card';
+    
+    article.innerHTML = `
+      <div class="book-cover">
+        ${book.coverImageUrl 
+          ? `<img src="${book.coverImageUrl}" alt="Cover of ${book.title}" loading="lazy" />`
+          : `<div class="book-cover-placeholder">
+               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                 <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                 <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+               </svg>
+             </div>`
+        }
+      </div>
+      <div class="book-content">
+        <header class="book-header">
+          <h3 class="book-title">
+            <a href="/book?id=${book.id}">${book.title}</a>
+          </h3>
+          <p class="book-author">${book.author}</p>
+        </header>
+        
+        ${book.description ? `
+          <div class="book-details">
+            <p class="book-description">${book.description}</p>
+          </div>
+        ` : ''}
+        
+        <div class="book-stats">
+          <span class="notes-count">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+              <path d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+            </svg>
+            ${notesCount} ${notesCount === 1 ? 'note' : 'notes'}
+          </span>
+        </div>
+        
+        <div class="book-actions">
+          <a href="/book?id=${book.id}" class="btn btn-sm btn-primary">View Notes</a>
+        </div>
+      </div>
+    `;
+    
+    return article;
+  }
+
+  async function renderRecentNotes(notes: any[]) {
+    const notesList = document.getElementById('notesList');
+    if (!notesList) return;
+
+    notesList.innerHTML = '';
+
+    for (const note of notes) {
+      // Get book info for the note
+      const book = await booksStorage.findById(note.bookId);
+      const noteElement = createNoteElement(note, book?.title);
+      notesList.appendChild(noteElement);
+    }
+  }
+
+  function createNoteElement(note: any, bookTitle?: string) {
+    const article = document.createElement('article');
+    article.className = `note-card note-type-${note.type} note-card-compact`;
+    
+    const formatDate = (date: Date) => {
+      return new Intl.DateTimeFormat('en-US', {
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit'
+      }).format(new Date(date));
+    };
+
+    article.innerHTML = `
+      <header class="note-header">
+        <div class="note-type">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            ${getTypeIconPath(note.type)}
+          </svg>
+          <span class="note-type-label">${note.type}</span>
+        </div>
+        <div class="note-meta">
+          ${note.page ? `<span class="note-page">Page ${note.page}</span>` : ''}
+          <time class="note-date">${formatDate(note.createdAt)}</time>
+        </div>
+      </header>
+      
+      ${bookTitle ? `
+        <div class="note-book-info">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
+            <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+          </svg>
+          <span class="book-title">${bookTitle}</span>
+        </div>
+      ` : ''}
+      
+      <div class="note-content">
+        ${note.type === 'bookmark' 
+          ? '<p class="bookmark-placeholder">Bookmark saved</p>'
+          : `<div class="note-text">${note.content}</div>`
+        }
+      </div>
+    `;
+    
+    return article;
+  }
+
+  function getTypeIconPath(type: string): string {
+    switch (type) {
+      case 'highlight':
+        return '<path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>';
+      case 'note':
+        return '<path d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 011-1h1a2 2 0 100-4H7a1 1 0 01-1-1V8a1 1 0 011-1h3a1 1 0 001-1V4z"/>';
+      case 'bookmark':
+        return '<path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>';
+      default:
+        return '';
+    }
+  }
+
+  function showLoading() {
+    document.getElementById('loadingState')!.style.display = 'flex';
+    document.getElementById('emptyState')!.style.display = 'none';
+    document.getElementById('booksSection')!.style.display = 'none';
+    document.getElementById('notesSection')!.style.display = 'none';
+  }
+
+  function showEmptyState() {
+    document.getElementById('loadingState')!.style.display = 'none';
+    document.getElementById('emptyState')!.style.display = 'block';
+    document.getElementById('booksSection')!.style.display = 'none';
+    document.getElementById('notesSection')!.style.display = 'none';
+  }
+
+  function showLibrary() {
+    document.getElementById('loadingState')!.style.display = 'none';
+    document.getElementById('emptyState')!.style.display = 'none';
+    document.getElementById('booksSection')!.style.display = 'block';
+    document.getElementById('notesSection')!.style.display = 'block';
+  }
+
+  function showError(message: string) {
+    // Simple error display - could be enhanced with proper error component
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.textContent = message;
+    errorDiv.style.cssText = `
+      background: var(--color-error);
+      color: white;
+      padding: var(--space-md);
+      border-radius: var(--border-radius-md);
+      margin: var(--space-lg) 0;
+      text-align: center;
+    `;
+    
+    document.querySelector('.library-content')?.appendChild(errorDiv);
+  }
+
+  // Event handlers
+  document.addEventListener('DOMContentLoaded', () => {
+    initializeLibrary();
+
+    // Sort change handler
+    document.getElementById('bookSort')?.addEventListener('change', async (e) => {
+      currentSort = (e.target as HTMLSelectElement).value;
+      await loadLibraryData();
+    });
+
+    // View toggle handler
+    document.getElementById('viewToggle')?.addEventListener('click', () => {
+      const grid = document.getElementById('booksGrid');
+      if (grid) {
+        currentView = currentView === 'grid' ? 'list' : 'grid';
+        grid.className = currentView === 'grid' ? 'books-grid' : 'books-list';
+        
+        const button = document.getElementById('viewToggle');
+        if (button) {
+          button.innerHTML = currentView === 'grid' 
+            ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>List View'
+            : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Grid View';
+        }
+      }
+    });
+  });
+</script>
+
+<style>
+  .library {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+  }
+
+  .library-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: var(--space-xl);
+    padding-bottom: var(--space-lg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .header-content {
+    flex: 1;
+  }
+
+  .library-title {
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-sm);
+  }
+
+  .library-description {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: center;
+  }
+
+  .header-actions .btn svg {
+    margin-right: var(--space-xs);
+  }
+
+  .library-stats {
+    display: flex;
+    gap: var(--space-xl);
+    margin-bottom: var(--space-2xl);
+    padding: var(--space-lg);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-value {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    display: block;
+  }
+
+  .stat-label {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-top: var(--space-xs);
+  }
+
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-lg);
+  }
+
+  .section-title {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  .section-actions {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: center;
+  }
+
+  .section-link {
+    font-family: var(--font-family-secondary);
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+    transition: color 0.2s var(--easing-ease-out);
+  }
+
+  .section-link:hover {
+    color: var(--color-primary-dark);
+  }
+
+  .sort-select {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+    padding: var(--space-sm) var(--space-md);
+    font-family: var(--font-family-secondary);
+    color: var(--color-text-primary);
+    cursor: pointer;
+  }
+
+  .books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-lg);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .books-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .books-list .book-card {
+    max-width: none;
+  }
+
+  .notes-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .load-more-btn {
+    display: block;
+    margin: var(--space-xl) auto 0;
+    padding: var(--space-md) var(--space-xl);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-md);
+    font-family: var(--font-family-secondary);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition: all 0.2s var(--easing-ease-out);
+  }
+
+  .load-more-btn:hover {
+    background: var(--color-surface-hover);
+    border-color: var(--color-primary);
+  }
+
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .library {
+      padding: 0 var(--space-md);
+    }
+
+    .library-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-lg);
+    }
+
+    .header-actions {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .library-stats {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg);
+    }
+
+    .books-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .section-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-sm);
+    }
+  }
+</style>
+
+<!-- Global styles for dynamically created book-card and note-card elements -->
+<style is:global>
+  /* ===== Book Card ===== */
+  .book-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    padding: var(--space-lg);
+    display: flex;
+    gap: var(--space-md);
+    transition: all 0.2s ease-out;
+  }
+
+  .book-card:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .book-cover {
+    flex-shrink: 0;
+    width: 80px;
+    height: 120px;
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
+    background: var(--color-surface-hover);
+  }
+
+  .book-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .book-cover-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-surface-hover) 0%, var(--color-border) 100%);
+    color: var(--color-text-muted);
+  }
+
+  .book-cover-placeholder svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .book-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .book-header {
+    margin-bottom: var(--space-sm);
+  }
+
+  .book-title {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin: 0 0 var(--space-xs);
+    line-height: var(--line-height-tight);
+  }
+
+  .book-title a {
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: color 0.2s ease-out;
+  }
+
+  .book-title a:hover {
+    color: var(--color-primary);
+  }
+
+  .book-author {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .book-details {
+    flex: 1;
+    margin-bottom: var(--space-md);
+  }
+
+  .book-description {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin: 0 0 var(--space-sm);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .book-stats {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-sm);
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .notes-count {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .book-actions {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: center;
+  }
+
+  /* ===== Note Card ===== */
+  .note-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    padding: var(--space-lg);
+    transition: all 0.2s ease-out;
+    position: relative;
+  }
+
+  .note-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .note-card-compact {
+    padding: var(--space-md);
+  }
+
+  .note-type-highlight {
+    border-left: 4px solid var(--color-warning);
+  }
+
+  .note-type-note {
+    border-left: 4px solid var(--color-info);
+  }
+
+  .note-type-bookmark {
+    border-left: 4px solid var(--color-success);
+  }
+
+  .note-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-md);
+    gap: var(--space-sm);
+  }
+
+  .note-type {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    text-transform: capitalize;
+  }
+
+  .note-type svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .note-type-highlight .note-type {
+    color: var(--color-warning);
+  }
+
+  .note-type-note .note-type {
+    color: var(--color-info);
+  }
+
+  .note-type-bookmark .note-type {
+    color: var(--color-success);
+  }
+
+  .note-meta {
+    display: flex;
+    gap: var(--space-sm);
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    text-align: right;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .note-meta span:not(:last-child)::after {
+    content: '•';
+    margin-left: var(--space-sm);
+  }
+
+  .note-book-info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-md);
+  }
+
+  .note-content {
+    margin-bottom: var(--space-md);
+  }
+
+  .note-text {
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-primary);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .bookmark-placeholder {
+    font-family: var(--font-family-secondary);
+    font-style: italic;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  /* Responsive card adjustments */
+  @media (max-width: 768px) {
+    .book-card {
+      padding: var(--space-md);
+      gap: var(--space-sm);
+    }
+
+    .book-cover {
+      width: 60px;
+      height: 90px;
+    }
+
+    .note-card {
+      padding: var(--space-md);
+    }
+
+    .note-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-xs);
+    }
+
+    .note-meta {
+      flex-direction: column;
+      text-align: left;
+      gap: var(--space-xs);
+    }
+
+    .note-meta span::after {
+      display: none;
+    }
+  }
+</style>

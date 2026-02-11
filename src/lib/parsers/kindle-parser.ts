@@ -1,5 +1,5 @@
-import type { Book, Note, NoteType } from '../types';
-import { ValidationError } from '../utils/errors';
+import type { Book, Note } from '../types';
+import { ValidationError } from '../types';
 
 export interface ParseResult {
     books: Book[];
@@ -184,8 +184,33 @@ export function parseKindleEntry(entryText: string): ParsedEntry {
     const [, typeStr, pageStr, locationStr, dateStr] = metadataMatch;
 
     const type = typeStr.toLowerCase() as NoteType;
-    const page = pageStr ? parseInt(pageStr, 10) : null;
-    const location = locationStr || null;
+    const page = pageStr ? parseInt(pageStr, 10) : undefined;
+    
+    // Parse location with start and optional end
+    let location: { start: number; end?: number } | undefined;
+    if (locationStr) {
+        const locationMatch = locationStr.match(/^(\d+)(?:-(\d+))?$/);
+        if (locationMatch) {
+            location = {
+                start: parseInt(locationMatch[1], 10),
+                end: locationMatch[2] ? parseInt(locationMatch[2], 10) : undefined
+            };
+        } else {
+            // Try to parse single location
+            const singleLoc = parseInt(locationStr, 10);
+            if (!isNaN(singleLoc)) {
+                location = { start: singleLoc };
+            } else {
+                console.warn(`Could not parse location: ${locationStr} for note in ${title}`);
+            }
+        }
+    }
+    
+    // CRITICAL: Log warning if location is missing
+    if (!location) {
+        console.warn(`Note without location in "${title}" - deduplication will use content hash`);
+    }
+    
     const createdAt = parseKindleDate(dateStr);
 
     // Extract content (everything after the metadata line)
@@ -202,7 +227,7 @@ export function parseKindleEntry(entryText: string): ParsedEntry {
         type,
         content,
         page,
-        location,
+        location, // Now includes {start, end?} structure
         createdAt
     };
 
