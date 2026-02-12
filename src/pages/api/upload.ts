@@ -38,14 +38,14 @@ export const POST: APIRoute = async ({ request }) => {
         // Save original file as backup
         const backupDir = path.join(process.cwd(), 'data', 'backups');
         await fs.mkdir(backupDir, { recursive: true });
-        
+
         // Generate unique filename with timestamp and hash
         const fileHash = crypto.createHash('md5').update(content).digest('hex').substring(0, 8);
         const timestamp = new Date().toISOString().replace(/[:.]/g, '-').substring(0, 19);
         const safeFilename = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
         const backupFilename = `${timestamp}_${fileHash}_${safeFilename}`;
         const backupPath = path.join(backupDir, backupFilename);
-        
+
         await fs.writeFile(backupPath, content, 'utf-8');
         console.log(`Backup saved: ${backupPath}`);
 

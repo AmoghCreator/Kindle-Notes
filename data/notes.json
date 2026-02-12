@@ -3,19 +3,19 @@
     "type": "highlight",
     "content": "disagreeing",
     "page": 471,
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "95f294ab-e232-4168-84ad-0619f458ac97",
-    "id": "4b82bccf-3bae-40ea-9f4d-869d028b7a0b",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "3b3c2337-3ac9-4fa8-afd9-d03cd71df26c",
+    "id": "2808ac7d-db25-4ba3-b8aa-4a23c21d0fdb",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "bookmark",
     "content": "",
     "page": 414,
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "9d5072f6-6722-4c89-839d-712079b5b4c9",
-    "id": "e24b71e4-b9f9-4e65-a8bf-91e2916772a9",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "eae56e18-dd25-43f9-84d7-1e26e95d9298",
+    "id": "b65c5238-2239-4b8c-badc-d8ed62a9cca3",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "bookmark",
@@ -24,10 +24,10 @@
     "location": {
       "start": 982
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "dffc0b32-a98d-4f5b-b39d-3956496c01c4",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "550dd124-fd2d-4f23-a36c-7af85e3681e5",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -37,10 +37,10 @@
       "start": 899,
       "end": 903
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "704d106c-3f01-46b4-b47f-d4bf71fd9613",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "db8cce99-ce53-443f-81c7-c666302fd823",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -49,11 +49,11 @@
     "location": {
       "start": 903
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "704d106c-3f01-46b4-b47f-d4bf71fd9613",
-    "id": "aa92f782-d8c4-4133-923e-18e1c869689b",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "db8cce99-ce53-443f-81c7-c666302fd823",
+    "id": "2cff5ef2-adfc-4640-bc66-f01fcba23776",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -62,11 +62,11 @@
     "location": {
       "start": 1017
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "7f87da7b-d675-4fa0-a1d5-60a8514833a3",
-    "id": "f594ddbe-dea6-46b8-9c5e-46747236379a",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "99f1b5b5-71e6-419b-91ca-17e3c59445df",
+    "id": "b9cdaa88-7a17-478d-a3cb-c5df23b63a96",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -76,10 +76,10 @@
       "start": 1015,
       "end": 1017
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "7f87da7b-d675-4fa0-a1d5-60a8514833a3",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "99f1b5b5-71e6-419b-91ca-17e3c59445df",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -88,11 +88,11 @@
     "location": {
       "start": 1043
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "9723ae56-4e4c-4a7a-bdae-de8fa74f5b07",
-    "id": "51bfc231-0aaa-4160-8f9e-df4745d3c1de",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "3928cbea-dc4f-4ed9-a3c0-6079d67fed51",
+    "id": "2b936ae1-e489-4e5a-9df8-e55ad45ecd3f",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "bookmark",
@@ -101,10 +101,10 @@
     "location": {
       "start": 1039
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "1c38400e-b16d-4f0d-9831-832da94ba99c",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "39941ffc-4c33-409e-a1c9-dced73037a32",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -113,11 +113,11 @@
     "location": {
       "start": 1049
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "ed82228f-2755-4b02-9d3a-882251f82d74",
-    "id": "1b97e37b-42e2-4ea1-b2aa-e67d14854231",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "146e869b-bc1a-4dae-b11b-8c6d50745d3f",
+    "id": "60d0b04c-5e7e-4a14-b3c2-1ebbf1c5c892",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -127,10 +127,10 @@
       "start": 1047,
       "end": 1049
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "ed82228f-2755-4b02-9d3a-882251f82d74",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "146e869b-bc1a-4dae-b11b-8c6d50745d3f",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -140,10 +140,10 @@
       "start": 1053,
       "end": 1054
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "d0f37a83-9bc6-449b-b933-54c4005c04ed",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "98f071f3-f97b-495c-b4cb-75131818df4f",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -152,11 +152,11 @@
     "location": {
       "start": 1069
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "b5d9619a-4f07-4da2-955b-474c1612a566",
-    "id": "28d46c9e-83c0-494e-9d78-2b0791e96927",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "5a39d8d2-2f52-4d93-8727-d2dfce1a4ba9",
+    "id": "81519330-c9e1-47c9-aa0c-0e8fd46a0a3c",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -166,10 +166,10 @@
       "start": 1068,
       "end": 1069
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "b5d9619a-4f07-4da2-955b-474c1612a566",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "5a39d8d2-2f52-4d93-8727-d2dfce1a4ba9",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -178,11 +178,11 @@
     "location": {
       "start": 1082
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "b101f90a-9af2-4167-b84f-e8ad133d200e",
-    "id": "e8ee4c3e-e34d-4850-96b6-8aef2a04d447",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "1e635dd2-e566-4ffa-8c00-4574400615bb",
+    "id": "753f4c73-b204-47a9-8faf-039f65fa9f1f",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "bookmark",
@@ -191,10 +191,10 @@
     "location": {
       "start": 1079
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "f4c88c92-d363-46c5-9343-a0271db64262",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "7b8f6ed2-3d57-46cd-aad7-02b53394e34a",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -203,10 +203,10 @@
     "location": {
       "start": 1089
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "45e89b82-1055-48ff-a6ef-b33c64f16bd5",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "4982ffa9-6606-4a94-90e5-ccdac426f801",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -216,10 +216,10 @@
       "start": 1087,
       "end": 1090
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "9940f2b7-e089-4efe-9bee-bacfe791720d",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "63344f00-d837-4f40-b205-07c8e74d8d1e",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "bookmark",
@@ -228,10 +228,10 @@
     "location": {
       "start": 1085
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "0e909b19-167f-48aa-9f1e-c682809be878",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "ecaa49a9-d5fa-423b-aea8-4dcd519e361e",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -240,11 +240,11 @@
     "location": {
       "start": 1100
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "82ff1648-2f67-4145-88e4-f55c60e24951",
-    "id": "84559b36-a5b8-46be-ad53-f934befa7854",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "70d3fee6-3fb6-4a72-ac0b-32b61d99730b",
+    "id": "27ef662e-b7f8-4bd5-bbce-ed6de09567cd",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -254,10 +254,10 @@
       "start": 1098,
       "end": 1100
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "82ff1648-2f67-4145-88e4-f55c60e24951",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "70d3fee6-3fb6-4a72-ac0b-32b61d99730b",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -267,10 +267,10 @@
       "start": 1101,
       "end": 1102
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "e6e21d42-3f3a-45b3-98f6-91bba8dda637",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "f205c761-2bd8-4479-b917-718666d55f09",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -280,10 +280,10 @@
       "start": 1147,
       "end": 1148
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "8830a279-6b64-46de-8a46-40348ab09468",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "fa9a5f11-4792-4dd3-a5cf-bab97a95fa5d",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -293,10 +293,10 @@
       "start": 1148,
       "end": 1149
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "036aa31d-7723-48ce-9d1b-03b7183c2e80",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "4bb0bcea-4d69-40a6-8b3c-ec33c8aef11b",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "bookmark",
@@ -305,10 +305,10 @@
     "location": {
       "start": 1145
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "d1403140-a12f-4907-a552-8686b7f269ea",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "9a2da6db-b0f0-4088-9fac-f7a3bc692455",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -318,10 +318,10 @@
       "start": 1178,
       "end": 1179
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "4e4191bb-29e6-40d9-b095-30c1bfd4ce2d",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "e1487ab1-290a-40c8-b131-5dbba360e6ec",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "bookmark",
@@ -330,10 +330,10 @@
     "location": {
       "start": 1177
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "e1afb82c-f0e7-41c1-990c-022d1bed64cb",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "9aaa175f-72e9-4671-9bf2-d75038736a6b",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -343,10 +343,10 @@
       "start": 1183,
       "end": 1185
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "5862a1fe-70ec-4aac-b999-e4efb86fd4e3",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "07c7471e-ac59-4f16-9c12-12c05c18b05c",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "bookmark",
@@ -355,10 +355,10 @@
     "location": {
       "start": 1182
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "6d5a5050-aa20-4faf-9bdd-6f2eb2f16209",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "8b224f56-96a1-4eed-9e54-d0a34a55e19f",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -367,11 +367,11 @@
     "location": {
       "start": 1224
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "1ad8584a-f1c5-4c21-b723-19f6e60c2d2b",
-    "id": "33105bea-1fed-4c02-a02f-69d7a0ffe2ae",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "f5650b49-512e-4877-98a0-e1f75733adbf",
+    "id": "745593f8-2c41-4398-b259-a1a0595cae0a",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -380,11 +380,11 @@
     "location": {
       "start": 1226
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "1ed14470-8af7-4d96-80f3-073b46486ad7",
-    "id": "881a753c-7380-4e93-aeff-afd165c33e47",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "ca3e6844-fb6b-4b7e-af24-2d900d82fb5d",
+    "id": "9df2dbd2-30ef-4537-91ce-c84f45098093",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "bookmark",
@@ -393,10 +393,10 @@
     "location": {
       "start": 1225
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "dbc26bd5-1783-4404-8e19-9b1a3803dd43",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "ee348b1d-73ea-4a90-b4f6-4a6a489135a5",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -405,11 +405,11 @@
     "location": {
       "start": 1233
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "1217b95e-a067-400d-bc18-89492fd8cbf6",
-    "id": "1ce1d5b9-2cac-4b29-b01c-640207ca19e2",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "c0f4fe19-1ee6-4005-893d-e6026f2daae6",
+    "id": "a30aa128-cd5d-42d2-b1ed-588f41713e03",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -419,10 +419,10 @@
       "start": 1232,
       "end": 1233
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "1217b95e-a067-400d-bc18-89492fd8cbf6",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "c0f4fe19-1ee6-4005-893d-e6026f2daae6",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -432,10 +432,10 @@
       "start": 1239,
       "end": 1239
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "808a6980-e650-4dde-8c40-d2f92ac19654",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "02a14981-24c5-41d2-a9a1-d0a0db79e4f6",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -445,10 +445,10 @@
       "start": 1240,
       "end": 1240
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "4699dd46-484b-4e05-b892-2d32f0d4ab18",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "046603b2-235f-4935-8c36-522bdbbd4d80",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -457,11 +457,11 @@
     "location": {
       "start": 1257
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "c559a9a2-7a26-49c2-a5a6-fddb6c4826c7",
-    "id": "a4e3e01e-5898-44aa-8a3b-00785428e3c7",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "66b8d7b1-4bea-42e5-8c08-cdfbead57450",
+    "id": "daeb10f8-cc24-4f32-be4f-6c3873fbc7ac",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -471,10 +471,10 @@
       "start": 1253,
       "end": 1257
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "c559a9a2-7a26-49c2-a5a6-fddb6c4826c7",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "66b8d7b1-4bea-42e5-8c08-cdfbead57450",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -483,11 +483,11 @@
     "location": {
       "start": 1274
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "91ce55e5-e785-4133-bec4-ceea64234800",
-    "id": "91269a95-8cfc-499d-ae6b-497f5d6ba1f8",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "02d4c0bb-a605-45fe-b0d9-26cf14beea49",
+    "id": "dcd1a41a-87af-4528-8598-a702ea35f181",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -497,10 +497,10 @@
       "start": 1273,
       "end": 1274
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "91ce55e5-e785-4133-bec4-ceea64234800",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "02d4c0bb-a605-45fe-b0d9-26cf14beea49",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -510,10 +510,10 @@
       "start": 1276,
       "end": 1276
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "ac6503fb-3a94-41be-b69c-b28dac0c7cca",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "91caeaad-31a5-46cf-ae30-98227f9c3c8a",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -523,10 +523,10 @@
       "start": 1283,
       "end": 1283
     },
-    "createdAt": "2026-02-12T18:41:09.006Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "86d2dca5-78eb-4b73-b6c3-f14c8b297aa6",
-    "updatedAt": "2026-02-12T18:41:09.006Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "195bc761-c592-4529-a3e8-3fd1051da80c",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -535,11 +535,11 @@
     "location": {
       "start": 1291
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "6c1c212c-ae09-432a-819b-669674af6d2c",
-    "id": "b0036f3b-4084-4a2f-aa0d-68a4883f67e1",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "e3531751-e781-4e2a-9f63-fce8890c32d4",
+    "id": "fa4f4375-cc26-4bc6-ba26-bb40804d7248",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -549,10 +549,10 @@
       "start": 1290,
       "end": 1291
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "6c1c212c-ae09-432a-819b-669674af6d2c",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "e3531751-e781-4e2a-9f63-fce8890c32d4",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -561,10 +561,10 @@
     "location": {
       "start": 1293
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "112bd81a-d1bc-4fcd-9296-c339aa5f6ab6",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "821e3ebd-1e0b-49b4-8e62-6c4d66450f6c",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -574,10 +574,10 @@
       "start": 1292,
       "end": 1294
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "2c9a1106-1724-4b99-bb76-1431a66d66e7",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "6633a245-5cad-4cba-8ee6-c71575a91a75",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -586,11 +586,11 @@
     "location": {
       "start": 1374
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "6ceb3a10-0b3c-4dbc-a1cc-872fc132a73c",
-    "id": "57b315f9-9df9-4b4a-94bb-249a77c5d003",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "ecf6ef65-ab54-4558-b51a-a06f9d2ed887",
+    "id": "eb1c7b60-0bf1-4d21-b438-abdf7d81362d",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -600,10 +600,10 @@
       "start": 1373,
       "end": 1374
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "6ceb3a10-0b3c-4dbc-a1cc-872fc132a73c",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "ecf6ef65-ab54-4558-b51a-a06f9d2ed887",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -612,10 +612,10 @@
     "location": {
       "start": 1409
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "41382d47-bb97-43e0-9ae7-5e5717686d8d",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "e8c556f2-5d83-4244-9b9d-a1c9214291b0",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -624,11 +624,11 @@
     "location": {
       "start": 1412
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "068d8855-151a-46eb-94e3-ce7173ca63c8",
-    "id": "f7cf8ffd-68bc-4d1d-a4b4-9be69bcf5e6c",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "fc46fc7c-eda9-49ec-9d4d-a71a6dc3b138",
+    "id": "1623d5f7-018c-43d9-b851-6104da5ca455",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -637,11 +637,11 @@
     "location": {
       "start": 1422
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "17a73f93-03e4-42b6-a7eb-2dce46b062f6",
-    "id": "703d7452-ebe2-4df9-b70b-bc9453df2d15",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "8a50d0ee-305e-44f4-a683-33f65ec45836",
+    "id": "67fb8683-b318-4e6b-8644-3d1d080b8a16",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -650,11 +650,11 @@
     "location": {
       "start": 1423
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "b9020694-e36f-47d7-a982-51951c1265d7",
-    "id": "ff125c7b-7c48-4fef-8596-f14bd535665a",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "a35a8748-b07c-4033-a36f-4f77d9c92b80",
+    "id": "adf151a3-6da9-4b93-b20c-bfc9e7ad26cc",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -663,11 +663,11 @@
     "location": {
       "start": 1432
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "cdb5987b-2b94-4849-bb69-d9aae2989eea",
-    "id": "239f9ce1-eda0-4718-9ce9-7e972791ab8a",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "acfe2924-7e42-4df7-a0f2-6629a5d85529",
+    "id": "e486ff86-e215-4783-bec5-3b58fbf8bf3e",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -677,10 +677,10 @@
       "start": 1431,
       "end": 1432
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "cdb5987b-2b94-4849-bb69-d9aae2989eea",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "acfe2924-7e42-4df7-a0f2-6629a5d85529",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -689,11 +689,11 @@
     "location": {
       "start": 1437
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "429412e0-1316-4094-a8a2-6dc15b97929b",
-    "id": "c8a0d880-ce43-4fe4-a207-728fa0fb9bbc",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "7a9b19eb-9baf-4307-bcec-9dfbf4c7aaa2",
+    "id": "6a32df97-d573-40c8-a2da-fee8197d5b27",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -703,10 +703,10 @@
       "start": 1436,
       "end": 1437
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "429412e0-1316-4094-a8a2-6dc15b97929b",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "7a9b19eb-9baf-4307-bcec-9dfbf4c7aaa2",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -715,11 +715,11 @@
     "location": {
       "start": 1446
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "7aed6c85-4576-4837-a277-9bf77f8c5fa5",
-    "id": "3933b3a3-6af8-4f9f-a609-6286604a40ac",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "c2a84eb8-eaf8-4720-8a61-a7f223620d9c",
+    "id": "d10d7930-344b-4940-b218-ccc8c64756b0",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -728,11 +728,11 @@
     "location": {
       "start": 1457
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "a8ce2b51-a3ca-4610-a1a5-5bc7d3a37f33",
-    "id": "9b00c6f1-70cf-40db-9c19-6d2992b9d129",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "fbd80973-fc1b-4c5c-9679-0b5e8fd9abda",
+    "id": "53797227-a260-47e5-9e84-36801f1eba96",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -742,10 +742,10 @@
       "start": 1456,
       "end": 1457
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "a8ce2b51-a3ca-4610-a1a5-5bc7d3a37f33",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "fbd80973-fc1b-4c5c-9679-0b5e8fd9abda",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -754,11 +754,11 @@
     "location": {
       "start": 1463
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "0f9906e5-7571-4cde-bb76-4000718a42e7",
-    "id": "ec81cf6c-ca15-46c9-aaac-fbd7e3f134cb",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "cd025274-d265-4f2d-9083-6d1c4826977c",
+    "id": "15a5f305-9ae1-443c-a51c-e58e717f7717",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -768,10 +768,10 @@
       "start": 1462,
       "end": 1463
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "0f9906e5-7571-4cde-bb76-4000718a42e7",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "cd025274-d265-4f2d-9083-6d1c4826977c",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -780,11 +780,11 @@
     "location": {
       "start": 1481
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "8ead2dcf-2380-48a8-897b-51a588cb670a",
-    "id": "7055d848-4fad-415e-be66-66bba1fe06bd",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "d0a66eb6-5b85-4174-aad4-8a9893a3f38d",
+    "id": "15105eee-7bd7-4019-a642-0b9041cd1eef",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -794,10 +794,10 @@
       "start": 1480,
       "end": 1481
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "8ead2dcf-2380-48a8-897b-51a588cb670a",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "d0a66eb6-5b85-4174-aad4-8a9893a3f38d",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -806,11 +806,11 @@
     "location": {
       "start": 1496
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "43bf180f-0a98-41b1-8b94-841aca350b4b",
-    "id": "cba31cfe-ce84-49c1-aeef-72cf1276dc8a",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "f2acfd36-5c6c-420a-b4d4-f2be26cae15b",
+    "id": "ef797148-3f14-4bef-bd5f-c749c7ff3f40",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -820,10 +820,10 @@
       "start": 1493,
       "end": 1496
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "43bf180f-0a98-41b1-8b94-841aca350b4b",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "f2acfd36-5c6c-420a-b4d4-f2be26cae15b",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -832,11 +832,11 @@
     "location": {
       "start": 1508
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "e2eafc8d-ec5d-429b-9b9a-89498113ac96",
-    "id": "768222b5-a708-4c64-91e4-6a919cbaa885",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "31d8e2f0-e839-4399-ab39-f61ed4f22fef",
+    "id": "0722b689-428f-4d80-ae32-dd711a3cbf25",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -846,10 +846,10 @@
       "start": 1506,
       "end": 1508
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "e2eafc8d-ec5d-429b-9b9a-89498113ac96",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "31d8e2f0-e839-4399-ab39-f61ed4f22fef",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -859,10 +859,10 @@
       "start": 1516,
       "end": 1516
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "4d55966e-8151-4538-b42e-f9057286562d",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "e94621e6-f431-473a-a665-0d24c815fa56",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -871,11 +871,11 @@
     "location": {
       "start": 1558
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "2d219a7e-948d-473a-86d1-ef7171e2164c",
-    "id": "cb21d96f-d89d-496d-8bec-3464e194df62",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "9888c6b6-3106-4680-a9d0-7201c05cbeb4",
+    "id": "1692d21c-ccd2-440f-b1a1-5955b75acd01",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -885,10 +885,10 @@
       "start": 1557,
       "end": 1558
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "2d219a7e-948d-473a-86d1-ef7171e2164c",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "9888c6b6-3106-4680-a9d0-7201c05cbeb4",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -897,11 +897,11 @@
     "location": {
       "start": 1579
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "8025b0bb-2296-4c9e-847e-5f8a8f6fa75e",
-    "id": "1e4410a7-0d93-474f-9e67-b9407728eb3f",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "d2399946-e1c1-4cd9-89e1-841a016c74c3",
+    "id": "21227053-2e6f-48e2-a3b5-3ab0531575aa",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -911,10 +911,10 @@
       "start": 1578,
       "end": 1579
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "8025b0bb-2296-4c9e-847e-5f8a8f6fa75e",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "d2399946-e1c1-4cd9-89e1-841a016c74c3",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -923,11 +923,11 @@
     "location": {
       "start": 1591
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "ba58b942-5d99-4ae9-b4ae-5d4395e5f527",
-    "id": "4ffe2ae7-a2ab-47a1-9afe-cf507a5e4967",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "1a1ed9e9-a3a3-4ac8-95cc-857a5adce6f1",
+    "id": "91ca6640-66e2-47bd-9a1a-8527345ff5b2",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -937,10 +937,10 @@
       "start": 1589,
       "end": 1591
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "ba58b942-5d99-4ae9-b4ae-5d4395e5f527",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "1a1ed9e9-a3a3-4ac8-95cc-857a5adce6f1",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -950,10 +950,10 @@
       "start": 1594,
       "end": 1594
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "0aba64ce-90bd-4a8d-a1ad-a867beb78e50",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "e6f7a7a6-c13e-48aa-b114-f8c2323c7436",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -963,10 +963,10 @@
       "start": 1601,
       "end": 1603
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "d467bc4c-2909-45bf-a48c-6d2e50609d03",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "ca1ecf2f-09ae-4559-8b4a-032b35523753",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -975,11 +975,11 @@
     "location": {
       "start": 1603
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "d467bc4c-2909-45bf-a48c-6d2e50609d03",
-    "id": "1a5cc552-a1b3-46bc-b6f7-a95b91515b71",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "ca1ecf2f-09ae-4559-8b4a-032b35523753",
+    "id": "6c24e375-f8dd-4368-8b12-e216e46ee75c",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -988,11 +988,11 @@
     "location": {
       "start": 1604
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "239492fe-3d94-434d-ad82-50e4d5ac499d",
-    "id": "15f8e4cd-0c6e-497c-8e75-81154c0f1278",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "be41b4d4-37cd-4ac6-b265-1627e627a811",
+    "id": "3a3b2e4e-664a-4341-89b7-624c76d24272",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -1001,10 +1001,10 @@
     "location": {
       "start": 1606
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "4f3b7147-b0d4-46cd-a03b-25c1fed42b9a",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "3a3fa453-d150-49a6-a599-b290ec0a52f8",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -1014,10 +1014,10 @@
       "start": 1605,
       "end": 1607
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "2225de76-5ebf-494e-a117-1c5a6dc26cd0",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "3161d4cd-a68f-4e28-9fd1-54d32cc7c429",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -1026,11 +1026,11 @@
     "location": {
       "start": 1614
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "60dcdd0e-b9a6-4b2a-8b19-7095a8e1accb",
-    "id": "ff1af3fa-54eb-49de-801d-b59d501a61c3",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "42b120e0-6836-4bc4-821b-39d41df068f6",
+    "id": "3fd55161-7049-486e-ac14-03f1537bfafb",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -1040,10 +1040,10 @@
       "start": 1613,
       "end": 1614
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "60dcdd0e-b9a6-4b2a-8b19-7095a8e1accb",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "42b120e0-6836-4bc4-821b-39d41df068f6",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -1052,11 +1052,11 @@
     "location": {
       "start": 1619
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "03a183d1-d62b-4154-9b58-b0f756c2ba08",
-    "id": "68e73d8c-a81f-4dd6-ae86-e87be8383072",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "6d59fcfb-90ef-4088-b1a6-9e3566c37cb4",
+    "id": "8e1d2a39-3cf6-4dff-8052-a01241a7c6b8",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -1066,10 +1066,10 @@
       "start": 1618,
       "end": 1619
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "03a183d1-d62b-4154-9b58-b0f756c2ba08",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "6d59fcfb-90ef-4088-b1a6-9e3566c37cb4",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -1078,11 +1078,11 @@
     "location": {
       "start": 1656
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "e70efd71-8c14-4817-9b9a-92df9db722ab",
-    "id": "15a8acfa-2049-4b88-8489-dde5b4786590",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "5a1773e6-8635-432a-bdaa-6b8b5de005a8",
+    "id": "49c914f2-e7ab-4cc0-9343-c5f6982a573d",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -1092,10 +1092,10 @@
       "start": 1654,
       "end": 1656
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "e70efd71-8c14-4817-9b9a-92df9db722ab",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "5a1773e6-8635-432a-bdaa-6b8b5de005a8",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -1104,11 +1104,11 @@
     "location": {
       "start": 1708
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "2f1885d1-3a8a-4b82-8913-f7f2f7ffce7a",
-    "id": "96bb3196-7186-462b-8f6f-63d6a20a7081",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "afeafa85-725b-4bb5-8eca-18b7715dfd07",
+    "id": "c935bdc4-966d-4d8f-bc56-dd01cbfede11",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -1118,10 +1118,10 @@
       "start": 1706,
       "end": 1708
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "2f1885d1-3a8a-4b82-8913-f7f2f7ffce7a",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "afeafa85-725b-4bb5-8eca-18b7715dfd07",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -1131,10 +1131,10 @@
       "start": 137,
       "end": 138
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "491d5e65-4b3b-40b6-a565-b099d142f259",
-    "id": "d2c0796b-fa5e-4b47-954b-fe77c804bed0",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "09e1bbb0-b52a-49ac-9c22-9164173ccb3a",
+    "id": "a344771b-0002-44d7-b4a4-a5dd1f34c647",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -1144,10 +1144,10 @@
       "start": 215,
       "end": 217
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "491d5e65-4b3b-40b6-a565-b099d142f259",
-    "id": "95155cd8-4455-4ff5-997a-ba447222cb4d",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "09e1bbb0-b52a-49ac-9c22-9164173ccb3a",
+    "id": "53c01d8f-1717-40a9-9afd-c28382feeab6",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -1157,10 +1157,10 @@
       "start": 315,
       "end": 317
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "491d5e65-4b3b-40b6-a565-b099d142f259",
-    "id": "654ad0e3-4acc-490b-8b97-470fe79b35ad",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "09e1bbb0-b52a-49ac-9c22-9164173ccb3a",
+    "id": "26ed547b-422d-4274-a88e-8f531e067a38",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -1170,10 +1170,10 @@
       "start": 335,
       "end": 339
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "491d5e65-4b3b-40b6-a565-b099d142f259",
-    "id": "141fcbd9-e905-4446-9e3d-b2b421f1e33a",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "09e1bbb0-b52a-49ac-9c22-9164173ccb3a",
+    "id": "ece03d47-bba1-4f66-bfe8-d4327bf5e9cb",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -1183,10 +1183,10 @@
       "start": 1744,
       "end": 1744
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "ea061b6a-0f1d-43dd-8d91-a9099eae240d",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "a0d6af43-e012-4254-b5bb-4318568eed48",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -1195,11 +1195,11 @@
     "location": {
       "start": 1748
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "0dabdeb1-55d2-40ee-ae17-b00b6de6df15",
-    "id": "956f0a7a-8a24-40e8-b4b1-251eec364277",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "faa9b2de-334c-487f-95a9-101f8e980f53",
+    "id": "171ea5ef-5876-485a-ab72-17bf76ab632d",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -1209,10 +1209,10 @@
       "start": 1746,
       "end": 1748
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "0dabdeb1-55d2-40ee-ae17-b00b6de6df15",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "faa9b2de-334c-487f-95a9-101f8e980f53",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -1222,10 +1222,10 @@
       "start": 1752,
       "end": 1752
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "d5c25b5c-836c-449a-be5a-60a97b81f790",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "2a279162-063a-4619-baf4-604b44a72b34",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "note",
@@ -1234,11 +1234,11 @@
     "location": {
       "start": 1776
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "7f1cd596-b5ed-4718-af0e-93e8acbcb6f1",
-    "id": "2987ac09-e5bb-47ad-8a7f-da1afe8aa970",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "0410e9b7-da92-4e84-8612-1abaf3fbc99c",
+    "id": "7b00c084-142f-48fa-b2bf-91e9d92814a2",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -1248,10 +1248,10 @@
       "start": 1775,
       "end": 1776
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "7f1cd596-b5ed-4718-af0e-93e8acbcb6f1",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.183Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "0410e9b7-da92-4e84-8612-1abaf3fbc99c",
+    "updatedAt": "2026-02-12T19:37:32.183Z"
   },
   {
     "type": "highlight",
@@ -1261,10 +1261,10 @@
       "start": 1819,
       "end": 1820
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "59e5a435-5d52-43b5-8e12-56fcd9af2eda",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "500430ef-3af3-4a71-885e-650ac9aa33d4",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -1273,11 +1273,11 @@
     "location": {
       "start": 1841
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "820cd813-b01c-4da9-9cbd-d4ba5314f4ac",
-    "id": "416d73ae-2af7-47f5-a43e-c74a8f8beb2d",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "49524189-eb78-4599-9711-fbc27814f309",
+    "id": "dd4fc9ca-f29c-4c70-876c-c1b47f3993a9",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1287,10 +1287,10 @@
       "start": 1840,
       "end": 1841
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "820cd813-b01c-4da9-9cbd-d4ba5314f4ac",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "49524189-eb78-4599-9711-fbc27814f309",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -1299,11 +1299,11 @@
     "location": {
       "start": 1857
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "30dcf4ea-efee-4a18-b41d-752f0f18ac83",
-    "id": "97b43329-8bcc-418b-af75-ff6ac2812a64",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "a6dab1f7-8fbb-44d8-a1d1-08e1434db6a5",
+    "id": "9d6e0328-00b5-40e0-9f45-18d88fa2b602",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1313,10 +1313,10 @@
       "start": 1856,
       "end": 1857
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "30dcf4ea-efee-4a18-b41d-752f0f18ac83",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "a6dab1f7-8fbb-44d8-a1d1-08e1434db6a5",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -1325,11 +1325,11 @@
     "location": {
       "start": 1999
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "2be75496-0bb4-4ea2-b80e-2ec6e0b93789",
-    "id": "c8475708-7c06-4742-bb80-67610c6639d3",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "b16acf5a-8e14-4999-ab5c-6fe2c6211771",
+    "id": "935c41f7-6d3b-4735-b464-c71e60e9c5b7",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1339,10 +1339,10 @@
       "start": 1998,
       "end": 1999
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "2be75496-0bb4-4ea2-b80e-2ec6e0b93789",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "b16acf5a-8e14-4999-ab5c-6fe2c6211771",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -1351,11 +1351,11 @@
     "location": {
       "start": 2022
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "871228bc-b46a-4ff2-98df-380c582c925b",
-    "id": "a65139bb-07af-4870-897b-9d58ebea19cc",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "20fb06a9-4141-49b0-9142-8c2ee3ebf3af",
+    "id": "9475f2a6-e139-4b4e-a2ad-79070e406716",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1365,10 +1365,10 @@
       "start": 2111,
       "end": 2111
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "d6b6aa35-2a64-4bd9-adec-3d1221c4c534",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "ba90e118-8154-444e-8b97-cbd0de8b2e2a",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1378,10 +1378,10 @@
       "start": 2141,
       "end": 2143
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "55854095-66ca-42a6-bb45-292e9a0491bf",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "cdd1d78a-86a5-4794-a845-1986d13aa6d3",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1391,10 +1391,10 @@
       "start": 335,
       "end": 336
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "c9e52104-d1f4-4944-b12d-2026aa2e6008",
-    "id": "e77b04fd-eacc-476a-a11f-bbbd2681ccac",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "142f0ed8-16aa-480c-b9fa-34e8c8e33930",
+    "id": "8622dec0-c66a-465d-97a3-1b38fa903558",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1404,10 +1404,10 @@
       "start": 48,
       "end": 48
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "b0a5a2ea-b82b-43b3-96c8-e27dc70e76bc",
-    "id": "be6d110f-583a-4ae6-a55c-783f8bf04e9e",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "33e4bf4b-25c3-4e5c-b932-8df225b9f49f",
+    "id": "fd164fc7-12fd-4c0b-a2b6-50fb31722d08",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1417,10 +1417,10 @@
       "start": 66,
       "end": 66
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "b0a5a2ea-b82b-43b3-96c8-e27dc70e76bc",
-    "id": "71b5ba2a-3b71-4850-b681-01e73dcec207",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "33e4bf4b-25c3-4e5c-b932-8df225b9f49f",
+    "id": "7e99cfa8-9694-4929-99c3-205a563fd384",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1430,10 +1430,10 @@
       "start": 67,
       "end": 68
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "b0a5a2ea-b82b-43b3-96c8-e27dc70e76bc",
-    "id": "79dbf2c1-cc22-424e-91fa-10e273d9ea7a",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "33e4bf4b-25c3-4e5c-b932-8df225b9f49f",
+    "id": "51eece8d-9a5a-42c6-a1e7-b1fa57f0f3c9",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1443,10 +1443,10 @@
       "start": 70,
       "end": 70
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "b0a5a2ea-b82b-43b3-96c8-e27dc70e76bc",
-    "id": "f67fbb9d-0bf8-4cc9-a1e9-7919ed4b03d7",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "33e4bf4b-25c3-4e5c-b932-8df225b9f49f",
+    "id": "6f2e73fa-b041-446f-8247-8ce568c2040b",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1456,10 +1456,10 @@
       "start": 72,
       "end": 74
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "b0a5a2ea-b82b-43b3-96c8-e27dc70e76bc",
-    "id": "a20dd69e-dc94-45b5-a699-83dae7c62164",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "33e4bf4b-25c3-4e5c-b932-8df225b9f49f",
+    "id": "b18ae12f-63a3-4a5e-8f35-d40879547369",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1469,10 +1469,10 @@
       "start": 71,
       "end": 74
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "b0a5a2ea-b82b-43b3-96c8-e27dc70e76bc",
-    "id": "eade0892-618c-439a-a3db-0376609bdb14",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "33e4bf4b-25c3-4e5c-b932-8df225b9f49f",
+    "id": "3bbdddd7-f667-4fb2-b8b8-082cb7792638",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1482,10 +1482,10 @@
       "start": 182,
       "end": 182
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "b0a5a2ea-b82b-43b3-96c8-e27dc70e76bc",
-    "id": "cd2f6336-dd0a-4a27-baed-2b57d62a34aa",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "33e4bf4b-25c3-4e5c-b932-8df225b9f49f",
+    "id": "46b19346-318a-48c5-99cc-83a91735744f",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1495,10 +1495,10 @@
       "start": 186,
       "end": 189
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "b0a5a2ea-b82b-43b3-96c8-e27dc70e76bc",
-    "id": "89043e80-09d5-4b43-9d43-d3b0b08e0f25",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "33e4bf4b-25c3-4e5c-b932-8df225b9f49f",
+    "id": "dd233e08-7521-41aa-abbe-de3e99e92dbe",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1508,10 +1508,10 @@
       "start": 201,
       "end": 203
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "b0a5a2ea-b82b-43b3-96c8-e27dc70e76bc",
-    "id": "10ce87e4-3af7-4937-97da-b71b0e0bc9ed",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "33e4bf4b-25c3-4e5c-b932-8df225b9f49f",
+    "id": "960d4eed-7475-43d7-8bb9-79d84e9515c0",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1521,10 +1521,10 @@
       "start": 203,
       "end": 204
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "b0a5a2ea-b82b-43b3-96c8-e27dc70e76bc",
-    "id": "824dae0b-98fa-47b2-b4b5-add7c5023114",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "33e4bf4b-25c3-4e5c-b932-8df225b9f49f",
+    "id": "d4383799-3345-452e-842e-0c638f37c27c",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1534,10 +1534,10 @@
       "start": 206,
       "end": 206
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "b0a5a2ea-b82b-43b3-96c8-e27dc70e76bc",
-    "id": "a33bf7ee-23a4-48ce-b8a2-8b9b74bfa7ae",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "33e4bf4b-25c3-4e5c-b932-8df225b9f49f",
+    "id": "ea3162ba-3069-4f2b-a8a6-b24c9a32551e",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1547,10 +1547,10 @@
       "start": 208,
       "end": 210
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "b0a5a2ea-b82b-43b3-96c8-e27dc70e76bc",
-    "id": "5100d708-93af-481e-985b-bbf7850a4a13",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "33e4bf4b-25c3-4e5c-b932-8df225b9f49f",
+    "id": "74c74393-1a06-4bdd-8a5c-561716fe2706",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1560,10 +1560,10 @@
       "start": 217,
       "end": 218
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "b0a5a2ea-b82b-43b3-96c8-e27dc70e76bc",
-    "id": "e6feb0d7-0f7f-423a-9609-9c329bbcac1e",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "33e4bf4b-25c3-4e5c-b932-8df225b9f49f",
+    "id": "5a515cee-a55d-4bd2-9ad5-42ebb8167458",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1573,10 +1573,10 @@
       "start": 293,
       "end": 295
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "b0a5a2ea-b82b-43b3-96c8-e27dc70e76bc",
-    "id": "88eb14f9-13aa-4b17-a7bf-0977e61129a5",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "33e4bf4b-25c3-4e5c-b932-8df225b9f49f",
+    "id": "8490de33-90ba-421b-9ef8-12193f51579e",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1586,10 +1586,10 @@
       "start": 381,
       "end": 382
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "b0a5a2ea-b82b-43b3-96c8-e27dc70e76bc",
-    "id": "dbd4c015-c792-4d1d-94cb-76b41b426baa",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "33e4bf4b-25c3-4e5c-b932-8df225b9f49f",
+    "id": "de0f64cb-eeb8-44f4-a730-7398b5a4c37b",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -1598,11 +1598,11 @@
     "location": {
       "start": 2224
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "90624d4e-8e91-4e81-954c-6c6f6d2cfe1c",
-    "id": "40ad51b5-102c-4a7d-9b34-ca153f8a9a8f",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "b800ff99-8400-4d86-a5ca-1c6b0785f252",
+    "id": "1c4f5c85-889b-44b6-83cc-a2d72a1d842f",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -1611,10 +1611,10 @@
     "location": {
       "start": 2226
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "87fbedfc-512f-4814-acf5-416450b10a72",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "ee95b3b3-f07a-4a82-9be4-cebf814bda04",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1624,10 +1624,10 @@
       "start": 2225,
       "end": 2227
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "9e8e7dc5-c063-4c6c-bc29-4e0f044f8765",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "1decc2d9-c17f-41e1-826a-f03f6f6d1e59",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1637,10 +1637,10 @@
       "start": 2265,
       "end": 2266
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "5a9d4b65-2126-45c5-9efe-0f8c6fe28524",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "29bd1357-c0ea-4e1c-ac14-9e8da405eb16",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1650,10 +1650,10 @@
       "start": 2280,
       "end": 2280
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "979896d9-f13b-450f-a59c-7011772a8139",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "13eaa637-d4b3-4e0b-8175-041683d1cbfb",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1663,10 +1663,10 @@
       "start": 2353,
       "end": 2353
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "4032ca34-08b7-41a5-afc8-71cf44da7de4",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "49e1b541-d688-45f1-8b5b-ebc459593469",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1676,10 +1676,10 @@
       "start": 2360,
       "end": 2361
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "5495bf6a-27ec-413d-92e9-d13ced395961",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "73b098a8-0280-4271-83ca-92fafd2f5658",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1689,10 +1689,10 @@
       "start": 2380,
       "end": 2380
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "c0bb7d31-ff10-4002-9c80-0951dbace6d5",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "ec56db02-9a5e-4e0d-8fc6-cc61f6f0ad06",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -1701,11 +1701,11 @@
     "location": {
       "start": 2480
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "bb3032a4-d988-46c5-ad1a-a2450c1fdc1f",
-    "id": "cd317db3-b336-45b0-a1e8-47da5cf1cd0d",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "9ed2b908-c305-41e7-8959-86eeec3fca10",
+    "id": "527c9641-9f50-454d-906e-6bfc0855b9c6",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -1714,10 +1714,10 @@
     "location": {
       "start": 2472
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "41bf6e14-e831-4a45-8bad-4746fb35a0f0",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "3b2364e4-59e1-4035-9349-376bea4eadad",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1727,10 +1727,10 @@
       "start": 2514,
       "end": 2514
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "a3ed494e-ba54-4838-a587-84d6abe6c7eb",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "29186571-2536-4fd3-b4ed-c623aaae9144",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -1739,11 +1739,11 @@
     "location": {
       "start": 2520
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "5b7bfe7b-cd67-425e-af5a-06eecf27ce63",
-    "id": "d4eb3efa-16d1-4946-9633-c91162b2cfd1",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "00f4efc9-056e-458f-99f9-0e34882f63e2",
+    "id": "c09819f0-573f-4b21-8933-bda8fec3326f",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1753,10 +1753,10 @@
       "start": 2517,
       "end": 2520
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "5b7bfe7b-cd67-425e-af5a-06eecf27ce63",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "00f4efc9-056e-458f-99f9-0e34882f63e2",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1766,10 +1766,10 @@
       "start": 2540,
       "end": 2548
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "fe30c897-cd30-410e-af57-53e7c27b806d",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "0c721320-b819-4fe1-9c14-67c22350a1a9",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -1778,11 +1778,11 @@
     "location": {
       "start": 2548
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "fe30c897-cd30-410e-af57-53e7c27b806d",
-    "id": "52aa183c-6062-4e26-9b0a-c2d6f06143ec",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "0c721320-b819-4fe1-9c14-67c22350a1a9",
+    "id": "dfefc4c9-82e9-42ee-9035-a7681da096f1",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -1791,11 +1791,11 @@
     "location": {
       "start": 2583
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "8abc7f9d-250c-42e4-a515-c8d07d9b028d",
-    "id": "1d478af4-92de-40e8-8985-76d64178cccf",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "33fded3a-7f93-40fc-9589-ab40ab5c84d0",
+    "id": "5b511e6f-3076-4a1a-9fff-7b730bbbfc7d",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1805,10 +1805,10 @@
       "start": 2581,
       "end": 2583
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "8abc7f9d-250c-42e4-a515-c8d07d9b028d",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "33fded3a-7f93-40fc-9589-ab40ab5c84d0",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1818,10 +1818,10 @@
       "start": 2622,
       "end": 2622
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "192461e3-29fe-4669-966c-12020283fd50",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "0576ca64-3d7e-432c-8c5f-4cb999ac5da7",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1831,10 +1831,10 @@
       "start": 2708,
       "end": 2708
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "3b39ed32-66f9-4b53-a5f5-9675221438ad",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "6501ff73-1152-44cb-a7b7-1b17f5cf049d",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1844,10 +1844,10 @@
       "start": 2856,
       "end": 2857
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "d6a3700d-446e-4a98-a9c5-d60e203ba033",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "96b61b4f-0526-4582-a5e1-f48b5d9b477d",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -1856,11 +1856,11 @@
     "location": {
       "start": 2997
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "31382073-6f9a-4be8-8848-eadb80afeb6f",
-    "id": "9fcdbab9-d90b-4f0a-8e88-9f006bbef3ab",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "5a47745a-ac50-421b-b267-81d44831c651",
+    "id": "416d1af4-a29a-4b85-8860-1fa37b3ed8fb",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1870,10 +1870,10 @@
       "start": 2996,
       "end": 2997
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "31382073-6f9a-4be8-8848-eadb80afeb6f",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "5a47745a-ac50-421b-b267-81d44831c651",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1883,10 +1883,10 @@
       "start": 3020,
       "end": 3023
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "d60b0381-f8bc-48de-a591-80917bded96a",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "00ae978c-81d6-45fc-b718-749bc8f1ed95",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -1895,10 +1895,10 @@
     "location": {
       "start": 3022
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "a9cd71f1-2372-4026-a10b-be7092ce4c8f",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "b183802c-3cf3-49b5-b00c-8520d123bec5",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1908,10 +1908,10 @@
       "start": 3062,
       "end": 3064
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "1c696beb-6cf5-4672-b543-3b4c05a6baee",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "220875ec-8c57-48bf-8137-fc8994b7a8c9",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1921,10 +1921,10 @@
       "start": 3072,
       "end": 3073
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "e2fc3c4c-fe10-49f1-a9cf-e19a29f37466",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "bf6e2fd6-c759-4699-a30d-bbc1a33f5524",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1934,10 +1934,10 @@
       "start": 3086,
       "end": 3087
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "3c8c17e0-ab05-41af-9077-e4e68749e05e",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "3a50888e-c0ac-45de-8102-f677de4b4282",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -1946,11 +1946,11 @@
     "location": {
       "start": 3103
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "72e606d9-58bd-436e-9b37-66116c19c592",
-    "id": "07d0b4ce-3912-45bf-b236-10b301f7cfc1",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "3ac7d048-df4e-42bc-b2cb-ea44a51d90c6",
+    "id": "d21a1354-96b0-4139-82c8-0cdaf8eda43b",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -1959,11 +1959,11 @@
     "location": {
       "start": 3109
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "6d9fa7eb-8c50-4b77-b0cd-bfb876e61ffc",
-    "id": "553132dc-4792-4179-a6e7-30709cae0789",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "e56ac5dd-d1e6-405d-91aa-6e64a5dfaf21",
+    "id": "8d5c6dbb-15d7-44b1-b008-1d0b661b3791",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1973,10 +1973,10 @@
       "start": 3105,
       "end": 3109
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "6d9fa7eb-8c50-4b77-b0cd-bfb876e61ffc",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "e56ac5dd-d1e6-405d-91aa-6e64a5dfaf21",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1986,10 +1986,10 @@
       "start": 3145,
       "end": 3152
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "ade2320c-87b7-45b5-bab0-835c66befcab",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "d6de96d7-2d9c-4a95-8e97-c218dd8e246b",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -1999,10 +1999,10 @@
       "start": 3164,
       "end": 3169
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "60065730-8807-4732-9fe6-0a1ef36440a3",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "ca4c7296-c03f-4473-8938-54f263ebb65f",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -2011,11 +2011,11 @@
     "location": {
       "start": 3183
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "associatedHighlightId": "524d68da-e926-4c1b-86b5-1f76e4d8e210",
-    "id": "8b4b30c9-d774-42db-8f05-a353557a6392",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "associatedHighlightId": "cf81cfa2-4770-453e-a93b-cba8312ecd2b",
+    "id": "53233a41-295e-478d-a538-4a3fc604c7d9",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2025,10 +2025,10 @@
       "start": 3182,
       "end": 3183
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "524d68da-e926-4c1b-86b5-1f76e4d8e210",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "cf81cfa2-4770-453e-a93b-cba8312ecd2b",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2038,10 +2038,10 @@
       "start": 3184,
       "end": 3185
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "388cbd95-9287-4df6-b149-7abb1dc35382",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "da47599f-bae5-4561-b722-187c040cd02f",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2051,10 +2051,10 @@
       "start": 3201,
       "end": 3202
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "a5b65514-2639-4c54-8738-4cfa31f770bc",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "211145a3-dbff-43f3-b0a3-ab0c43e95d35",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2064,10 +2064,10 @@
       "start": 3343,
       "end": 3345
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "157d3fdc-e7cf-4e4f-8849-df5e386d9399",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "0f5bba64-ae9c-46f5-b062-f7d6555307d7",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -2076,10 +2076,10 @@
     "location": {
       "start": 3344
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "5aa06a25-21ef-4c32-a15e-0c19ebe58e07",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "daa0ed23-d348-4bc9-89cd-63d0e83c6746",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2089,10 +2089,10 @@
       "start": 3373,
       "end": 3375
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "25a1006d-989e-4a11-b002-fd3b368b4c42",
-    "id": "2e230d14-f8ad-4a33-8da5-405dd6858377",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "ac945ae0-436d-4672-a08d-eb761e884b29",
+    "id": "119547cd-cfb0-481c-b0cb-b9471d6b5fad",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -2101,11 +2101,11 @@
     "location": {
       "start": 20
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "associatedHighlightId": "5b3670c9-7542-4623-8410-76b200f9db47",
-    "id": "a3511f7a-e1da-4065-8be4-3be4ba4399d6",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "associatedHighlightId": "5e58c841-09a4-4170-87d0-2709c71ecc2c",
+    "id": "fe6a0b4c-d2e0-42f3-bac9-09d7d6c512a6",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -2114,11 +2114,11 @@
     "location": {
       "start": 29
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "associatedHighlightId": "4424329d-3c7e-445b-84bb-3dc8299d1f66",
-    "id": "aba1004d-574b-437a-a647-65b29d1a0f68",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "associatedHighlightId": "8fb1be73-827b-47a2-b2be-2f60682d90e7",
+    "id": "152839f5-1f76-4334-965a-ddfc25ef877b",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2128,10 +2128,10 @@
       "start": 28,
       "end": 29
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "4424329d-3c7e-445b-84bb-3dc8299d1f66",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "8fb1be73-827b-47a2-b2be-2f60682d90e7",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -2140,11 +2140,11 @@
     "location": {
       "start": 31
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "associatedHighlightId": "6d11cae3-8e4f-4178-b6ca-2ab3ab4554f2",
-    "id": "e7ef86f6-ba3b-46b2-9bba-a73fd98cc47f",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "associatedHighlightId": "a37293be-80f5-4be3-baf9-d23a611ee640",
+    "id": "a836da67-9531-4cc0-a6a2-344f568407e0",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2154,10 +2154,10 @@
       "start": 30,
       "end": 31
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "6d11cae3-8e4f-4178-b6ca-2ab3ab4554f2",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "a37293be-80f5-4be3-baf9-d23a611ee640",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2167,10 +2167,10 @@
       "start": 36,
       "end": 36
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "85f6ced4-437c-4711-a23c-fe9820ec183d",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "bb20ada5-d350-4471-a2ec-c3532e161897",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2180,10 +2180,10 @@
       "start": 41,
       "end": 41
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "0b1cf139-3d07-4bb3-962f-8414e4cc004c",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "e6e491de-247a-43e6-8d6a-bbedfadc811a",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2193,10 +2193,10 @@
       "start": 61,
       "end": 62
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "8f69c835-649b-4196-862a-0f1fc7c09bd5",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "a962de84-3a63-4f75-b02c-2a6c8f95a001",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -2205,11 +2205,11 @@
     "location": {
       "start": 218
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "associatedHighlightId": "05183c49-8eab-4e0f-95d3-da8cf49dcd0d",
-    "id": "d717e86e-9051-4c46-b8b3-5b0a468739d6",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "associatedHighlightId": "93d11a02-c051-4e07-89bd-d9ebb167bde3",
+    "id": "fe47912e-5cc4-4126-b147-39854f1aac2f",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2219,10 +2219,10 @@
       "start": 217,
       "end": 218
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "05183c49-8eab-4e0f-95d3-da8cf49dcd0d",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "93d11a02-c051-4e07-89bd-d9ebb167bde3",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2232,10 +2232,10 @@
       "start": 244,
       "end": 245
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "7b2c6f6a-58e9-46f8-b5f6-0235f87c2df6",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "0ac623de-abe2-4356-bd74-39284dacce4c",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -2244,11 +2244,11 @@
     "location": {
       "start": 383
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "associatedHighlightId": "57478f3b-0460-4681-835a-5cf566d5e14a",
-    "id": "bb13110e-aa30-420e-bd59-f4e68dfded16",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "associatedHighlightId": "8ee0ed13-1106-407d-a4c4-3b8755207aad",
+    "id": "361f0dbc-0437-47cf-a1cd-b586c4376687",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2258,10 +2258,10 @@
       "start": 381,
       "end": 383
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "57478f3b-0460-4681-835a-5cf566d5e14a",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "8ee0ed13-1106-407d-a4c4-3b8755207aad",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2271,10 +2271,10 @@
       "start": 392,
       "end": 393
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "9bec0eef-c987-49f0-9ab5-f62ebe5c5cee",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "8458fe82-bf0f-46af-9aeb-d6645bbbdde0",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -2283,11 +2283,11 @@
     "location": {
       "start": 410
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "associatedHighlightId": "903fecf3-2a20-4682-87e0-276d3465d3ac",
-    "id": "ed993f49-9888-4197-ad24-9f41b6d99520",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "associatedHighlightId": "6aaeefe5-21a8-4294-9f3d-6cbda4301697",
+    "id": "3328f89f-1809-4b9e-82ac-b866269ea025",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2297,10 +2297,10 @@
       "start": 413,
       "end": 414
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "3f88786f-87b5-463a-b804-be61e9cd8ddb",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "9c60ec8d-ef13-4d38-8f31-47f9e87a17d1",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2310,10 +2310,10 @@
       "start": 414,
       "end": 414
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "e069ac26-8364-450a-9b3f-ee14f7527733",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "78d61744-10ce-4d3d-9244-a8966983c203",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -2322,11 +2322,11 @@
     "location": {
       "start": 426
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "associatedHighlightId": "56ddfb9b-d331-4f23-9e5e-2b29980071c7",
-    "id": "734b97f9-4ecb-4c8d-b868-2b7687cddc18",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "associatedHighlightId": "76e6d740-f93f-449a-ac87-d2f613cc70ec",
+    "id": "0618be57-ca56-401e-b1ed-e06921554cea",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2336,10 +2336,10 @@
       "start": 424,
       "end": 426
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "56ddfb9b-d331-4f23-9e5e-2b29980071c7",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "76e6d740-f93f-449a-ac87-d2f613cc70ec",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -2348,11 +2348,11 @@
     "location": {
       "start": 494
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "associatedHighlightId": "199ac814-3c21-476b-89c9-c3ba308b017e",
-    "id": "6f92ad48-e86c-4894-b417-c91d76924812",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "associatedHighlightId": "58f606a2-ff61-4f82-ba2d-426cb3f650eb",
+    "id": "d0be9387-fcc1-4831-9c7f-cd2e460e63f2",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2362,10 +2362,10 @@
       "start": 493,
       "end": 494
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "199ac814-3c21-476b-89c9-c3ba308b017e",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "58f606a2-ff61-4f82-ba2d-426cb3f650eb",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2375,10 +2375,10 @@
       "start": 507,
       "end": 508
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "80b98b5e-aa9a-4b7d-a9dc-05bb54adb9b9",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "b98127e5-c494-459f-af4f-405d14c995bc",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2388,10 +2388,10 @@
       "start": 508,
       "end": 508
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "9988d1e3-3a2f-4499-8c90-1ef6abc40d9b",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "30c116d6-4f0a-4368-93c8-54ffb916b6bf",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -2400,11 +2400,11 @@
     "location": {
       "start": 512
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "associatedHighlightId": "3ab9777d-295f-4d57-8676-d3385b563738",
-    "id": "a1bfcbc8-e816-44c3-b467-be5952b8fc0d",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "associatedHighlightId": "22786267-f2ba-4602-b700-56ac0897761d",
+    "id": "5220cc88-66a6-4554-847d-6a9d32e83f0c",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2414,10 +2414,10 @@
       "start": 510,
       "end": 512
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "3ab9777d-295f-4d57-8676-d3385b563738",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "22786267-f2ba-4602-b700-56ac0897761d",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -2426,11 +2426,11 @@
     "location": {
       "start": 557
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "associatedHighlightId": "3a1563dd-ac77-4a70-a31a-2aceaa37d850",
-    "id": "1f469282-8f3b-4074-9a0b-89871947e0b3",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "associatedHighlightId": "01c4acb2-186a-432a-90f5-0395042cae3f",
+    "id": "ba145926-5083-48eb-aa19-7d54a8fcedcd",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2440,10 +2440,10 @@
       "start": 556,
       "end": 557
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "3a1563dd-ac77-4a70-a31a-2aceaa37d850",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "01c4acb2-186a-432a-90f5-0395042cae3f",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2453,10 +2453,10 @@
       "start": 733,
       "end": 734
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "788b989f-ec89-4f90-8080-820ab99a93dd",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "2238403a-990d-4ade-8d8d-5dbd03af200e",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2466,10 +2466,10 @@
       "start": 186,
       "end": 187
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "0a470960-d199-493d-89dc-acd5c13bf51c",
-    "id": "df55b95b-0a2f-449d-a3a6-62aaafc5004d",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "d84534cc-52d2-478d-bdc8-093bac505506",
+    "id": "4a453bc9-8f08-4c15-aac7-1c1af707be90",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -2478,11 +2478,11 @@
     "location": {
       "start": 840
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "associatedHighlightId": "d910e1ad-a4ab-466b-ad74-479016541fb2",
-    "id": "e3eaa233-c403-4088-b0a7-66303db93d62",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "associatedHighlightId": "c9d23990-2cfa-48bc-9ee1-0294b407f8a0",
+    "id": "261c660e-592d-4ad4-ac50-605350a2ba0c",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2492,10 +2492,10 @@
       "start": 839,
       "end": 840
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "d910e1ad-a4ab-466b-ad74-479016541fb2",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "c9d23990-2cfa-48bc-9ee1-0294b407f8a0",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2505,10 +2505,10 @@
       "start": 1030,
       "end": 1031
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "e5bb2852-c728-4e3a-ba8d-2d3f30286572",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "01dec884-3404-43b0-bdc1-9e2c98e4256d",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2518,10 +2518,10 @@
       "start": 1054,
       "end": 1054
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "9fc2f55d-548a-4ce3-b4bf-217857bef464",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "e35d7bda-7ba1-45f6-9f60-2ace9c481540",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2531,10 +2531,10 @@
       "start": 1078,
       "end": 1079
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "d5c646f5-e017-4687-a888-4fad8999688d",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "4216575b-ed9e-43ac-8857-8e9c3b472240",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2544,10 +2544,10 @@
       "start": 1079,
       "end": 1080
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "79ad1419-34b2-4687-95a6-ea975798b6c1",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "055b6a07-c360-4148-8703-50cb2d2d9413",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -2556,11 +2556,11 @@
     "location": {
       "start": 1095
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "associatedHighlightId": "b0df8061-4538-416a-8509-f216532dd1c8",
-    "id": "9752886e-4a8d-427f-af9b-3a6e52d26f67",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "associatedHighlightId": "6734ae25-4b01-4934-9d87-b40edee9bc79",
+    "id": "1ab54e11-3ce9-456a-81f8-723e0508f3ba",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2570,10 +2570,10 @@
       "start": 1093,
       "end": 1095
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "b0df8061-4538-416a-8509-f216532dd1c8",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "6734ae25-4b01-4934-9d87-b40edee9bc79",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2583,10 +2583,10 @@
       "start": 1096,
       "end": 1096
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "cb3039fb-1fd5-4584-be96-0472aef3d727",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "16d10bbd-aa85-4afa-8beb-f83ed9f49461",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2596,10 +2596,10 @@
       "start": 1097,
       "end": 1098
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "b5f54095-73c3-472a-b91f-323cb006a511",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "3d11acfc-2f87-4ebd-b063-c7a7bcf365e4",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2609,10 +2609,10 @@
       "start": 1133,
       "end": 1134
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "d87f237d-a1d1-4814-9543-3492d07b933a",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "fefce646-61d4-4279-92c2-619cfe5fb9ea",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2622,10 +2622,10 @@
       "start": 1137,
       "end": 1137
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "111a5de3-449e-423d-80f6-b78e90d179e4",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "35486469-cdbe-438f-9954-6d1709a0b441",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2635,10 +2635,10 @@
       "start": 1155,
       "end": 1156
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "dc0aba21-397f-44bf-9cc7-b84faca0908c",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "58044b47-3dc2-490c-85f7-8ac0fe733767",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2648,10 +2648,10 @@
       "start": 221,
       "end": 222
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "0a470960-d199-493d-89dc-acd5c13bf51c",
-    "id": "903f3980-f5bd-4d01-a613-622e29367a3d",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "d84534cc-52d2-478d-bdc8-093bac505506",
+    "id": "335c1b65-b3d1-4358-b9bc-93c50d59c79e",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -2660,11 +2660,11 @@
     "location": {
       "start": 227
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "0a470960-d199-493d-89dc-acd5c13bf51c",
-    "associatedHighlightId": "c635f5fc-07f2-4b37-bae1-6b9304db05b9",
-    "id": "021a9770-5175-4afd-9fc7-6fd6e7bc18e1",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "d84534cc-52d2-478d-bdc8-093bac505506",
+    "associatedHighlightId": "5e99a81d-9b04-4b18-a33a-630607cc4d4b",
+    "id": "ecc55cc9-7e84-4dcb-ac3b-c60788b6dc92",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2674,10 +2674,10 @@
       "start": 226,
       "end": 227
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "0a470960-d199-493d-89dc-acd5c13bf51c",
-    "id": "c635f5fc-07f2-4b37-bae1-6b9304db05b9",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "d84534cc-52d2-478d-bdc8-093bac505506",
+    "id": "5e99a81d-9b04-4b18-a33a-630607cc4d4b",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2687,10 +2687,10 @@
       "start": 267,
       "end": 270
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "0a470960-d199-493d-89dc-acd5c13bf51c",
-    "id": "ff97ecdb-3f31-463a-b957-4aa3d4de6c30",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "d84534cc-52d2-478d-bdc8-093bac505506",
+    "id": "526c7fe9-bda6-4efa-8fcf-467d4fd2eda0",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2700,10 +2700,10 @@
       "start": 280,
       "end": 280
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "0a470960-d199-493d-89dc-acd5c13bf51c",
-    "id": "60f213ae-968a-4e78-a7af-3084dad9c146",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "d84534cc-52d2-478d-bdc8-093bac505506",
+    "id": "9b14f63b-c922-4998-a2a0-62d2419c6e77",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2713,10 +2713,10 @@
       "start": 410,
       "end": 411
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "b0a5a2ea-b82b-43b3-96c8-e27dc70e76bc",
-    "id": "424bd726-6b9f-4328-9916-9f2fb3e3cafb",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "33e4bf4b-25c3-4e5c-b932-8df225b9f49f",
+    "id": "95fef5a9-7e01-4bef-80b3-853576fc05c8",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2726,10 +2726,10 @@
       "start": 424,
       "end": 424
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "b0a5a2ea-b82b-43b3-96c8-e27dc70e76bc",
-    "id": "5c32285e-3a7e-46fd-bac4-bfe7049f481f",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "33e4bf4b-25c3-4e5c-b932-8df225b9f49f",
+    "id": "4a273607-8cf6-4610-9670-5990a36d063d",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2739,10 +2739,10 @@
       "start": 434,
       "end": 434
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "b0a5a2ea-b82b-43b3-96c8-e27dc70e76bc",
-    "id": "823c5d63-2f49-4fce-aacd-e4b2d6807568",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "33e4bf4b-25c3-4e5c-b932-8df225b9f49f",
+    "id": "29d3c423-9aa4-4b32-b78c-01bf2a0594fd",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2752,10 +2752,10 @@
       "start": 435,
       "end": 435
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "b0a5a2ea-b82b-43b3-96c8-e27dc70e76bc",
-    "id": "1e6c8b39-c2ca-4201-9a45-d644ac90a340",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "33e4bf4b-25c3-4e5c-b932-8df225b9f49f",
+    "id": "cb148b05-53a0-443b-b2b1-97715c2949b0",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2765,10 +2765,10 @@
       "start": 436,
       "end": 437
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "b0a5a2ea-b82b-43b3-96c8-e27dc70e76bc",
-    "id": "bbe74ffc-aadb-4643-9029-a74b2d767a7d",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "33e4bf4b-25c3-4e5c-b932-8df225b9f49f",
+    "id": "33d8d528-8961-48b4-993a-1d6bef46b1be",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2778,10 +2778,10 @@
       "start": 437,
       "end": 438
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "b0a5a2ea-b82b-43b3-96c8-e27dc70e76bc",
-    "id": "c8d9afc2-9e64-443a-b010-04918baa0d0e",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "33e4bf4b-25c3-4e5c-b932-8df225b9f49f",
+    "id": "81303586-9cd6-4599-9613-147c0caf603b",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -2790,11 +2790,11 @@
     "location": {
       "start": 438
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "b0a5a2ea-b82b-43b3-96c8-e27dc70e76bc",
-    "associatedHighlightId": "c8d9afc2-9e64-443a-b010-04918baa0d0e",
-    "id": "44b23f81-3f5b-4d13-8178-3880a1d6a59d",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "33e4bf4b-25c3-4e5c-b932-8df225b9f49f",
+    "associatedHighlightId": "81303586-9cd6-4599-9613-147c0caf603b",
+    "id": "52d552bd-319c-48c5-a2de-f3fffbdcc3dd",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2804,10 +2804,10 @@
       "start": 1429,
       "end": 1429
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "eae6300f-10e8-4d8c-8811-7eb8cbf62b1e",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "bde4f6f7-88ad-472d-b812-f6205533f1b0",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2817,10 +2817,10 @@
       "start": 1431,
       "end": 1431
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "62b3d4c5-d582-4187-86a6-f6bb91cd7f62",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "a4ef3cee-93a4-4f83-9ea9-2b58759f4dc0",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2830,10 +2830,10 @@
       "start": 1432,
       "end": 1433
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "a0fc38fa-c1cb-40e3-8d2e-8e3022155290",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "ffe022ed-e7ba-4391-9a31-252ecdd3515d",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2843,10 +2843,10 @@
       "start": 1435,
       "end": 1437
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "a535d35f-9de4-4a7f-83a8-9d5943f3803d",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "2b3f6224-3641-4696-8884-f07a75c1c6ca",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2856,10 +2856,10 @@
       "start": 1523,
       "end": 1523
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "2bef7265-748c-491b-be5c-e8b2910f1879",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "fa273b35-d9a2-49fe-8f90-419218cc24ee",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2869,10 +2869,10 @@
       "start": 1522,
       "end": 1523
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "12dfc493-38d4-4b3c-b3e4-c551f4246aee",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "9008e734-5e21-4a8f-8bd0-1238b99862f5",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2882,10 +2882,10 @@
       "start": 1712,
       "end": 1712
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "d192f713-92c5-45d2-b472-e614d7f74019",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "42a824c5-4d4a-423a-b638-1f500c2c349b",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2895,10 +2895,10 @@
       "start": 1725,
       "end": 1725
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "e1f40a81-a252-46cb-9d30-2920ef2a4a02",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "bc041a8d-baf1-4138-b3de-2bd407fd163c",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2908,10 +2908,10 @@
       "start": 1736,
       "end": 1736
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "cc2c1a81-1829-4568-a530-141f2a4ac75f",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "d02dff3b-f25a-4f92-8fb9-251be42c2c31",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -2920,11 +2920,11 @@
     "location": {
       "start": 1741
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "associatedHighlightId": "a5e80632-2e78-4aab-a0ab-045b6e7c3835",
-    "id": "2b97df3b-f223-49d5-a072-a17a0aacd1a1",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "associatedHighlightId": "09b156be-3eb3-4e71-adfb-7ab2f9339641",
+    "id": "ab2e4548-95ad-4c0b-bf97-ec2ae247e4a1",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2934,10 +2934,10 @@
       "start": 1739,
       "end": 1741
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "a5e80632-2e78-4aab-a0ab-045b6e7c3835",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "09b156be-3eb3-4e71-adfb-7ab2f9339641",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2947,10 +2947,10 @@
       "start": 1742,
       "end": 1742
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "5eb49fd9-621b-4936-89b9-5d71489e2536",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "8369fe31-7111-4cb8-8f21-3eff2ee31d76",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2960,10 +2960,10 @@
       "start": 1754,
       "end": 1756
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "995022cd-db7c-4ce8-a547-cc5853ecc5f2",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "b62679cd-7fab-48f1-8638-d63f4e0e333d",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2973,10 +2973,10 @@
       "start": 1760,
       "end": 1761
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "a0a3d262-36c4-40f7-9909-18b2f3a2e4ff",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "6c716693-8439-4f25-8f35-e3f67d6cdacc",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2986,10 +2986,10 @@
       "start": 1765,
       "end": 1766
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "b47b7525-08f9-4fee-b5f1-f62727fd2344",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "e94903d3-03b8-494c-a43d-d964cee1e643",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -2999,10 +2999,10 @@
       "start": 1766,
       "end": 1766
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "f053bc2d-5eb3-4ece-a389-2b1c02cbb965",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "9c5e70ce-3e0a-46df-ae5c-94a439ab5c51",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3012,10 +3012,10 @@
       "start": 1964,
       "end": 1965
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "82980929-553c-494f-9049-ac86bab673be",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "f17666ee-5c0f-4351-90a9-7e8bd7820189",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3025,10 +3025,10 @@
       "start": 1969,
       "end": 1970
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "72310f92-c7cf-4f13-a98c-f91f2a2782aa",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "bfd818cf-5e98-42b0-985d-5c2864c05303",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3038,10 +3038,10 @@
       "start": 1957,
       "end": 1957
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "dfe487d6-363f-4330-ad9a-245e90d7ab88",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "033d9068-22ef-436f-9530-4d37be3a8a58",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3051,10 +3051,10 @@
       "start": 1958,
       "end": 1958
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "bd64863a-7c3f-4df0-acaa-5127c43a53ba",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "3ffe4cf1-7dc7-46b4-bec8-99ad88a87dab",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3064,10 +3064,10 @@
       "start": 1960,
       "end": 1961
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "e0667aff-41f5-4eb1-85cc-f89ff50fd733",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "85874735-a073-40c1-894c-0bba6e72fdcf",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3077,10 +3077,10 @@
       "start": 1967,
       "end": 1968
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "774d0069-732f-43c6-a89b-8122fd115c9e",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "09c04715-9c26-4b65-aad3-d97a2dc3579d",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3090,10 +3090,10 @@
       "start": 1773,
       "end": 1775
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "031b2b37-f114-428a-90a8-94df4a3de94a",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "09c3984d-f5bc-4d59-9866-60cd47f3fde6",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -3102,11 +3102,11 @@
     "location": {
       "start": 1775
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "associatedHighlightId": "031b2b37-f114-428a-90a8-94df4a3de94a",
-    "id": "298c3ec2-f134-4b1d-8c79-0becd5597ff0",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "associatedHighlightId": "09c3984d-f5bc-4d59-9866-60cd47f3fde6",
+    "id": "f174e031-eb22-4c10-8a89-205fb40623e0",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -3115,11 +3115,11 @@
     "location": {
       "start": 1834
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "associatedHighlightId": "fd2d3df3-c249-4ecf-a238-a63926dde823",
-    "id": "cb9b7be9-fe73-4de0-847d-1be4049259c0",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "associatedHighlightId": "12f149aa-96b2-4be9-92ad-74c5397592a9",
+    "id": "b322152a-09b2-443c-ab22-ee2ecadbfd3f",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3129,10 +3129,10 @@
       "start": 1832,
       "end": 1834
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "fd2d3df3-c249-4ecf-a238-a63926dde823",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "12f149aa-96b2-4be9-92ad-74c5397592a9",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -3141,11 +3141,11 @@
     "location": {
       "start": 1855
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "associatedHighlightId": "a489d5ea-842d-4a97-b2ea-2dfd0e7dfdea",
-    "id": "96271835-eeaf-4e7c-bc3b-c0501a7a6776",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "associatedHighlightId": "b49d30be-85ce-4c7e-be63-53bdaecc5fd2",
+    "id": "c56571e4-810c-4d65-82e2-deac1bf5c6d0",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3155,10 +3155,10 @@
       "start": 1854,
       "end": 1855
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "a489d5ea-842d-4a97-b2ea-2dfd0e7dfdea",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "b49d30be-85ce-4c7e-be63-53bdaecc5fd2",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3168,10 +3168,10 @@
       "start": 1859,
       "end": 1860
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "ac93a55b-121c-40f2-b4bc-fb172025123e",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "fac3889b-0b5f-4a0a-8b16-ceb0cce14df0",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3181,10 +3181,10 @@
       "start": 1891,
       "end": 1893
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "ab56b145-87ca-4335-a71a-099db33a5813",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "fbc26e7d-5e11-46ee-abc0-dfbff41510e4",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3194,10 +3194,10 @@
       "start": 1895,
       "end": 1896
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "d89436b6-3888-4678-9f7f-ec21631d0508",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "5b0e0e5a-186c-4d51-97cc-016cc5e0ff05",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3207,10 +3207,10 @@
       "start": 1898,
       "end": 1901
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "a9795ba6-b61d-41d0-b88a-48d7b2f1fe55",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "f9c93eed-c8c5-44dc-bb20-d53da65ce938",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -3219,10 +3219,10 @@
     "location": {
       "start": 1900
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "984522b8-da2c-42ff-9eec-6d9be796641b",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "a6e18566-4403-4b8e-84d9-c17456ac6b78",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3232,10 +3232,10 @@
       "start": 1901,
       "end": 1901
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "7cf606c3-5d91-4ee8-9236-8386756b2f7f",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "2f2d6e90-e72e-4390-a1c0-9b7bf75e094f",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -3244,11 +3244,11 @@
     "location": {
       "start": 1931
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "associatedHighlightId": "c4548630-2d2b-4443-a48e-3fbcb8b0e8e6",
-    "id": "c664e5c5-65d5-476a-8bc9-6ef1d750f223",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "associatedHighlightId": "ed6b1cb6-b2ef-4222-a94e-0814cc383d96",
+    "id": "915bd4a3-1453-4b5c-9d54-a28aad4878ab",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3258,10 +3258,10 @@
       "start": 1930,
       "end": 1931
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "c4548630-2d2b-4443-a48e-3fbcb8b0e8e6",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "ed6b1cb6-b2ef-4222-a94e-0814cc383d96",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3271,10 +3271,10 @@
       "start": 1943,
       "end": 1945
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "ab67b3a8-c9f6-46ff-9d8a-a2a70e442f2e",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "54b403c1-067c-4c2e-8fd7-54625704110b",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -3283,11 +3283,11 @@
     "location": {
       "start": 1945
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "associatedHighlightId": "ab67b3a8-c9f6-46ff-9d8a-a2a70e442f2e",
-    "id": "d7ac436d-37a2-4752-b964-66dff3f86609",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "associatedHighlightId": "54b403c1-067c-4c2e-8fd7-54625704110b",
+    "id": "d85c9270-a608-4395-91c6-ae1cdc0dc800",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3297,10 +3297,10 @@
       "start": 1951,
       "end": 1952
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "4fe082d9-f7c6-4e87-994d-055a7aca927a",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "20dbb1c1-477a-47db-817e-7c1ec41b157a",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -3309,11 +3309,11 @@
     "location": {
       "start": 1952
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "associatedHighlightId": "4fe082d9-f7c6-4e87-994d-055a7aca927a",
-    "id": "f4e3459b-7099-4902-8a13-9bf47323bb65",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "associatedHighlightId": "20dbb1c1-477a-47db-817e-7c1ec41b157a",
+    "id": "9c3cfa0b-ab67-476c-ab27-14032b971929",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3323,10 +3323,10 @@
       "start": 2097,
       "end": 2098
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "91780565-6746-4cdd-bb83-4a85479f6e2b",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "69a4084c-01c5-4bdb-bde3-31a958ba676d",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -3335,11 +3335,11 @@
     "location": {
       "start": 2099
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "associatedHighlightId": "bd3649e8-c5fc-40a8-87c7-912441d5ebb3",
-    "id": "c9042793-1b00-4d09-ba47-fcdf7e624363",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "associatedHighlightId": "21975e71-6983-497d-87c8-78cfb29da16a",
+    "id": "07907f9c-8e3d-4e95-8b99-7ff1b3f48d41",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3349,10 +3349,10 @@
       "start": 2098,
       "end": 2099
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "bd3649e8-c5fc-40a8-87c7-912441d5ebb3",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "21975e71-6983-497d-87c8-78cfb29da16a",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3362,10 +3362,10 @@
       "start": 2228,
       "end": 2229
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "7924db77-b4a9-4f62-84d5-306c99503d04",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "490482fd-5ef5-486b-8d5f-8d1a79dc1c3a",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3375,10 +3375,10 @@
       "start": 2262,
       "end": 2264
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "a2b79c80-0a57-4514-929f-754c2f6a5596",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "6d45d7b4-6e48-4125-9fff-201bd6fe9b6b",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3388,10 +3388,10 @@
       "start": 2319,
       "end": 2320
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "e867e6d9-5c98-427e-a699-59d755b9e66c",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "9e7c9e4a-f16b-466f-9e64-477bace68588",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "note",
@@ -3400,11 +3400,11 @@
     "location": {
       "start": 2360
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "associatedHighlightId": "1975f2f3-ef81-4567-8bae-c657e1163d9c",
-    "id": "9dbd93f3-df9b-425c-b8f1-001b94c822b2",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "associatedHighlightId": "1c0fdadb-464b-4229-b3c0-4d37b197bf18",
+    "id": "e60eed87-f900-467c-a603-d4afe92bd48e",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3414,10 +3414,10 @@
       "start": 2551,
       "end": 2554
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "4f161b0c-8689-42f5-a601-a7ffe319c68b",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "a3f676e5-8d2c-436e-ba9f-bb390ee17d91",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3427,10 +3427,10 @@
       "start": 2567,
       "end": 2570
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "0a5ffdc8-48a7-4e1e-a2f6-1ae47543fc7d",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "5c3b780e-f244-4181-947b-1d94b06fe8ce",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3440,10 +3440,10 @@
       "start": 2583,
       "end": 2586
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "ad98d1d5-46ac-4d7c-bd9d-e6981c955430",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "782ceae8-b1fa-4026-8fe8-f1e4f25aaf66",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3453,10 +3453,10 @@
       "start": 2590,
       "end": 2591
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "51b49a6e-fa01-460d-894c-d5d0ed9dead0",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "3e873087-9d41-4587-9820-0fe6a0d9f7cc",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "bookmark",
@@ -3465,10 +3465,10 @@
     "location": {
       "start": 2609
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "8229303d-b73b-4ee1-a05f-ad8624906892",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "4942802e-9f14-48d4-8df7-6504d92cac81",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3478,10 +3478,10 @@
       "start": 2691,
       "end": 2692
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "15082bb2-60c3-483e-b56e-cf449c3f1aae",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "3cfe79eb-5520-4f86-8e72-2afbffa66d57",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3491,10 +3491,10 @@
       "start": 2723,
       "end": 2723
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "539ffa32-09db-476c-94ca-29b2d250a7b3",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "d2c54a3b-36e2-45cb-a202-ba09fc0901f0",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3504,10 +3504,10 @@
       "start": 2756,
       "end": 2757
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "c7511054-d120-45b8-ac2f-f5e37b90d54d",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "b039b987-dfb5-417d-8af5-21809a6c9a7c",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3517,10 +3517,10 @@
       "start": 2757,
       "end": 2758
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "7315b1d0-e5c3-45fc-85b3-96634c78fae2",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "05404506-c13f-47d4-a877-19cba9074201",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3530,10 +3530,10 @@
       "start": 2825,
       "end": 2826
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "8301c6c5-80cf-474f-8170-ec822f8f3ffa",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "551e6f82-0565-4844-8c70-7e603edde90d",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   },
   {
     "type": "highlight",
@@ -3543,9 +3543,9 @@
       "start": 2828,
       "end": 2829
     },
-    "createdAt": "2026-02-12T18:41:09.007Z",
-    "bookId": "9d8bc4ef-4bd8-44db-82a6-a275ed872dfa",
-    "id": "dd8c9373-e81d-46ac-afeb-0cb8dd2726e8",
-    "updatedAt": "2026-02-12T18:41:09.007Z"
+    "createdAt": "2026-02-12T19:37:32.184Z",
+    "bookId": "e9dcc602-6ab4-428e-bb5f-1145881cd371",
+    "id": "82eae140-4701-46a6-ae16-978c82dabab6",
+    "updatedAt": "2026-02-12T19:37:32.184Z"
   }
 ]
