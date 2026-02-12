@@ -1,10 +1,10 @@
 ---
 // Library page showing organized books and notes
-import BaseLayout from '../layouts/BaseLayout.astro';
-import BookCard from '../components/notes/BookCard.astro';
-import NoteCard from '../components/notes/NoteCard.astro';
-import EmptyState from '../components/common/EmptyState.astro';
-import { getAllBooks, getAllNotes } from '../lib/server/storage';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import BookCard from "../components/notes/BookCard.astro";
+import NoteCard from "../components/notes/NoteCard.astro";
+import EmptyState from "../components/common/EmptyState.astro";
+import { getAllBooks, getAllNotes } from "../lib/server/storage";
 
 // Load all data at build time
 const allBooks = await getAllBooks();
@@ -17,33 +17,37 @@ for (const note of allNotes) {
 }
 
 // Add note counts to books and sort by most recent first
-const booksWithCounts = allBooks.map(book => ({
-  ...book,
-  noteCount: noteCountMap.get(book.id) || 0
-})).sort((a, b) => {
-  const dateA = new Date(a.lastModifiedAt || a.createdAt).getTime();
-  const dateB = new Date(b.lastModifiedAt || b.createdAt).getTime();
-  return dateB - dateA;
-});
+const booksWithCounts = allBooks
+  .map((book) => ({
+    ...book,
+    noteCount: noteCountMap.get(book.id) || 0,
+  }))
+  .sort((a, b) => {
+    const dateA = new Date(a.lastModifiedAt || a.createdAt).getTime();
+    const dateB = new Date(b.lastModifiedAt || b.createdAt).getTime();
+    return dateB - dateA;
+  });
 
 // Get recent notes (last 10)
 const recentNotes = [...allNotes]
-  .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+  .sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  )
   .slice(0, 10);
 
 // Compute statistics
 const stats = {
   totalBooks: allBooks.length,
   totalNotes: allNotes.length,
-  totalHighlights: allNotes.filter(n => n.type === 'highlight').length,
-  favoriteNotes: 0 // Future feature
+  totalHighlights: allNotes.filter((n) => n.type === "highlight").length,
+  favoriteNotes: 0, // Future feature
 };
 
 const hasContent = allBooks.length > 0;
 ---
 
-<BaseLayout 
-  title="My Library" 
+<BaseLayout
+  title="My Library"
   description="Browse and organize your Kindle highlights, notes, and bookmarks"
 >
   <main class="library">
@@ -54,86 +58,100 @@ const hasContent = allBooks.length > 0;
           Your collection of books, highlights, and insights
         </p>
       </div>
-      
+
       <div class="header-actions">
         <a href="/search" class="btn btn-primary">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"/>
-            <path d="M21 21l-4.35-4.35"/>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="M21 21l-4.35-4.35"></path>
           </svg>
           Search
         </a>
       </div>
     </header>
 
-    {hasContent && (
-      <div class="library-stats">
-        <div class="stat">
-          <div class="stat-value">{stats.totalBooks}</div>
-          <div class="stat-label">Books</div>
+    {
+      hasContent && (
+        <div class="library-stats">
+          <div class="stat">
+            <div class="stat-value">{stats.totalBooks}</div>
+            <div class="stat-label">Books</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">{stats.totalNotes}</div>
+            <div class="stat-label">Notes</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">{stats.totalHighlights}</div>
+            <div class="stat-label">Highlights</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">{stats.favoriteNotes}</div>
+            <div class="stat-label">Favorites</div>
+          </div>
         </div>
-        <div class="stat">
-          <div class="stat-value">{stats.totalNotes}</div>
-          <div class="stat-label">Notes</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value">{stats.totalHighlights}</div>
-          <div class="stat-label">Highlights</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value">{stats.favoriteNotes}</div>
-          <div class="stat-label">Favorites</div>
-        </div>
-      </div>
-    )}
+      )
+    }
 
     <div class="library-content">
-      {!hasContent ? (
-        <EmptyState
-          title="No Books Yet"
-          message="Start building your library by importing your Kindle clippings file."
-          icon="books"
-          action={{
-            text: "Import Books",
-            href: "/"
-          }}
-        />
-      ) : (
-        <>
-          {/* Books section */}
-          <section class="books-section">
-            <div class="section-header">
-              <h2 class="section-title">My Books</h2>
-              <div class="section-actions">
-                <span class="book-count">{stats.totalBooks} {stats.totalBooks === 1 ? 'book' : 'books'}</span>
-              </div>
-            </div>
-
-            <div class="books-grid">
-              {booksWithCounts.map(book => (
-                <BookCard book={book} noteCount={book.noteCount} />
-              ))}
-            </div>
-          </section>
-
-          {/* Recent notes section */}
-          {recentNotes.length > 0 && (
-            <section class="notes-section">
+      {
+        !hasContent ? (
+          <EmptyState
+            title="No Books Yet"
+            message="Start building your library by importing your Kindle clippings file."
+            icon="books"
+            action={{
+              text: "Import Books",
+              href: "/",
+            }}
+          />
+        ) : (
+          <>
+            {/* Books section */}
+            <section class="books-section">
               <div class="section-header">
-                <h2 class="section-title">Recent Notes</h2>
-                <a href="/search?type=notes" class="section-link">View All</a>
+                <h2 class="section-title">My Books</h2>
+                <div class="section-actions">
+                  <span class="book-count">
+                    {stats.totalBooks}{" "}
+                    {stats.totalBooks === 1 ? "book" : "books"}
+                  </span>
+                </div>
               </div>
 
-              <div class="notes-list">
-                {recentNotes.map(note => {
-                  const book = allBooks.find(b => b.id === note.bookId);
-                  return <NoteCard note={note} bookTitle={book?.title} />;
-                })}
+              <div class="books-grid">
+                {booksWithCounts.map((book) => (
+                  <BookCard book={book} noteCount={book.noteCount} />
+                ))}
               </div>
             </section>
-          )}
-        </>
-      )}
+
+            {/* Recent notes section */}
+            {recentNotes.length > 0 && (
+              <section class="notes-section">
+                <div class="section-header">
+                  <h2 class="section-title">Recent Notes</h2>
+                  <a href="/search?type=notes" class="section-link">
+                    View All
+                  </a>
+                </div>
+
+                <div class="notes-list">
+                  {recentNotes.map((note) => {
+                    const book = allBooks.find((b) => b.id === note.bookId);
+                    return <NoteCard note={note} bookTitle={book?.title} />;
+                  })}
+                </div>
+              </section>
+            )}
+          </>
+        )
+      }
     </div>
   </main>
 </BaseLayout>
