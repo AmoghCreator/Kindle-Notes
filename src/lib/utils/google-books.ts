@@ -50,7 +50,7 @@ function cleanTitle(title: string): string {
  */
 function cleanAuthor(author?: string): string | undefined {
     if (!author || author === 'Unknown') return undefined;
-    
+
     return author
         .replace(/\(Z-Library[^)]*\)/gi, '')
         .replace(/;/g, ' ')
@@ -71,9 +71,9 @@ export async function fetchBookCover(
         // Clean up title and author for better search
         const cleanedTitle = cleanTitle(title);
         const cleanedAuthor = cleanAuthor(author);
-        
+
         console.log(`Searching for: "${cleanedTitle}"${cleanedAuthor ? ` by ${cleanedAuthor}` : ''}`);
-        
+
         // Build search query
         let query = `intitle:${encodeURIComponent(cleanedTitle)}`;
         if (cleanedAuthor) {

@@ -29,7 +29,7 @@ export const POST: APIRoute = async ({ request }) => {
 
         for (const book of booksWithoutCovers) {
             const coverUrl = await fetchBookCover(book.title, book.author);
-            
+
             if (coverUrl) {
                 book.cover = coverUrl;
                 book.lastModifiedAt = new Date();

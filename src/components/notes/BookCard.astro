@@ -24,16 +24,15 @@ const bookUrl = `/books/${book.id}`;
 const createdAtDate = book.createdAt ? new Date(book.createdAt) : null;
 ---
 
-<article class={`book-card ${compact ? "book-card-compact" : ""} ${className}`} data-book-id={book.id}>
+<article
+  class={`book-card ${compact ? "book-card-compact" : ""} ${className}`}
+  data-book-id={book.id}
+>
   <div class="book-content">
     <div class="book-cover" data-cover-container>
       {
         book.cover ? (
-          <img
-            src={book.cover}
-            alt={`Cover of ${book.title}`}
-            loading="lazy"
-          />
+          <img src={book.cover} alt={`Cover of ${book.title}`} loading="lazy" />
         ) : (
           <div class="book-cover-placeholder" data-cover-placeholder>
             <svg
@@ -120,28 +119,28 @@ const createdAtDate = book.createdAt ? new Date(book.createdAt) : null;
 
 <script>
   async function fetchBookCover(bookId: string, container: Element) {
-    const placeholder = container.querySelector('[data-cover-placeholder]');
+    const placeholder = container.querySelector("[data-cover-placeholder]");
     if (!placeholder) return; // Already has a cover
 
     try {
-      const response = await fetch('/api/book-cover', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ bookId })
+      const response = await fetch("/api/book-cover", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ bookId }),
       });
 
       const data = await response.json();
 
       if (data.success && data.cover) {
         // Replace placeholder with actual image
-        const img = document.createElement('img');
+        const img = document.createElement("img");
         img.src = data.cover;
-        img.alt = 'Book cover';
-        img.loading = 'lazy';
+        img.alt = "Book cover";
+        img.loading = "lazy";
         placeholder.replaceWith(img);
       }
     } catch (error) {
-      console.error('Failed to fetch book cover:', error);
+      console.error("Failed to fetch book cover:", error);
     }
   }
 
@@ -174,11 +173,11 @@ const createdAtDate = book.createdAt ? new Date(book.createdAt) : null;
   (window as any).shareBook = shareBook;
 
   // Fetch book covers on page load
-  document.addEventListener('DOMContentLoaded', () => {
-    const bookCards = document.querySelectorAll('[data-book-id]');
+  document.addEventListener("DOMContentLoaded", () => {
+    const bookCards = document.querySelectorAll("[data-book-id]");
     bookCards.forEach((card) => {
-      const bookId = card.getAttribute('data-book-id');
-      const coverContainer = card.querySelector('[data-cover-container]');
+      const bookId = card.getAttribute("data-book-id");
+      const coverContainer = card.querySelector("[data-cover-container]");
       if (bookId && coverContainer) {
         fetchBookCover(bookId, coverContainer);
       }
