@@ -1,4 +1,7 @@
 import type { APIRoute } from 'astro';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import crypto from 'node:crypto';
 import { parseKindleFile } from '../../lib/parsers/kindle-parser';
 import {
     addBook,
@@ -31,6 +34,20 @@ export const POST: APIRoute = async ({ request }) => {
 
         // Read file content
         const content = await file.text();
+
+        // Save original file as backup
+        const backupDir = path.join(process.cwd(), 'data', 'backups');
+        await fs.mkdir(backupDir, { recursive: true });
+        
+        // Generate unique filename with timestamp and hash
+        const fileHash = crypto.createHash('md5').update(content).digest('hex').substring(0, 8);
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-').substring(0, 19);
+        const safeFilename = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+        const backupFilename = `${timestamp}_${fileHash}_${safeFilename}`;
+        const backupPath = path.join(backupDir, backupFilename);
+        
+        await fs.writeFile(backupPath, content, 'utf-8');
+        console.log(`Backup saved: ${backupPath}`);
 
         // Parse Kindle clippings
         const { books, notes, metadata } = await parseKindleFile(content, file.name);

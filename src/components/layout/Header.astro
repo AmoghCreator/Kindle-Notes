@@ -6,39 +6,52 @@
   <div class="container">
     <nav class="nav-wrapper">
       <a href="/" class="logo">
-        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-          <path d="M8 7h8"/>
-          <path d="M8 11h8"/>
-          <path d="M8 15h6"/>
+        <svg
+          class="logo-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+          <path
+            d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+          ></path>
+          <path d="M8 7h8"></path>
+          <path d="M8 11h8"></path>
+          <path d="M8 15h6"></path>
         </svg>
         <span class="logo-text">Kindle Notes</span>
       </a>
-      
+
       <div class="nav-links">
-        <a href="/" class="nav-link">Import</a>
-        <a href="/library" class="nav-link">Library</a>
+        <a href="/" class="nav-link">Home</a>
+        <a href="/import" class="nav-link">Import</a>
         <a href="/search" class="nav-link">Search</a>
       </div>
-      
+
       <div class="nav-actions">
-        <button 
-          class="btn btn-secondary" 
+        <button
+          class="btn btn-secondary"
           onclick="window.toggleTheme()"
           data-theme-toggle
           aria-label="Toggle dark mode"
           title="Toggle dark/light mode"
         >
-          <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          <svg
+            class="theme-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
         </button>
       </div>
     </nav>
   </div>
 </header>
-
 
 <style>
   .site-header {
@@ -49,14 +62,14 @@
     z-index: 100;
     backdrop-filter: blur(8px);
   }
-  
+
   .nav-wrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: var(--space-md) 0;
   }
-  
+
   .logo {
     display: flex;
     align-items: center;
@@ -68,23 +81,23 @@
     text-decoration: none;
     transition: color var(--transition-fast);
   }
-  
+
   .logo:hover {
     color: var(--color-accent);
     text-decoration: none;
   }
-  
+
   .logo-icon {
     width: 24px;
     height: 24px;
   }
-  
+
   .nav-links {
     display: flex;
     align-items: center;
     gap: var(--space-lg);
   }
-  
+
   .nav-link {
     font-family: var(--font-family-secondary);
     font-weight: var(--font-weight-medium);
@@ -94,40 +107,40 @@
     border-radius: var(--border-radius);
     transition: all var(--transition-fast);
   }
-  
+
   .nav-link:hover,
   .nav-link[aria-current="page"] {
     color: var(--color-accent);
     background: var(--color-background);
     text-decoration: none;
   }
-  
+
   .nav-actions {
     display: flex;
     align-items: center;
     gap: var(--space-sm);
   }
-  
+
   .theme-icon {
     width: 18px;
     height: 18px;
   }
-  
+
   /* Mobile responsive */
   @media (max-width: 768px) {
     .nav-wrapper {
       padding: var(--space-sm) 0;
     }
-    
+
     .nav-links {
       gap: var(--space-md);
     }
-    
+
     .nav-link {
       padding: var(--space-xs) var(--space-sm);
       font-size: var(--font-size-sm);
     }
-    
+
     .logo-text {
       display: none;
     }
