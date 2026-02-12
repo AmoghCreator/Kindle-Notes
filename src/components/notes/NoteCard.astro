@@ -1,6 +1,6 @@
 ---
 // Note card component for displaying individual notes
-import type { Note } from '../../lib/types';
+import type { Note } from "../../lib/types";
 
 export interface Props {
   note: Note;
@@ -9,7 +9,7 @@ export interface Props {
   compact?: boolean;
   editable?: boolean;
   class?: string;
-  displayMode?: 'standalone' | 'associated'; // T015: Display mode for association styling
+  displayMode?: "standalone" | "associated"; // T015: Display mode for association styling
   associatedHighlight?: Note; // T016: Associated highlight for context
   hasAssociatedNote?: boolean; // Indicates if this highlight has a note attached
 }
@@ -20,10 +20,10 @@ const {
   showBookInfo = false,
   compact = false,
   editable = false,
-  class: className = '',
-  displayMode = 'standalone', // T015: Default to standalone
+  class: className = "",
+  displayMode = "standalone", // T015: Default to standalone
   associatedHighlight,
-  hasAssociatedNote = false
+  hasAssociatedNote = false,
 } = Astro.props;
 
 // Convert date strings to Date objects (JSON deserialization gives us strings)
@@ -31,151 +31,196 @@ const createdAtDate = note.createdAt ? new Date(note.createdAt) : new Date();
 
 // Format the note creation date
 const formatDate = (date: Date) => {
-  return new Intl.DateTimeFormat('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: date.getFullYear() !== new Date().getFullYear() ? 'numeric' : undefined,
-    hour: 'numeric',
-    minute: '2-digit'
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year:
+      date.getFullYear() !== new Date().getFullYear() ? "numeric" : undefined,
+    hour: "numeric",
+    minute: "2-digit",
   }).format(date);
 };
 
 // Get icon for note type
-const getTypeIcon = (type: 'highlight' | 'note' | 'bookmark') => {
+const getTypeIcon = (type: "highlight" | "note" | "bookmark") => {
   switch (type) {
-    case 'highlight':
-      return 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z';
-    case 'note':
-      return 'M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 011-1h1a2 2 0 100-4H7a1 1 0 01-1-1V8a1 1 0 011-1h3a1 1 0 001-1V4z';
-    case 'bookmark':
-      return 'M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z';
+    case "highlight":
+      return "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z";
+    case "note":
+      return "M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 011-1h1a2 2 0 100-4H7a1 1 0 01-1-1V8a1 1 0 011-1h3a1 1 0 001-1V4z";
+    case "bookmark":
+      return "M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z";
     default:
-      return '';
+      return "";
   }
 };
 
 const typeIcon = getTypeIcon(note.type);
 
 // T017: Build CSS classes based on display mode
-const displayClass = displayMode === 'associated' ? 'note-associated' : 'note-standalone';
-const hasNoteClass = hasAssociatedNote ? 'has-associated-note' : '';
-const cardClasses = `note-card note-type-${note.type} ${displayClass} ${hasNoteClass} ${compact ? 'note-card-compact' : ''} ${className}`;
+const displayClass =
+  displayMode === "associated" ? "note-associated" : "note-standalone";
+const hasNoteClass = hasAssociatedNote ? "has-associated-note" : "";
+const cardClasses = `note-card note-type-${note.type} ${displayClass} ${hasNoteClass} ${compact ? "note-card-compact" : ""} ${className}`;
 
 // T024: Build ARIA label for associated notes
-const ariaLabel = displayMode === 'associated' && associatedHighlight
-  ? `Note for highlight: ${associatedHighlight.text?.substring(0, 50) || 'highlight'}${(associatedHighlight.text?.length || 0) > 50 ? '...' : ''}`
-  : undefined;
+const ariaLabel =
+  displayMode === "associated" && associatedHighlight
+    ? `Note for highlight: ${associatedHighlight.text?.substring(0, 50) || "highlight"}${(associatedHighlight.text?.length || 0) > 50 ? "..." : ""}`
+    : undefined;
 ---
 
-<article 
+<article
   class={cardClasses}
-  role={displayMode === 'associated' ? 'complementary' : 'article'}
+  role={displayMode === "associated" ? "complementary" : "article"}
   aria-label={ariaLabel}
 >
   <header class="note-header">
     <div class="note-type">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d={typeIcon} />
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d={typeIcon}></path>
       </svg>
       <span class="note-type-label">{note.type}</span>
     </div>
-    
+
     <div class="note-meta">
-      {note.location?.page && (
-        <span class="note-page">Page {note.location.page}</span>
-      )}
-      {note.location && note.location.start && (
-        <span class="note-location">
-          Location {note.location.start}{note.location.end && note.location.end !== note.location.start ? `-${note.location.end}` : ''}
-        </span>
-      )}
+      {
+        note.location?.page && (
+          <span class="note-page">Page {note.location.page}</span>
+        )
+      }
+      {
+        note.location && note.location.start && (
+          <span class="note-location">
+            Location {note.location.start}
+            {note.location.end && note.location.end !== note.location.start
+              ? `-${note.location.end}`
+              : ""}
+          </span>
+        )
+      }
       <time class="note-date" datetime={createdAtDate.toISOString()}>
         {formatDate(createdAtDate)}
       </time>
     </div>
   </header>
 
-  {showBookInfo && bookTitle && (
-    <div class="note-book-info">
-      <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
-        <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-      </svg>
-      <span class="book-title">{bookTitle}</span>
-    </div>
-  )}
+  {
+    showBookInfo && bookTitle && (
+      <div class="note-book-info">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
+          <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        </svg>
+        <span class="book-title">{bookTitle}</span>
+      </div>
+    )
+  }
 
   <div class="note-content">
-    {note.type === 'bookmark' ? (
-      <p class="bookmark-placeholder">Bookmark saved</p>
-    ) : (
-      <div 
-        class="note-text" 
-        data-note-id={note.id}
-        contenteditable={editable}
-      >
-        {note.content}
-      </div>
-    )}
+    {
+      note.type === "bookmark" ? (
+        <p class="bookmark-placeholder">Bookmark saved</p>
+      ) : (
+        <div
+          class="note-text"
+          data-note-id={note.id}
+          contenteditable={editable}
+        >
+          {note.content}
+        </div>
+      )
+    }
   </div>
 
-  {note.tags && note.tags.length > 0 && (
-    <div class="note-tags">
-      {note.tags.map(tag => (
-        <span class="tag">#{tag}</span>
-      ))}
-    </div>
-  )}
+  {
+    note.tags && note.tags.length > 0 && (
+      <div class="note-tags">
+        {note.tags.map((tag) => (
+          <span class="tag">#{tag}</span>
+        ))}
+      </div>
+    )
+  }
 
   <footer class="note-actions">
-    <button 
+    <button
       class="action-btn"
       onclick={`copyNote('${note.id}')`}
       aria-label="Copy note"
       title="Copy to clipboard"
     >
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
       </svg>
     </button>
 
-    <button 
+    <button
       class="action-btn"
       onclick={`shareNote('${note.id}')`}
       aria-label="Share note"
       title="Share note"
     >
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/>
-        <polyline points="16,6 12,2 8,6"/>
-        <line x1="12" y1="2" x2="12" y2="15"/>
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"></path>
+        <polyline points="16,6 12,2 8,6"></polyline>
+        <line x1="12" y1="2" x2="12" y2="15"></line>
       </svg>
     </button>
 
-    {editable && (
-      <button 
-        class="action-btn"
-        onclick={`editNote('${note.id}')`}
-        aria-label="Edit note"
-        title="Edit note"
-      >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
-          <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
-        </svg>
-      </button>
-    )}
+    {
+      editable && (
+        <button
+          class="action-btn"
+          onclick={`editNote('${note.id}')`}
+          aria-label="Edit note"
+          title="Edit note"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+            <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+          </svg>
+        </button>
+      )
+    }
 
     <div class="action-spacer"></div>
-    
-    <button 
+
+    <button
       class="action-btn favorite-btn"
       onclick={`toggleFavorite('${note.id}')`}
       aria-label="Toggle favorite"
       title="Add to favorites"
     >
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <polygon
+          points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
+        ></polygon>
       </svg>
     </button>
   </footer>
@@ -183,57 +228,71 @@ const ariaLabel = displayMode === 'associated' && associatedHighlight
 
 <script>
   // Client-side actions for notes (no database dependency)
-  
+
   function copyNote(noteId: string) {
     const noteElement = document.querySelector(`[data-note-id="${noteId}"]`);
     if (noteElement) {
-      const text = noteElement.textContent || '';
-      navigator.clipboard.writeText(text).then(() => {
-        showToast('Note copied to clipboard!', 'success');
-      }).catch(() => {
-        showToast('Failed to copy note', 'error');
-      });
+      const text = noteElement.textContent || "";
+      navigator.clipboard
+        .writeText(text)
+        .then(() => {
+          showToast("Note copied to clipboard!", "success");
+        })
+        .catch(() => {
+          showToast("Failed to copy note", "error");
+        });
     }
   }
 
   function shareNote(noteId: string) {
     const noteElement = document.querySelector(`[data-note-id="${noteId}"]`);
     if (noteElement) {
-      const text = noteElement.textContent || '';
+      const text = noteElement.textContent || "";
       const shareData = {
-        title: 'Note from my reading',
+        title: "Note from my reading",
         text: text,
-        url: `${window.location.origin}/notes/${noteId}`
+        url: `${window.location.origin}/notes/${noteId}`,
       };
 
       if (navigator.share) {
         navigator.share(shareData).catch(console.error);
       } else {
-        navigator.clipboard.writeText(`${shareData.text}\n\n${shareData.url}`).then(() => {
-          showToast('Note and link copied to clipboard!', 'success');
-        }).catch(console.error);
+        navigator.clipboard
+          .writeText(`${shareData.text}\n\n${shareData.url}`)
+          .then(() => {
+            showToast("Note and link copied to clipboard!", "success");
+          })
+          .catch(console.error);
       }
     }
   }
 
   function editNote(noteId: string) {
     // TODO: Implement server-side note editing API
-    showToast('Edit feature coming soon!', 'info');
+    showToast("Edit feature coming soon!", "info");
   }
 
   async function toggleFavorite(noteId: string) {
     // TODO: Implement server-side favorite toggling API
-    const button = document.querySelector(`[onclick="toggleFavorite('${noteId}')"]`);
-    button?.classList.toggle('favorited');
-    const svg = button?.querySelector('svg');
+    const button = document.querySelector(
+      `[onclick="toggleFavorite('${noteId}')"]`,
+    );
+    button?.classList.toggle("favorited");
+    const svg = button?.querySelector("svg");
     if (svg) {
-      svg.setAttribute('fill', button?.classList.contains('favorited') ? 'currentColor' : 'none');
+      svg.setAttribute(
+        "fill",
+        button?.classList.contains("favorited") ? "currentColor" : "none",
+      );
     }
-    showToast('Favorite feature coming soon!', 'info');
+    showToast("Favorite feature coming soon!", "info");
   }
 
-  function showToast(message: string, type: 'success' | 'error' | 'info' = 'info') {
-    const toast = document.createElement('div');
+  function showToast(
+    message: string,
+    type: "success" | "error" | "info" = "info",
+  ) {
+    const toast = document.createElement("div");
     toast.className = `toast toast-${type}`;
     toast.textContent = message;
     toast.style.cssText = `
@@ -246,18 +305,18 @@ const ariaLabel = displayMode === 'associated' && associatedHighlight
       font-family: var(--font-family-secondary);
       font-size: var(--font-size-sm);
     `;
-    
-    if (type === 'success') {
-      toast.style.background = 'var(--color-success)';
-      toast.style.color = 'white';
-    } else if (type === 'error') {
-      toast.style.background = 'var(--color-error)';
-      toast.style.color = 'white';
+
+    if (type === "success") {
+      toast.style.background = "var(--color-success)";
+      toast.style.color = "white";
+    } else if (type === "error") {
+      toast.style.background = "var(--color-error)";
+      toast.style.color = "white";
     } else {
-      toast.style.background = 'var(--color-info)';
-      toast.style.color = 'white';
+      toast.style.background = "var(--color-info)";
+      toast.style.color = "white";
     }
-    
+
     document.body.appendChild(toast);
     setTimeout(() => toast.remove(), 3000);
   }
@@ -280,12 +339,12 @@ const ariaLabel = displayMode === 'associated' && associatedHighlight
     transition: all 0.2s ease-out;
     position: relative;
   }
-  
+
   .note-card:hover {
     border-color: var(--kindle-color-accent);
     box-shadow: var(--kindle-shadow-card);
   }
-  
+
   /* T018, T019: Association display styles */
   .note-associated {
     margin-left: 2rem;
@@ -294,15 +353,15 @@ const ariaLabel = displayMode === 'associated' && associatedHighlight
     padding-left: 1rem;
     background: var(--kindle-color-surface-hover);
   }
-  
+
   .note-standalone {
     /* Full width, normal display */
     margin-bottom: 1.5rem;
   }
-  
+
   /* T020: Visual connector for associated notes */
   .note-associated::before {
-    content: '';
+    content: "";
     position: absolute;
     left: -3px;
     top: -0.75rem;
@@ -311,16 +370,16 @@ const ariaLabel = displayMode === 'associated' && associatedHighlight
     background: var(--kindle-color-accent-secondary);
     opacity: 0.3;
   }
-  
+
   .note-card-compact {
     padding: var(--kindle-space-md);
   }
-  
+
   /* Type-specific styling */
   .note-type-highlight {
     border-left: 4px solid var(--kindle-color-accent);
   }
-  
+
   /* Highlight with associated note gets subtle visual indicator */
   .note-type-highlight.has-associated-note {
     border-bottom: 2px solid var(--kindle-color-accent-secondary);
@@ -328,15 +387,15 @@ const ariaLabel = displayMode === 'associated' && associatedHighlight
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
-  
+
   .note-type-note {
     border-left: 4px solid var(--kindle-color-accent-secondary);
   }
-  
+
   .note-type-bookmark {
     border-left: 4px solid var(--kindle-color-accent);
   }
-  
+
   .note-header {
     display: flex;
     justify-content: space-between;
@@ -344,7 +403,7 @@ const ariaLabel = displayMode === 'associated' && associatedHighlight
     margin-bottom: var(--kindle-space-md);
     gap: var(--kindle-space-sm);
   }
-  
+
   .note-type {
     display: flex;
     align-items: center;
@@ -355,24 +414,24 @@ const ariaLabel = displayMode === 'associated' && associatedHighlight
     color: var(--kindle-color-text-secondary);
     text-transform: capitalize;
   }
-  
+
   .note-type svg {
     width: 16px;
     height: 16px;
   }
-  
+
   .note-type-highlight .note-type {
     color: var(--kindle-color-accent);
   }
-  
+
   .note-type-note .note-type {
     color: var(--kindle-color-accent-secondary);
   }
-  
+
   .note-type-bookmark .note-type {
     color: var(--kindle-color-accent);
   }
-  
+
   .note-meta {
     display: flex;
     gap: var(--kindle-space-sm);
@@ -383,12 +442,12 @@ const ariaLabel = displayMode === 'associated' && associatedHighlight
     flex-wrap: wrap;
     justify-content: flex-end;
   }
-  
+
   .note-meta span:not(:last-child)::after {
-    content: '•';
+    content: "•";
     margin-left: var(--kindle-space-sm);
   }
-  
+
   .note-book-info {
     display: flex;
     align-items: center;
@@ -398,11 +457,11 @@ const ariaLabel = displayMode === 'associated' && associatedHighlight
     color: var(--kindle-color-text-muted);
     margin-bottom: var(--kindle-space-md);
   }
-  
+
   .note-content {
     margin-bottom: var(--kindle-space-md);
   }
-  
+
   .note-text {
     font-family: var(--kindle-font-serif);
     font-size: var(--kindle-size-text-base);
@@ -411,28 +470,28 @@ const ariaLabel = displayMode === 'associated' && associatedHighlight
     white-space: pre-wrap;
     word-wrap: break-word;
   }
-  
+
   .note-text.editing {
     background: var(--kindle-color-surface-hover);
     padding: var(--kindle-space-sm);
     border-radius: var(--kindle-border-radius);
     outline: 2px solid var(--kindle-color-accent);
   }
-  
+
   .bookmark-placeholder {
     font-family: var(--kindle-font-sans);
     font-style: italic;
     color: var(--kindle-color-text-muted);
     margin: 0;
   }
-  
+
   .note-tags {
     display: flex;
     flex-wrap: wrap;
     gap: var(--kindle-space-xs);
     margin-bottom: var(--kindle-space-md);
   }
-  
+
   .tag {
     background: var(--kindle-color-surface-hover);
     color: var(--kindle-color-text-secondary);
@@ -443,19 +502,19 @@ const ariaLabel = displayMode === 'associated' && associatedHighlight
     border: 1px solid var(--kindle-color-border);
     transition: all 0.2s ease-out;
   }
-  
+
   .tag:hover {
     background: var(--kindle-color-accent);
     color: white;
     cursor: pointer;
   }
-  
+
   .note-actions {
     display: flex;
     align-items: center;
     gap: var(--kindle-space-xs);
   }
-  
+
   .action-btn {
     background: none;
     border: none;
@@ -468,69 +527,69 @@ const ariaLabel = displayMode === 'associated' && associatedHighlight
     align-items: center;
     justify-content: center;
   }
-  
+
   .action-btn:hover {
     color: var(--kindle-color-text);
     background: var(--kindle-color-surface-hover);
   }
-  
+
   .action-btn svg {
     width: 16px;
     height: 16px;
   }
-  
+
   .favorite-btn.favorited {
     color: var(--kindle-color-accent);
   }
-  
+
   .favorite-btn.favorited svg {
     fill: currentColor;
   }
-  
+
   .action-spacer {
     flex: 1;
   }
-  
+
   .save-btn {
     position: absolute;
     top: var(--kindle-space-sm);
     right: var(--kindle-space-sm);
   }
-  
+
   /* Responsive design */
   @media (max-width: 768px) {
     .note-card {
       padding: var(--kindle-space-md);
     }
-    
+
     /* T041: Reduce indentation on mobile */
     .note-associated {
       margin-left: 1rem;
     }
-    
+
     .note-header {
       flex-direction: column;
       align-items: flex-start;
       gap: var(--kindle-space-xs);
     }
-    
+
     .note-meta {
       flex-direction: column;
       text-align: left;
       gap: var(--kindle-space-xs);
     }
-    
+
     .note-meta span::after {
       display: none;
     }
   }
-  
+
   /* Print styles */
   @media print {
     .note-actions {
       display: none;
     }
-    
+
     .note-card {
       border: 1px solid #ccc;
       margin-bottom: 1rem;

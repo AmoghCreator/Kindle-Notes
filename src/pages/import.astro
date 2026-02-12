@@ -1,11 +1,11 @@
 ---
 // Homepage with file upload functionality
-import BaseLayout from '../layouts/BaseLayout.astro';
-import FileUpload from '../components/upload/FileUpload.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import FileUpload from "../components/upload/FileUpload.astro";
 ---
 
-<BaseLayout 
-  title="Import Your Kindle Notes" 
+<BaseLayout
+  title="Import Your Kindle Notes"
   description="Upload your Kindle clippings and organize your highlights, notes, and bookmarks"
 >
   <main class="container">
@@ -14,41 +14,62 @@ import FileUpload from '../components/upload/FileUpload.astro';
         Your Kindle Notes,
         <span class="hero-highlight">Beautifully Organized</span>
       </h1>
-      
+
       <p class="hero-description">
-        Import your Kindle clippings file and transform your highlights, notes, and bookmarks 
-        into a searchable, shareable library that grows with your reading journey.
+        Import your Kindle clippings file and transform your highlights, notes,
+        and bookmarks into a searchable, shareable library that grows with your
+        reading journey.
       </p>
 
       <div class="hero-features">
         <div class="feature">
           <div class="feature-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
-              <polyline points="7,10 12,15 17,10"/>
-              <line x1="12" y1="15" x2="12" y2="3"/>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path>
+              <polyline points="7,10 12,15 17,10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
             </svg>
           </div>
           <h3>Easy Import</h3>
-          <p>Drag and drop your "My Clippings.txt" file to get started instantly</p>
+          <p>
+            Drag and drop your "My Clippings.txt" file to get started instantly
+          </p>
         </div>
 
         <div class="feature">
           <div class="feature-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
             </svg>
           </div>
           <h3>Smart Search</h3>
-          <p>Find any highlight or note instantly with powerful search and filtering</p>
+          <p>
+            Find any highlight or note instantly with powerful search and
+            filtering
+          </p>
         </div>
 
         <div class="feature">
           <div class="feature-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/>
-              <polyline points="16,6 12,2 8,6"/>
-              <line x1="12" y1="2" x2="12" y2="15"/>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"></path>
+              <polyline points="16,6 12,2 8,6"></polyline>
+              <line x1="12" y1="2" x2="12" y2="15"></line>
             </svg>
           </div>
           <h3>Share Insights</h3>
@@ -59,7 +80,7 @@ import FileUpload from '../components/upload/FileUpload.astro';
 
     <section class="upload-section">
       <h2 class="section-title">Import Your Kindle Notes</h2>
-      
+
       <div class="upload-instructions">
         <h3>How to get your Kindle clippings file:</h3>
         <ol>
@@ -76,13 +97,16 @@ import FileUpload from '../components/upload/FileUpload.astro';
 
     <section class="getting-started">
       <h2 class="section-title">Getting Started</h2>
-      
+
       <div class="steps">
         <div class="step">
           <div class="step-number">1</div>
           <div class="step-content">
             <h3>Import</h3>
-            <p>Upload your Kindle clippings file to automatically organize your highlights and notes by book</p>
+            <p>
+              Upload your Kindle clippings file to automatically organize your
+              highlights and notes by book
+            </p>
           </div>
         </div>
 
@@ -90,7 +114,10 @@ import FileUpload from '../components/upload/FileUpload.astro';
           <div class="step-number">2</div>
           <div class="step-content">
             <h3>Organize</h3>
-            <p>Browse your library, search for specific quotes, and add tags to create your personal knowledge system</p>
+            <p>
+              Browse your library, search for specific quotes, and add tags to
+              create your personal knowledge system
+            </p>
           </div>
         </div>
 
@@ -98,7 +125,10 @@ import FileUpload from '../components/upload/FileUpload.astro';
           <div class="step-number">3</div>
           <div class="step-content">
             <h3>Share</h3>
-            <p>Turn your favorite insights into Twitter posts or Instagram stories to inspire others</p>
+            <p>
+              Turn your favorite insights into Twitter posts or Instagram
+              stories to inspire others
+            </p>
           </div>
         </div>
       </div>
@@ -106,20 +136,28 @@ import FileUpload from '../components/upload/FileUpload.astro';
 
     <section class="demo-section">
       <h2 class="section-title">See It In Action</h2>
-      
+
       <div class="demo-preview">
         <div class="demo-book">
           <div class="demo-book-cover">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path
+                d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+              ></path>
             </svg>
           </div>
           <div class="demo-content">
             <h4>Atomic Habits</h4>
             <p class="demo-author">James Clear</p>
             <div class="demo-note">
-              "You do not rise to the level of your goals. You fall to the level of your systems."
+              "You do not rise to the level of your goals. You fall to the level
+              of your systems."
             </div>
             <div class="demo-tags">
               <span class="demo-tag">#productivity</span>
@@ -128,10 +166,10 @@ import FileUpload from '../components/upload/FileUpload.astro';
           </div>
         </div>
       </div>
-      
+
       <p class="demo-description">
-        Your notes will be automatically organized by book, with smart categorization and 
-        the ability to add your own tags and annotations.
+        Your notes will be automatically organized by book, with smart
+        categorization and the ability to add your own tags and annotations.
       </p>
     </section>
   </main>
@@ -347,7 +385,11 @@ import FileUpload from '../components/upload/FileUpload.astro';
   .demo-book-cover {
     width: 60px;
     height: 90px;
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    background: linear-gradient(
+      135deg,
+      var(--color-primary) 0%,
+      var(--color-primary-dark) 100%
+    );
     border-radius: var(--border-radius-sm);
     display: flex;
     align-items: center;
