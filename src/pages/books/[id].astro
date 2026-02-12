@@ -5,6 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import NoteCard from '../../components/notes/NoteCard.astro';
 import EmptyState from '../../components/common/EmptyState.astro';
 import { getAllBooks, getNotesByBookId } from '../../lib/server/storage';
+import { groupEntriesByAssociation } from '../../lib/utils/note-grouping'; // T021
 
 // Generate static paths for all books at build time
 export async function getStaticPaths() {
@@ -22,7 +23,10 @@ const { book } = Astro.props;
 // Load notes for this book
 const allNotes = await getNotesByBookId(book.id);
 
-// Sort notes by location (start) then by date
+// T021: Group notes by association for display
+const grouped = groupEntriesByAssociation(book.id, allNotes);
+
+// Sort notes by location (start) then by date (fallback for old code)
 const sortedNotes = [...allNotes].sort((a, b) => {
   // First sort by location if both have it
   if (a.location?.start && b.location?.start) {
@@ -69,8 +73,8 @@ const hasNotes = allNotes.length > 0;
         <header class="book-header">
           <div class="book-info">
             <div class="book-cover">
-              {book.coverUrl ? (
-                <img src={book.coverUrl} alt={`${book.title} cover`} />
+              {book.cover ? (
+                <img src={book.cover} alt={`${book.title} cover`} />
               ) : (
                 <div class="book-cover-placeholder">
                   <svg viewBox="0 0 24 24" fill="currentColor">
@@ -121,9 +125,48 @@ const hasNotes = allNotes.length > 0;
           </div>
 
           <div class="notes-list">
-            {sortedNotes.map(note => (
-              <NoteCard note={note} />
+            {/* T022: Render highlight-note pairs */}
+            {grouped.pairs.map(pair => (
+              <div class="note-group">
+                {/* T023: Render highlight with indicator if it has a note */}
+                <NoteCard 
+                  note={pair.highlight} 
+                  displayMode="standalone" 
+                  hasAssociatedNote={!!pair.associatedNote}
+                />
+                
+                {/* T023: Render associated note if it exists */}
+                {pair.associatedNote && (
+                  <NoteCard 
+                    note={pair.associatedNote}
+                    displayMode="associated"
+                    associatedHighlight={pair.highlight}
+                  />
+                )}
+              </div>
             ))}
+            
+            {/* T026: Render standalone notes section */}
+            {grouped.standaloneNotes.length > 0 && (
+              <>
+                <div class="standalone-separator"></div>
+                <h3 class="standalone-heading">Standalone Notes</h3>
+                {grouped.standaloneNotes.map(note => (
+                  <NoteCard note={note} displayMode="standalone" />
+                ))}
+              </>
+            )}
+            
+            {/* Render bookmarks if any */}
+            {grouped.bookmarks.length > 0 && (
+              <>
+                <div class="standalone-separator"></div>
+                <h3 class="standalone-heading">Bookmarks</h3>
+                {grouped.bookmarks.map(note => (
+                  <NoteCard note={note} displayMode="standalone" />
+                ))}
+              </>
+            )}
           </div>
         </section>
       </>
@@ -285,7 +328,53 @@ const hasNotes = allNotes.length > 0;
     flex-direction: column;
     gap: var(--space-md);
   }
+  /* T026: Standalone section separator */
+  .standalone-separator {
+    height: 1px;
+    background: var(--kindle-color-border);
+    margin: var(--kindle-space-xl) 0 var(--kindle-space-lg) 0;
+    position: relative;
+  }
 
+  .standalone-separator::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 3px;
+    background: var(--kindle-color-accent);
+    border-radius: 2px;
+  }
+
+  /* T027: Standalone section heading */
+  .standalone-heading {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--kindle-color-text-secondary);
+    margin: 0 0 var(--kindle-space-md) 0;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* T022: Note group container for highlight-note pairs */
+  .note-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--kindle-space-sm);
+  }
+
+  /* T042: Hover state for note pairs */
+  .note-group:hover {
+    /* Subtle background for the entire group on hover */
+    border-radius: var(--kindle-border-radius);
+  }
+
+  .note-group:hover > :global(.note-card) {
+    /* Enhance hover effect when hovering over the group */
+    border-color: var(--kindle-color-accent);
+  }
   /* Responsive design */
   @media (max-width: 768px) {
     .book-detail {

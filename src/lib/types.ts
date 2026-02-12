@@ -39,6 +39,7 @@ export interface Note {
     type: 'highlight' | 'note' | 'bookmark';
     tags: string[];
     userNote?: string;
+    associatedHighlightId?: string; // T001: References associated highlight (for notes that follow highlights)
     createdAt: Date;
     lastModifiedAt: Date;
     importSource: UploadMeta;
@@ -51,6 +52,20 @@ export interface NoteLocation {
     page?: number;
     chapter?: string;
     position?: string;
+}
+
+// T002: Display entity for rendering grouped highlight-note pairs
+export interface HighlightNotePair {
+    highlight: Note & { type: 'highlight' };
+    associatedNote?: Note & { type: 'note' };
+    displayOrder: number;
+}
+
+// T003: Complete collection of entries for a book
+export interface GroupedBookEntries {
+    pairs: HighlightNotePair[];
+    standaloneNotes: Note[];
+    bookmarks: Note[];
 }
 
 export interface ShareRecord {
@@ -135,6 +150,8 @@ export interface ParseResult {
         booksFound: number;
         notesFound: number;
         duplicatesDetected: number;
+        associatedNotes?: number; // T004: Count of notes associated with highlights
+        standaloneNotes?: number; // T004: Count of standalone notes
     };
 }
 

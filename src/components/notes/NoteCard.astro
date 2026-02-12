@@ -1,6 +1,6 @@
 ---
 // Note card component for displaying individual notes
-import type { Note, NoteType } from '../../lib/types';
+import type { Note } from '../../lib/types';
 
 export interface Props {
   note: Note;
@@ -9,6 +9,9 @@ export interface Props {
   compact?: boolean;
   editable?: boolean;
   class?: string;
+  displayMode?: 'standalone' | 'associated'; // T015: Display mode for association styling
+  associatedHighlight?: Note; // T016: Associated highlight for context
+  hasAssociatedNote?: boolean; // Indicates if this highlight has a note attached
 }
 
 const {
@@ -17,7 +20,10 @@ const {
   showBookInfo = false,
   compact = false,
   editable = false,
-  class: className = ''
+  class: className = '',
+  displayMode = 'standalone', // T015: Default to standalone
+  associatedHighlight,
+  hasAssociatedNote = false
 } = Astro.props;
 
 // Convert date strings to Date objects (JSON deserialization gives us strings)
@@ -35,7 +41,7 @@ const formatDate = (date: Date) => {
 };
 
 // Get icon for note type
-const getTypeIcon = (type: NoteType) => {
+const getTypeIcon = (type: 'highlight' | 'note' | 'bookmark') => {
   switch (type) {
     case 'highlight':
       return 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z';
@@ -49,9 +55,23 @@ const getTypeIcon = (type: NoteType) => {
 };
 
 const typeIcon = getTypeIcon(note.type);
+
+// T017: Build CSS classes based on display mode
+const displayClass = displayMode === 'associated' ? 'note-associated' : 'note-standalone';
+const hasNoteClass = hasAssociatedNote ? 'has-associated-note' : '';
+const cardClasses = `note-card note-type-${note.type} ${displayClass} ${hasNoteClass} ${compact ? 'note-card-compact' : ''} ${className}`;
+
+// T024: Build ARIA label for associated notes
+const ariaLabel = displayMode === 'associated' && associatedHighlight
+  ? `Note for highlight: ${associatedHighlight.text?.substring(0, 50) || 'highlight'}${(associatedHighlight.text?.length || 0) > 50 ? '...' : ''}`
+  : undefined;
 ---
 
-<article class={`note-card note-type-${note.type} ${compact ? 'note-card-compact' : ''} ${className}`}>
+<article 
+  class={cardClasses}
+  role={displayMode === 'associated' ? 'complementary' : 'article'}
+  aria-label={ariaLabel}
+>
   <header class="note-header">
     <div class="note-type">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -61,8 +81,8 @@ const typeIcon = getTypeIcon(note.type);
     </div>
     
     <div class="note-meta">
-      {note.page && (
-        <span class="note-page">Page {note.page}</span>
+      {note.location?.page && (
+        <span class="note-page">Page {note.location.page}</span>
       )}
       {note.location && note.location.start && (
         <span class="note-location">
@@ -92,7 +112,6 @@ const typeIcon = getTypeIcon(note.type);
         class="note-text" 
         data-note-id={note.id}
         contenteditable={editable}
-        suppressContentEditableWarning={true}
       >
         {note.content}
       </div>
@@ -102,7 +121,7 @@ const typeIcon = getTypeIcon(note.type);
   {note.tags && note.tags.length > 0 && (
     <div class="note-tags">
       {note.tags.map(tag => (
-        <span class="tag" key={tag}>#{tag}</span>
+        <span class="tag">#{tag}</span>
       ))}
     </div>
   )}
@@ -244,10 +263,10 @@ const typeIcon = getTypeIcon(note.type);
   }
 
   // Make functions globally available
-  window.copyNote = copyNote;
-  window.shareNote = shareNote;
-  window.editNote = editNote;
-  window.toggleFavorite = toggleFavorite;
+  (window as any).copyNote = copyNote;
+  (window as any).shareNote = shareNote;
+  (window as any).editNote = editNote;
+  (window as any).toggleFavorite = toggleFavorite;
 </script>
 
 <style>
@@ -265,6 +284,32 @@ const typeIcon = getTypeIcon(note.type);
     box-shadow: var(--kindle-shadow-card);
   }
   
+  /* T018, T019: Association display styles */
+  .note-associated {
+    margin-left: 2rem;
+    margin-top: 0.75rem;
+    border-left: 3px solid var(--kindle-color-accent-secondary);
+    padding-left: 1rem;
+    background: var(--kindle-color-surface-hover);
+  }
+  
+  .note-standalone {
+    /* Full width, normal display */
+    margin-bottom: 1.5rem;
+  }
+  
+  /* T020: Visual connector for associated notes */
+  .note-associated::before {
+    content: '';
+    position: absolute;
+    left: -3px;
+    top: -0.75rem;
+    width: 3px;
+    height: 0.75rem;
+    background: var(--kindle-color-accent-secondary);
+    opacity: 0.3;
+  }
+  
   .note-card-compact {
     padding: var(--kindle-space-md);
   }
@@ -272,6 +317,14 @@ const typeIcon = getTypeIcon(note.type);
   /* Type-specific styling */
   .note-type-highlight {
     border-left: 4px solid var(--kindle-color-accent);
+  }
+  
+  /* Highlight with associated note gets subtle visual indicator */
+  .note-type-highlight.has-associated-note {
+    border-bottom: 2px solid var(--kindle-color-accent-secondary);
+    margin-bottom: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
   
   .note-type-note {
@@ -446,6 +499,11 @@ const typeIcon = getTypeIcon(note.type);
   @media (max-width: 768px) {
     .note-card {
       padding: var(--kindle-space-md);
+    }
+    
+    /* T041: Reduce indentation on mobile */
+    .note-associated {
+      margin-left: 1rem;
     }
     
     .note-header {

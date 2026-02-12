@@ -17,6 +17,8 @@ export interface ParseMetadata {
         notes: number;
         bookmarks: number;
         uniqueBooks: number;
+        associatedNotes?: number; // T013: Count of notes associated with highlights
+        standaloneNotes?: number; // T013: Count of standalone notes
     };
 }
 
@@ -76,29 +78,67 @@ export async function parseKindleFile(content: string, fileName?: string): Promi
 
             const book = books.get(bookKey)!;
 
-            // Create note with book reference
+            // Create note with book reference and temp ID for association
+            const tempId = crypto.randomUUID();
             const note = {
                 ...parsed.note,
-                bookId: book.id
+                bookId: book.id,
+                tempId // Temporary ID for tracking during parsing
             };
 
-            notes.push(note);
-
-            // Count note types
-            switch (parsed.note.type) {
-                case 'highlight':
-                    highlights++;
-                    break;
-                case 'note':
-                    noteCount++;
-                    break;
-                case 'bookmark':
-                    bookmarks++;
-                    break;
+            // Count by type
+            if (parsed.note.type === 'highlight') {
+                highlights++;
+            } else if (parsed.note.type === 'note') {
+                noteCount++;
+            } else if (parsed.note.type === 'bookmark') {
+                bookmarks++;
             }
+
+            notes.push(note);
         } catch (error) {
             console.warn('Failed to parse entry:', error);
             // Continue parsing other entries
+        }
+    }
+
+    // T052: Associate notes with highlights based on location proximity (not file order)
+    // This handles cases where notes come before highlights in the file
+    let associatedNotesCount = 0;
+    let standaloneNotesCount = 0;
+
+    // Group notes by book for efficient lookup
+    const notesByBook = new Map<string, typeof notes>();
+    for (const note of notes) {
+        if (!notesByBook.has(note.bookId)) {
+            notesByBook.set(note.bookId, []);
+        }
+        notesByBook.get(note.bookId)!.push(note);
+    }
+
+    // For each note, find matching highlight by location
+    for (const note of notes) {
+        if (note.type !== 'note') continue;
+
+        const bookNotes = notesByBook.get(note.bookId) || [];
+        const highlights = bookNotes.filter(n => n.type === 'highlight');
+
+        // Simple logic: note associates if its location matches highlight's end location
+        const matchingHighlight = highlights.find(highlight => {
+            if (!note.location?.start || !highlight.location) return false;
+
+            const noteLocation = note.location.start;
+            const highlightEnd = highlight.location.end || highlight.location.start;
+
+            // Note location matches highlight's end location
+            return noteLocation === highlightEnd;
+        });
+
+        if (matchingHighlight) {
+            (note as any).associatedHighlightId = (matchingHighlight as any).tempId;
+            associatedNotesCount++;
+        } else {
+            standaloneNotesCount++;
         }
     }
 
@@ -119,15 +159,33 @@ export async function parseKindleFile(content: string, fileName?: string): Promi
         bookIdMap.set(tempBook.id, finalBooks[index].id);
     });
 
+    // T014: Map temp IDs to final IDs for association preservation
+    const noteIdMap = new Map<string, string>();
     const finalNotes: Note[] = notes.map(note => {
+        const finalId = crypto.randomUUID();
+        noteIdMap.set((note as any).tempId, finalId);
+
         const now = new Date();
         return {
             ...note,
-            id: crypto.randomUUID(),
+            id: finalId,
             bookId: bookIdMap.get(note.bookId) || note.bookId,
             createdAt: now,
             updatedAt: now
         };
+    });
+
+    // T014: Update associatedHighlightId references to use final IDs
+    finalNotes.forEach(note => {
+        if ((note as any).associatedHighlightId) {
+            const tempHighlightId = (note as any).associatedHighlightId;
+            const finalHighlightId = noteIdMap.get(tempHighlightId);
+            if (finalHighlightId) {
+                note.associatedHighlightId = finalHighlightId;
+            }
+        }
+        // Remove tempId property
+        delete (note as any).tempId;
     });
 
     const metadata: ParseMetadata = {
@@ -139,7 +197,9 @@ export async function parseKindleFile(content: string, fileName?: string): Promi
             highlights,
             notes: noteCount,
             bookmarks,
-            uniqueBooks: finalBooks.length
+            uniqueBooks: finalBooks.length,
+            associatedNotes: associatedNotesCount, // T013
+            standaloneNotes: standaloneNotesCount // T013
         }
     };
 
@@ -185,7 +245,7 @@ export function parseKindleEntry(entryText: string): ParsedEntry {
 
     const type = typeStr.toLowerCase() as NoteType;
     const page = pageStr ? parseInt(pageStr, 10) : undefined;
-    
+
     // Parse location with start and optional end
     let location: { start: number; end?: number } | undefined;
     if (locationStr) {
@@ -205,12 +265,12 @@ export function parseKindleEntry(entryText: string): ParsedEntry {
             }
         }
     }
-    
+
     // CRITICAL: Log warning if location is missing
     if (!location) {
         console.warn(`Note without location in "${title}" - deduplication will use content hash`);
     }
-    
+
     const createdAt = parseKindleDate(dateStr);
 
     // Extract content (everything after the metadata line)
