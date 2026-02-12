@@ -2,6 +2,7 @@
 // Main layout wrapper component
 import Header from "../components/layout/Header.astro";
 import Footer from "../components/layout/Footer.astro";
+import "../styles/kindle-theme.css";
 
 export interface Props {
   title?: string;
@@ -33,8 +34,6 @@ const {
       rel="stylesheet"
     />
 
-    <!-- Import Kindle theme -->
-    <link rel="stylesheet" href="/src/styles/kindle-theme.css" />
   </head>
 
   <body>
@@ -114,7 +113,9 @@ const {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background: var(--color-background);
+    background-color: var(--color-background);
+    background-image: var(--texture-paper);
+    background-size: var(--texture-paper-size);
   }
 
   .main-content {
@@ -122,12 +123,12 @@ const {
     width: 100%;
     max-width: var(--max-width-content);
     margin: 0 auto;
-    padding: var(--space-lg) var(--space-md);
+    padding: var(--space-xl) var(--space-lg) var(--space-3xl);
   }
 
   @media (max-width: 768px) {
     .main-content {
-      padding: var(--space-md) var(--space-sm);
+      padding: var(--space-lg) var(--space-md) var(--space-2xl);
     }
   }
 </style>

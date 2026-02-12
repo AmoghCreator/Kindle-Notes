@@ -7,7 +7,7 @@
     <div class="footer-content">
       <div class="footer-info">
         <p class="footer-text">
-          Built for book lovers who want to organize and share their reading insights.
+          A calm workspace for your highlights, notes, and reading breakthroughs.
         </p>
       </div>
       
@@ -22,7 +22,7 @@
     
     <div class="footer-bottom">
       <p class="copyright">
-        &copy; 2026 Kindle Notes. Made with ❤️ for readers.
+        &copy; 2026 Kindle Notes. Crafted for serious readers.
       </p>
     </div>
   </div>
@@ -31,7 +31,11 @@
 <style>
   .site-footer {
     border-top: 1px solid var(--color-border);
-    background: var(--color-surface);
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-surface), transparent 12%) 0%,
+      var(--color-surface) 100%
+    );
     margin-top: auto;
     padding: var(--space-2xl) 0 var(--space-lg) 0;
   }
@@ -41,11 +45,12 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: var(--space-lg);
+    gap: var(--space-lg);
   }
   
   .footer-info {
     flex: 1;
-    max-width: 400px;
+    max-width: 460px;
   }
   
   .footer-text {
@@ -59,7 +64,7 @@
   .footer-links {
     display: flex;
     align-items: center;
-    gap: var(--space-lg);
+    gap: var(--space-sm);
   }
   
   .footer-link {
@@ -68,11 +73,13 @@
     color: var(--color-text-muted);
     text-decoration: none;
     transition: color var(--transition-fast);
+    padding: 0.45rem 0.7rem;
+    border-radius: var(--border-radius-full);
   }
   
   .footer-link:hover {
-    color: var(--color-accent);
-    text-decoration: none;
+    color: var(--color-text-primary);
+    background: var(--color-surface-hover);
   }
   
   .footer-bottom {
