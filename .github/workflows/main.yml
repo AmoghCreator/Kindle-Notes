@@ -1,2 +1,13 @@
 name: Coolify - Application Deploy
-uses: marconneves/coolify-actions@v0.0.4
+
+on:
+  push:
+    branches: [ main ]
+  # or whatever trigger you need
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: marconneves/coolify-action@v0.0.4
+        # your step configuration here
