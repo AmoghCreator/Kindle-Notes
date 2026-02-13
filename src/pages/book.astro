@@ -122,13 +122,6 @@ import LoadingSpinner from "../components/common/LoadingSpinner.astro";
 </BaseLayout>
 
 <script>
-  import { KindleNotesDatabase } from "../lib/storage/database";
-  import { BooksStorage } from "../lib/storage/books";
-  import { NotesStorage } from "../lib/storage/notes";
-
-  let db: KindleNotesDatabase;
-  let booksStorage: BooksStorage;
-  let notesStorage: NotesStorage;
   let currentBook: any = null;
   let allNotes: any[] = [];
   let filteredNotes: any[] = [];
@@ -137,13 +130,6 @@ import LoadingSpinner from "../components/common/LoadingSpinner.astro";
 
   async function initializeBookDetail() {
     try {
-      // Initialize database
-      db = new KindleNotesDatabase();
-      await db.open();
-
-      booksStorage = new BooksStorage(db);
-      notesStorage = new NotesStorage(db);
-
       // Get book ID from URL query parameter
       const bookId = getBookIdFromUrl();
       if (!bookId) {
@@ -168,11 +154,19 @@ import LoadingSpinner from "../components/common/LoadingSpinner.astro";
     showLoading();
 
     try {
-      // Load book and notes in parallel
-      const [book, notes] = await Promise.all([
-        booksStorage.findById(bookId),
-        notesStorage.findByBookId(bookId),
+      // Load book and notes in parallel from server APIs
+      const [booksResponse, notesResponse] = await Promise.all([
+        fetch("/api/books"),
+        fetch(`/api/notes?bookId=${encodeURIComponent(bookId)}`),
       ]);
+
+      if (!booksResponse.ok || !notesResponse.ok) {
+        throw new Error("Failed to fetch book detail data");
+      }
+
+      const books = await booksResponse.json();
+      const notes = await notesResponse.json();
+      const book = books.find((entry: any) => entry?.id === bookId);
 
       if (!book) {
         showError();
