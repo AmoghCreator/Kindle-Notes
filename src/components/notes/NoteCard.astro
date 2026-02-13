@@ -268,6 +268,30 @@ const ariaLabel =
     return fromHeader || undefined;
   }
 
+  async function copyText(text: string): Promise<void> {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    textarea.style.pointerEvents = "none";
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+
+    const success = document.execCommand("copy");
+    textarea.remove();
+
+    if (!success) {
+      throw new Error("Clipboard copy is unavailable");
+    }
+  }
+
   async function getSharePayload(noteId: string, mode: "share" | "copy") {
     const card = getCardForNote(noteId);
     if (!card) {
@@ -300,17 +324,10 @@ const ariaLabel =
   async function copyNote(noteId: string) {
     try {
       const payload = await getSharePayload(noteId, "copy");
-      await navigator.clipboard.writeText(payload.text);
+      await copyText(payload.text);
       showToast("Formatted quote copied to clipboard!", "success");
     } catch (error) {
-      navigator.clipboard
-        .writeText("")
-        .then(() => {
-          showToast("Copy failed. Clipboard access may be blocked.", "error");
-        })
-        .catch(() => {
-          showToast("Failed to copy formatted note", "error");
-        });
+      showToast("Copy failed. Clipboard access may be blocked.", "error");
     }
   }
 
@@ -330,8 +347,7 @@ const ariaLabel =
           .then(() => showToast("Share opened successfully.", "success"))
           .catch(() => showToast("Share cancelled or unavailable.", "error"));
       } else {
-        navigator.clipboard
-          .writeText(shareData.text)
+        copyText(shareData.text)
           .then(() => {
             showToast("Formatted share text copied to clipboard!", "success");
           })
