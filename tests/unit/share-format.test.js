@@ -33,9 +33,9 @@ describe('share formatter', () => {
         },
     ];
 
-    it('formats attribution with title and optional author', () => {
-        expect(formatAttribution('Deep Work', 'Cal Newport')).toBe('— Deep Work, Cal Newport');
-        expect(formatAttribution('Untitled Source')).toBe('— Untitled Source');
+    it('formats attribution as title-only line', () => {
+        expect(formatAttribution('Deep Work', 'Cal Newport')).toBe('- Deep Work');
+        expect(formatAttribution('Untitled Source')).toBe('- Untitled Source');
     });
 
     it('resolves note with associated highlight for sharing', () => {
@@ -49,9 +49,9 @@ describe('share formatter', () => {
         const item = resolveShareableItem('n1', notes, books);
         const payload = buildShareText(item, { mode: 'share', maxLength: 280 });
 
-        expect(payload.text).toContain('"This is why I block calendar time."');
         expect(payload.text).toContain('"Focus is the new IQ."');
-        expect(payload.text).toContain('— Deep Work, Cal Newport');
+        expect(payload.text).toContain('Note: This is why I block calendar time.');
+        expect(payload.text).toContain('- Deep Work');
         expect(payload.includesAssociatedHighlight).toBe(true);
     });
 
@@ -67,23 +67,23 @@ describe('share formatter', () => {
         const item = resolveShareableItem('n3', noteSet, books);
         const payload = buildShareText(item, { mode: 'share' });
 
-        expect(payload.text).toContain('"A note with bad highlight link."');
+        expect(payload.text).toContain('Note: A note with bad highlight link.');
         expect(payload.includesAssociatedHighlight).toBe(false);
     });
 
-    it('builds copy-mode payload with quote + attribution for highlight', () => {
+    it('builds copy-mode payload for highlight + attribution', () => {
         const item = resolveShareableItem('h1', notes, books);
         const payload = buildShareText(item, { mode: 'copy' });
 
         expect(payload.truncated).toBe(false);
-        expect(payload.text).toBe('"Focus is the new IQ."\n— Deep Work, Cal Newport');
+        expect(payload.text).toBe('"Focus is the new IQ."\n- Deep Work');
     });
 
-    it('falls back to title-only attribution when author is missing', () => {
+    it('uses title-only attribution when author is missing', () => {
         const item = resolveShareableItem('n2', notes, books);
         const payload = buildShareText(item, { mode: 'copy' });
 
-        expect(payload.text).toContain('— Untitled Source');
+        expect(payload.text).toContain('- Untitled Source');
         expect(payload.text).not.toContain(', undefined');
     });
 });

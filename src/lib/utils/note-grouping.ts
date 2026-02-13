@@ -55,10 +55,32 @@ export function buildHighlightPairs(
     highlights: Note[],
     noteEntries: Note[]
 ): HighlightNotePair[] {
-    const pairs: HighlightNotePair[] = highlights.map(highlight => {
-        const associatedNote = noteEntries.find(
-            n => n.associatedHighlightId === highlight.id
+    const sortedHighlights = [...highlights].sort(
+        (a, b) => (a.location?.start ?? 0) - (b.location?.start ?? 0)
+    );
+
+    const usedNoteIds = new Set<string>();
+
+    const pairs: HighlightNotePair[] = sortedHighlights.map(highlight => {
+        // 1) Prefer explicit parser association
+        let associatedNote = noteEntries.find(
+            n => n.associatedHighlightId === highlight.id && !usedNoteIds.has(n.id)
         );
+
+        // 2) Fallback: location-based association
+        // Associate note if note.start is at highlight.end ±1
+        if (!associatedNote && highlight.location) {
+            const highlightEnd = highlight.location.end ?? highlight.location.start;
+            associatedNote = noteEntries.find(n => {
+                if (usedNoteIds.has(n.id)) return false;
+                if (!n.location?.start) return false;
+                return Math.abs(n.location.start - highlightEnd) <= 1;
+            });
+        }
+
+        if (associatedNote) {
+            usedNoteIds.add(associatedNote.id);
+        }
 
         return {
             highlight: highlight as Note & { type: 'highlight' },
@@ -92,7 +114,13 @@ export function groupEntriesByAssociation(
     const pairs = buildHighlightPairs(highlights, noteEntries);
 
     // Find standalone notes (not associated with any highlight)
-    const standaloneNotes = noteEntries.filter(n => !n.associatedHighlightId);
+    const associatedNoteIds = new Set(
+        pairs
+            .map(p => p.associatedNote?.id)
+            .filter((id): id is string => Boolean(id))
+    );
+
+    const standaloneNotes = noteEntries.filter(n => !associatedNoteIds.has(n.id));
 
     // Sort standalone notes by location
     standaloneNotes.sort((a, b) => {

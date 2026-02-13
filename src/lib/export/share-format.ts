@@ -14,9 +14,8 @@ export function normalizeItemText(value: unknown): string {
 }
 
 export function formatAttribution(bookTitle: string, bookAuthor?: string): string {
-    const safeTitle = normalizeItemText(bookTitle) || 'Unknown Book';
-    const safeAuthor = normalizeItemText(bookAuthor);
-    return safeAuthor ? `— ${safeTitle}, ${safeAuthor}` : `— ${safeTitle}`;
+    const safeTitle = (normalizeItemText(bookTitle).split('(Z-Library')[0] || '').trim() || 'Unknown Book';
+    return `- ${safeTitle}`;
 }
 
 export function quoteText(value: string): string {
@@ -82,14 +81,24 @@ export function buildShareText(
     }
 
     const attribution = formatAttribution(item.bookTitle, item.bookAuthor);
-    const primaryQuote = quoteText(text);
 
-    const secondaryCandidate =
+    const associatedHighlight = normalizeItemText(item.associatedHighlightText);
+    const hasAssociatedHighlight =
         includeAssociatedHighlight &&
-            item.itemType === 'note' &&
-            normalizeItemText(item.associatedHighlightText)
-            ? quoteText(normalizeItemText(item.associatedHighlightText))
-            : undefined;
+        item.itemType === 'note' &&
+        Boolean(associatedHighlight);
+
+    // Requested canonical order:
+    // 1) Highlighted text (if present)
+    // 2) Associated Note prefixed with "Note:"
+    // 3) - Book Name
+    const noteLine = item.itemType === 'note' ? `Note: ${text}` : text;
+    const primaryQuote = hasAssociatedHighlight
+        ? quoteText(associatedHighlight)
+        : item.itemType === 'highlight'
+            ? quoteText(text)
+            : noteLine;
+    const secondaryCandidate = hasAssociatedHighlight ? noteLine : undefined;
 
     const payload =
         mode === 'share'

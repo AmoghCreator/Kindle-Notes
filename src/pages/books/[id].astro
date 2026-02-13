@@ -63,7 +63,7 @@ const hasNotes = allNotes.length > 0;
           icon="notes"
           action={{
             text: "Back to Library",
-            href: "/library"
+            href: "/"
           }}
         />
       </div>
@@ -85,11 +85,11 @@ const hasNotes = allNotes.length > 0;
             </div>
             <div class="book-details">
               <nav class="breadcrumb">
-                <a href="/library">Library</a>
+                <a href="/">Library</a>
                 <span class="breadcrumb-separator">›</span>
-                <span class="current-book">{book.title}</span>
+                <span class="current-book">{book.title.split('(Z-Library')[0]}</span>
               </nav>
-              <h1 class="book-title">{book.title}</h1>
+              <h1 class="book-title">{book.title.split('(Z-Library')[0]}</h1>
               {book.author && (
                 <p class="book-author">{book.author}</p>
               )}
@@ -133,6 +133,8 @@ const hasNotes = allNotes.length > 0;
                   note={pair.highlight} 
                   displayMode="standalone" 
                   hasAssociatedNote={!!pair.associatedNote}
+                  bookTitle={book.title}
+                  bookAuthor={book.author}
                 />
                 
                 {/* T023: Render associated note if it exists */}
@@ -141,6 +143,8 @@ const hasNotes = allNotes.length > 0;
                     note={pair.associatedNote}
                     displayMode="associated"
                     associatedHighlight={pair.highlight}
+                    bookTitle={book.title}
+                    bookAuthor={book.author}
                   />
                 )}
               </div>
@@ -152,7 +156,7 @@ const hasNotes = allNotes.length > 0;
                 <div class="standalone-separator"></div>
                 <h3 class="standalone-heading">Standalone Notes</h3>
                 {grouped.standaloneNotes.map(note => (
-                  <NoteCard note={note} displayMode="standalone" />
+                  <NoteCard note={note} displayMode="standalone" bookTitle={book.title} bookAuthor={book.author} />
                 ))}
               </>
             )}
@@ -163,7 +167,7 @@ const hasNotes = allNotes.length > 0;
                 <div class="standalone-separator"></div>
                 <h3 class="standalone-heading">Bookmarks</h3>
                 {grouped.bookmarks.map(note => (
-                  <NoteCard note={note} displayMode="standalone" />
+                  <NoteCard note={note} displayMode="standalone" bookTitle={book.title} bookAuthor={book.author} />
                 ))}
               </>
             )}

@@ -29,13 +29,13 @@ describe('share flow integration', () => {
         const sharePayload = buildShareText(item, { mode: 'share', maxLength: 280 });
         const copyPayload = buildShareText(item, { mode: 'copy' });
 
-        expect(sharePayload.text).toContain('"Systems make progress inevitable."');
         expect(sharePayload.text).toContain('"You do not rise to the level of your goals."');
-        expect(sharePayload.text).toContain('— Atomic Habits, James Clear');
+        expect(sharePayload.text).toContain('Note: Systems make progress inevitable.');
+        expect(sharePayload.text).toContain('- Atomic Habits');
 
-        expect(copyPayload.text).toContain('"Systems make progress inevitable."');
         expect(copyPayload.text).toContain('"You do not rise to the level of your goals."');
-        expect(copyPayload.text).toContain('— Atomic Habits, James Clear');
+        expect(copyPayload.text).toContain('Note: Systems make progress inevitable.');
+        expect(copyPayload.text).toContain('- Atomic Habits');
     });
 
     it('keeps attribution under truncation pressure', () => {
@@ -50,7 +50,7 @@ describe('share flow integration', () => {
         const payload = buildShareText(item, { mode: 'share', maxLength: 120 });
 
         expect(payload.truncated).toBe(true);
-        expect(payload.text).toContain('— Atomic Habits, James Clear');
+        expect(payload.text).toContain('- Atomic Habits');
         expect(payload.text.length).toBeLessThanOrEqual(120);
     });
 });

@@ -56,7 +56,13 @@ import LoadingSpinner from "../components/common/LoadingSpinner.astro";
               <span class="breadcrumb-separator">›</span>
               <span class="current-book" id="breadcrumbTitle">Book</span>
             </nav>
-            <h1 class="book-title" id="bookTitle">Loading...</h1>
+            <h1 class="book-title" id="bookTitle">
+              {
+                (Astro.props?.book?.title || "Loading...").split(
+                  "(Z-Library",
+                )[0]
+              }
+            </h1>
             <p class="book-author" id="bookAuthor">Loading...</p>
             <div class="book-stats" id="bookStats">
               <!-- Stats will be populated by JS -->
@@ -189,17 +195,20 @@ import LoadingSpinner from "../components/common/LoadingSpinner.astro";
   function renderBookDetail() {
     if (!currentBook) return;
 
+    // Always strip '(Z-Library' and after from title for display
+    const cleanTitle = currentBook.title.split("(Z-Library")[0];
+
     // Update page title
-    document.title = `${currentBook.title} - Kindle Notes`;
+    document.title = `${cleanTitle} - Kindle Notes`;
 
     // Update breadcrumb
     const breadcrumbTitle = document.getElementById("breadcrumbTitle");
     if (breadcrumbTitle) {
-      breadcrumbTitle.textContent = currentBook.title;
+      breadcrumbTitle.textContent = cleanTitle;
     }
 
     // Update book info
-    document.getElementById("bookTitle")!.textContent = currentBook.title;
+    document.getElementById("bookTitle")!.textContent = cleanTitle;
     document.getElementById("bookAuthor")!.textContent = currentBook.author;
 
     // Update cover

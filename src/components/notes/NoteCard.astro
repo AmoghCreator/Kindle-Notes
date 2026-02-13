@@ -248,6 +248,26 @@ const ariaLabel =
     return document.querySelector(`[data-note-card-id="${noteId}"]`);
   }
 
+  function getResolvedBookTitle(card: HTMLElement): string {
+    const fromData = (card.dataset.bookTitle || "").trim();
+    if (fromData) return fromData;
+
+    const fromHeader =
+      document.querySelector(".book-title")?.textContent?.trim() || "";
+    if (fromHeader) return fromHeader;
+
+    return "Unknown Book";
+  }
+
+  function getResolvedBookAuthor(card: HTMLElement): string | undefined {
+    const fromData = (card.dataset.bookAuthor || "").trim();
+    if (fromData) return fromData;
+
+    const fromHeader =
+      document.querySelector(".book-author")?.textContent?.trim() || "";
+    return fromHeader || undefined;
+  }
+
   async function getSharePayload(noteId: string, mode: "share" | "copy") {
     const card = getCardForNote(noteId);
     if (!card) {
@@ -258,44 +278,23 @@ const ariaLabel =
       card.dataset.noteType === "highlight" ? "highlight" : "note"
     ) as "highlight" | "note";
 
-    try {
-      const response = await fetch("/api/share-preview", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          itemId: noteId,
-          itemType,
-          platform: "twitter",
-          includeAssociatedHighlight: true,
-          mode,
-          maxLength: 280,
-        }),
-      });
+    const payloadItem = {
+      itemId: noteId,
+      itemType,
+      text: card.dataset.noteContent || "",
+      bookId: "",
+      bookTitle: getResolvedBookTitle(card),
+      bookAuthor: getResolvedBookAuthor(card),
+      associatedHighlightId: card.dataset.associatedHighlightId || undefined,
+      associatedHighlightText:
+        card.dataset.associatedHighlightText || undefined,
+    };
 
-      if (!response.ok) {
-        throw new Error(`Share preview failed with status ${response.status}`);
-      }
-
-      return await response.json();
-    } catch (error) {
-      const fallbackItem = {
-        itemId: noteId,
-        itemType,
-        text: card.dataset.noteContent || "",
-        bookId: "",
-        bookTitle: card.dataset.bookTitle || "Unknown Book",
-        bookAuthor: card.dataset.bookAuthor || undefined,
-        associatedHighlightId: card.dataset.associatedHighlightId || undefined,
-        associatedHighlightText:
-          card.dataset.associatedHighlightText || undefined,
-      };
-
-      return buildShareText(fallbackItem, {
-        mode,
-        includeAssociatedHighlight: true,
-        maxLength: 280,
-      });
-    }
+    return buildShareText(payloadItem, {
+      mode,
+      includeAssociatedHighlight: true,
+      maxLength: 280,
+    });
   }
 
   async function copyNote(noteId: string) {
