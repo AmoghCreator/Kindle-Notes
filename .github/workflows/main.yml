@@ -1,2 +1,2 @@
-- name: Coolify - Application Deploy
+name: Coolify - Application Deploy
   uses: marconneves/coolify-actions@v0.0.4
