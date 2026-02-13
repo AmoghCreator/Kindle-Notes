@@ -9,5 +9,5 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: marconneves/coolify-action@v0.0.4
+      - uses: github.com/marconneves/coolify-actions@0.0.4
         # your step configuration here
