@@ -5,6 +5,7 @@ import type { Note } from "../../lib/types";
 export interface Props {
   note: Note;
   bookTitle?: string;
+  bookAuthor?: string;
   showBookInfo?: boolean;
   compact?: boolean;
   editable?: boolean;
@@ -17,6 +18,7 @@ export interface Props {
 const {
   note,
   bookTitle,
+  bookAuthor,
   showBookInfo = false,
   compact = false,
   editable = false,
@@ -62,6 +64,10 @@ const displayClass =
   displayMode === "associated" ? "note-associated" : "note-standalone";
 const hasNoteClass = hasAssociatedNote ? "has-associated-note" : "";
 const cardClasses = `note-card note-type-${note.type} ${displayClass} ${hasNoteClass} ${compact ? "note-card-compact" : ""} ${className}`;
+const noteDisplayText = ((note as any).content || note.text || "") as string;
+const associatedHighlightText = ((associatedHighlight as any)?.content ||
+  associatedHighlight?.text ||
+  "") as string;
 
 // T024: Build ARIA label for associated notes
 const ariaLabel =
@@ -74,6 +80,13 @@ const ariaLabel =
   class={cardClasses}
   role={displayMode === "associated" ? "complementary" : "article"}
   aria-label={ariaLabel}
+  data-note-card-id={note.id}
+  data-note-type={note.type}
+  data-note-content={noteDisplayText}
+  data-book-title={bookTitle || ""}
+  data-book-author={bookAuthor || ""}
+  data-associated-highlight-id={note.associatedHighlightId || ""}
+  data-associated-highlight-text={associatedHighlightText}
 >
   <header class="note-header">
     <div class="note-type">
@@ -131,7 +144,7 @@ const ariaLabel =
           data-note-id={note.id}
           contenteditable={editable}
         >
-          {note.content}
+          {noteDisplayText}
         </div>
       )
     }
@@ -227,42 +240,103 @@ const ariaLabel =
 </article>
 
 <script>
+  import { buildShareText } from "../../lib/export/share-format";
+
   // Client-side actions for notes (no database dependency)
 
-  function copyNote(noteId: string) {
-    const noteElement = document.querySelector(`[data-note-id="${noteId}"]`);
-    if (noteElement) {
-      const text = noteElement.textContent || "";
+  function getCardForNote(noteId: string): HTMLElement | null {
+    return document.querySelector(`[data-note-card-id="${noteId}"]`);
+  }
+
+  async function getSharePayload(noteId: string, mode: "share" | "copy") {
+    const card = getCardForNote(noteId);
+    if (!card) {
+      throw new Error("Note card not found");
+    }
+
+    const itemType = (
+      card.dataset.noteType === "highlight" ? "highlight" : "note"
+    ) as "highlight" | "note";
+
+    try {
+      const response = await fetch("/api/share-preview", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          itemId: noteId,
+          itemType,
+          platform: "twitter",
+          includeAssociatedHighlight: true,
+          mode,
+          maxLength: 280,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Share preview failed with status ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      const fallbackItem = {
+        itemId: noteId,
+        itemType,
+        text: card.dataset.noteContent || "",
+        bookId: "",
+        bookTitle: card.dataset.bookTitle || "Unknown Book",
+        bookAuthor: card.dataset.bookAuthor || undefined,
+        associatedHighlightId: card.dataset.associatedHighlightId || undefined,
+        associatedHighlightText:
+          card.dataset.associatedHighlightText || undefined,
+      };
+
+      return buildShareText(fallbackItem, {
+        mode,
+        includeAssociatedHighlight: true,
+        maxLength: 280,
+      });
+    }
+  }
+
+  async function copyNote(noteId: string) {
+    try {
+      const payload = await getSharePayload(noteId, "copy");
+      await navigator.clipboard.writeText(payload.text);
+      showToast("Formatted quote copied to clipboard!", "success");
+    } catch (error) {
       navigator.clipboard
-        .writeText(text)
+        .writeText("")
         .then(() => {
-          showToast("Note copied to clipboard!", "success");
+          showToast("Copy failed. Clipboard access may be blocked.", "error");
         })
         .catch(() => {
-          showToast("Failed to copy note", "error");
+          showToast("Failed to copy formatted note", "error");
         });
     }
   }
 
-  function shareNote(noteId: string) {
-    const noteElement = document.querySelector(`[data-note-id="${noteId}"]`);
-    if (noteElement) {
-      const text = noteElement.textContent || "";
+  async function shareNote(noteId: string) {
+    const card = getCardForNote(noteId);
+    if (card) {
+      const payload = await getSharePayload(noteId, "share");
       const shareData = {
-        title: "Note from my reading",
-        text: text,
-        url: `${window.location.origin}/notes/${noteId}`,
+        title: `From ${card.dataset.bookTitle || "my reading"}`,
+        text: payload.text,
+        url: window.location.href,
       };
 
       if (navigator.share) {
-        navigator.share(shareData).catch(console.error);
+        navigator
+          .share(shareData)
+          .then(() => showToast("Share opened successfully.", "success"))
+          .catch(() => showToast("Share cancelled or unavailable.", "error"));
       } else {
         navigator.clipboard
-          .writeText(`${shareData.text}\n\n${shareData.url}`)
+          .writeText(shareData.text)
           .then(() => {
-            showToast("Note and link copied to clipboard!", "success");
+            showToast("Formatted share text copied to clipboard!", "success");
           })
-          .catch(console.error);
+          .catch(() => showToast("Failed to copy share text.", "error"));
       }
     }
   }

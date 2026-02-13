@@ -1,0 +1,190 @@
+openapi: 3.0.3
+info:
+  title: Kindle Notes Sharing Contract
+  version: 1.0.0
+  description: |
+    REST contract for Twitter-first sharing and random suggestion flows.
+    Endpoints may be implemented server-side or adapted to frontend services,
+    but request/response shapes remain the contract.
+servers:
+  - url: /api
+paths:
+  /share/preview:
+    post:
+      summary: Generate formatted share text
+      description: Generates canonical quote + attribution text for notes/highlights.
+      operationId: generateSharePreview
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SharePreviewRequest'
+      responses:
+        '200':
+          description: Share text generated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharePreviewResponse'
+        '404':
+          description: Note/highlight or related book not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Invalid input (unsupported type or empty text)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /suggestions/random:
+    get:
+      summary: Get one random shareable suggestion
+      description: Returns a single random note/highlight for top-of-index display.
+      operationId: getRandomSuggestion
+      parameters:
+        - name: excludeIds
+          in: query
+          required: false
+          description: Comma-separated item IDs to avoid immediate repetition.
+          schema:
+            type: string
+        - name: includeTypes
+          in: query
+          required: false
+          description: Filter suggestion pool by content type.
+          schema:
+            type: string
+            enum: [note, highlight, all]
+            default: all
+      responses:
+        '200':
+          description: Suggestion found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RandomSuggestionResponse'
+        '204':
+          description: No shareable content available
+        '500':
+          description: Unexpected retrieval failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    SharePreviewRequest:
+      type: object
+      required:
+        - itemId
+        - itemType
+        - platform
+      properties:
+        itemId:
+          type: string
+        itemType:
+          type: string
+          enum: [note, highlight]
+        platform:
+          type: string
+          enum: [twitter]
+        includeAssociatedHighlight:
+          type: boolean
+          default: true
+        mode:
+          type: string
+          enum: [share, copy]
+          default: share
+        maxLength:
+          type: integer
+          minimum: 50
+          maximum: 1000
+          default: 280
+    SharePreviewResponse:
+      type: object
+      required:
+        - text
+        - charCount
+        - truncated
+        - includesAssociatedHighlight
+        - attribution
+      properties:
+        text:
+          type: string
+        charCount:
+          type: integer
+        truncated:
+          type: boolean
+        includesAssociatedHighlight:
+          type: boolean
+        attribution:
+          type: string
+        metadata:
+          type: object
+          required:
+            - itemId
+            - itemType
+            - bookId
+            - bookTitle
+          properties:
+            itemId:
+              type: string
+            itemType:
+              type: string
+              enum: [note, highlight]
+            bookId:
+              type: string
+            bookTitle:
+              type: string
+            bookAuthor:
+              type: string
+              nullable: true
+            associatedHighlightId:
+              type: string
+              nullable: true
+    RandomSuggestionResponse:
+      type: object
+      required:
+        - suggestionId
+        - itemId
+        - itemType
+        - previewText
+        - bookId
+        - bookTitle
+        - canShare
+      properties:
+        suggestionId:
+          type: string
+        itemId:
+          type: string
+        itemType:
+          type: string
+          enum: [note, highlight]
+        previewText:
+          type: string
+        bookId:
+          type: string
+        bookTitle:
+          type: string
+        bookAuthor:
+          type: string
+          nullable: true
+        canShare:
+          type: boolean
+    ErrorResponse:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string

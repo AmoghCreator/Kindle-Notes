@@ -1,0 +1,324 @@
+---
+import type { RandomSuggestion } from "../../lib/types";
+
+export interface Props {
+  suggestion: RandomSuggestion | null;
+}
+
+const { suggestion } = Astro.props;
+---
+
+<section class="random-suggestion" aria-labelledby="randomSuggestionTitle">
+  <div class="suggestion-header">
+    <h2 id="randomSuggestionTitle">Random spark</h2>
+    {suggestion && <span class="suggestion-type">{suggestion.itemType}</span>}
+  </div>
+
+  {
+    suggestion ? (
+      <div
+        class="suggestion-body"
+        data-suggestion-id={suggestion.itemId}
+        data-suggestion-type={suggestion.itemType}
+        data-suggestion-title={suggestion.bookTitle}
+        data-associated-highlight-text={
+          suggestion.associatedHighlightText || ""
+        }
+      >
+        {suggestion.itemType === "note" &&
+          suggestion.associatedHighlightText && (
+            <p class="suggestion-highlight">
+              “{suggestion.associatedHighlightText}”
+            </p>
+          )}
+        <p class="suggestion-text">
+          {suggestion.itemType === "note" ? "Note: " : ""}
+          {`“${suggestion.previewText}”`}
+        </p>
+        <p class="suggestion-attribution">
+          — {suggestion.bookTitle.split("(Z-Library")[0]}
+        </p>
+        <div class="suggestion-actions">
+          <button
+            type="button"
+            class="btn btn-primary"
+            onclick="shareRandomSuggestion()"
+          >
+            Share now
+          </button>
+          <button
+            type="button"
+            class="btn btn-ghost"
+            onclick="refreshRandomSuggestion()"
+          >
+            New suggestion
+          </button>
+        </div>
+      </div>
+    ) : (
+      <div class="suggestion-empty" id="suggestionEmpty">
+        No notes or highlights yet. Import a book to get a shareable suggestion.
+      </div>
+    )
+  }
+</section>
+
+<script>
+  function buildSuggestionShareText(card: HTMLElement): string {
+    const primary =
+      card.querySelector(".suggestion-highlight")?.textContent?.trim() || "";
+    const secondary =
+      card.querySelector(".suggestion-text")?.textContent?.trim() || "";
+    const attribution =
+      card.querySelector(".suggestion-attribution")?.textContent?.trim() || "";
+    return [primary, secondary, attribution].filter(Boolean).join("\n");
+  }
+
+  async function shareRandomSuggestion() {
+    const card = document.querySelector(
+      "[data-suggestion-id]",
+    ) as HTMLElement | null;
+    if (!card) {
+      showSuggestionToast("No suggestion available to share.", "error");
+      return;
+    }
+
+    const shareText = buildSuggestionShareText(card);
+    if (!shareText) {
+      showSuggestionToast("No suggestion text available to share.", "error");
+      return;
+    }
+
+    try {
+      const shareData = {
+        title: `From ${card.dataset.suggestionTitle || "my reading"}`,
+        text: shareText,
+      };
+
+      if (navigator.share) {
+        await navigator.share(shareData);
+        showSuggestionToast("Share opened successfully.", "success");
+      } else {
+        await navigator.clipboard.writeText(shareText);
+        showSuggestionToast(
+          "Formatted share text copied to clipboard!",
+          "success",
+        );
+      }
+    } catch (error) {
+      showSuggestionToast("Failed to share suggestion text.", "error");
+    }
+  }
+
+  async function refreshRandomSuggestion() {
+    const current = document.querySelector(
+      "[data-suggestion-id]",
+    ) as HTMLElement | null;
+    const currentId = current?.dataset.suggestionId;
+    const query = currentId
+      ? `?excludeIds=${encodeURIComponent(currentId)}`
+      : "";
+
+    try {
+      const response = await fetch(`/api/suggestions${query}`);
+      if (response.status === 204) {
+        renderEmptySuggestion();
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch suggestion");
+      }
+
+      const suggestion = await response.json();
+      renderSuggestion(suggestion);
+      showSuggestionToast("New suggestion ready.", "success");
+    } catch (error) {
+      showSuggestionToast("Failed to load a new suggestion.", "error");
+    }
+  }
+
+  function renderSuggestion(suggestion: any) {
+    const container = document.querySelector(".random-suggestion");
+    if (!container) return;
+
+    const escapedText = String(suggestion.previewText || "").replace(
+      /"/g,
+      "&quot;",
+    );
+    const authorPart = suggestion.bookAuthor
+      ? `, ${suggestion.bookAuthor}`
+      : "";
+    // Strip '(Z-Library' and anything after from bookTitle for attribution
+    const cleanBookTitle = suggestion.bookTitle.split("(Z-Library")[0];
+
+    const body = container.querySelector(
+      ".suggestion-body",
+    ) as HTMLElement | null;
+    const empty = container.querySelector(
+      ".suggestion-empty",
+    ) as HTMLElement | null;
+
+    if (empty) {
+      empty.remove();
+    }
+
+    if (!body) {
+      const wrapper = document.createElement("div");
+      wrapper.className = "suggestion-body";
+      wrapper.innerHTML = `
+        ${
+          suggestion.itemType === "note" && suggestion.associatedHighlightText
+            ? `<p class="suggestion-highlight">“${String(suggestion.associatedHighlightText).replace(/"/g, "&quot;")}”</p>`
+            : ""
+        }
+        <p class="suggestion-text">“Note: ${escapedText}”</p>
+        <p class="suggestion-attribution">— ${cleanBookTitle}${authorPart}</p>
+        <div class="suggestion-actions">
+          <button type="button" class="btn btn-primary" onclick="shareRandomSuggestion()">Share now</button>
+          <button type="button" class="btn btn-ghost" onclick="refreshRandomSuggestion()">New suggestion</button>
+        </div>
+      `;
+      wrapper.setAttribute("data-suggestion-id", suggestion.itemId);
+      wrapper.setAttribute("data-suggestion-type", suggestion.itemType);
+      wrapper.setAttribute("data-suggestion-title", suggestion.bookTitle);
+      wrapper.setAttribute(
+        "data-associated-highlight-text",
+        suggestion.associatedHighlightText || "",
+      );
+      container.appendChild(wrapper);
+    } else {
+      body.setAttribute("data-suggestion-id", suggestion.itemId);
+      body.setAttribute("data-suggestion-type", suggestion.itemType);
+      body.setAttribute("data-suggestion-title", suggestion.bookTitle);
+      body.setAttribute(
+        "data-associated-highlight-text",
+        suggestion.associatedHighlightText || "",
+      );
+      const textNode = body.querySelector(".suggestion-text");
+      if (textNode) textNode.textContent = `“${suggestion.previewText}”`;
+      let highlightNode = body.querySelector(".suggestion-highlight");
+      if (
+        suggestion.itemType === "note" &&
+        suggestion.associatedHighlightText
+      ) {
+        if (!highlightNode) {
+          highlightNode = document.createElement("p");
+          highlightNode.className = "suggestion-highlight";
+          // Insert highlight before note text
+          textNode?.parentNode?.insertBefore(highlightNode, textNode);
+        }
+        highlightNode.textContent = `“${suggestion.associatedHighlightText}”`;
+      } else if (highlightNode) {
+        highlightNode.remove();
+      }
+      const attributionNode = body.querySelector(".suggestion-attribution");
+      if (attributionNode)
+        attributionNode.textContent = `— ${cleanBookTitle}${authorPart}`;
+    }
+
+    const typeBadge = container.querySelector(".suggestion-type");
+    if (typeBadge) {
+      typeBadge.textContent = suggestion.itemType;
+    }
+  }
+
+  function renderEmptySuggestion() {
+    const container = document.querySelector(".random-suggestion");
+    if (!container) return;
+
+    const body = container.querySelector(".suggestion-body");
+    if (body) body.remove();
+
+    const typeBadge = container.querySelector(".suggestion-type");
+    if (typeBadge) typeBadge.remove();
+
+    const empty = document.createElement("div");
+    empty.className = "suggestion-empty";
+    empty.textContent = "No notes or highlights available right now.";
+    container.appendChild(empty);
+  }
+
+  function showSuggestionToast(message: string, type: "success" | "error") {
+    const toast = document.createElement("div");
+    toast.className = `toast toast-${type}`;
+    toast.textContent = message;
+    toast.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      z-index: 1000;
+      font-family: var(--font-family-secondary);
+      font-size: var(--font-size-sm);
+      background: ${type === "success" ? "var(--color-success)" : "var(--color-error)"};
+      color: white;
+    `;
+
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+  }
+
+  (window as any).shareRandomSuggestion = shareRandomSuggestion;
+  (window as any).refreshRandomSuggestion = refreshRandomSuggestion;
+</script>
+
+<style>
+  .random-suggestion {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    background: var(--color-surface);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-xl);
+  }
+
+  .suggestion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-md);
+  }
+
+  .suggestion-header h2 {
+    margin: 0;
+    font-size: var(--font-size-lg);
+  }
+
+  .suggestion-type {
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-secondary);
+  }
+
+  .suggestion-text {
+    margin: 0 0 var(--space-sm);
+    font-size: var(--font-size-md);
+    color: var(--color-text-primary);
+  }
+
+  .suggestion-attribution {
+    margin: 0 0 var(--space-md);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+  }
+
+  .suggestion-highlight {
+    margin: 0 0 var(--space-sm);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+    opacity: 0.9;
+  }
+
+  .suggestion-actions {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .suggestion-empty {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+  }
+</style>

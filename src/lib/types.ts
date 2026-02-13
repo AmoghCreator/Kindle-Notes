@@ -235,6 +235,40 @@ export interface InstagramExport {
         theme: string;
     };
 }
+
+export type ShareableItemType = 'note' | 'highlight';
+
+export interface ShareableItem {
+    itemId: string;
+    itemType: ShareableItemType;
+    text: string;
+    bookId: string;
+    bookTitle: string;
+    bookAuthor?: string;
+    associatedHighlightId?: string;
+    associatedHighlightText?: string;
+}
+
+export interface ShareTextPayload {
+    text: string;
+    charCount: number;
+    truncated: boolean;
+    includesAssociatedHighlight: boolean;
+    attribution: string;
+}
+
+export interface RandomSuggestion {
+    suggestionId: string;
+    itemId: string;
+    itemType: ShareableItemType;
+    previewText: string;
+    associatedHighlightId?: string;
+    associatedHighlightText?: string;
+    bookId: string;
+    bookTitle: string;
+    bookAuthor?: string;
+    canShare: boolean;
+}
 // Server-side storage types for 003-server-side-storage
 
 export interface DeduplicationResult {

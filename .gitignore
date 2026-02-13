@@ -22,3 +22,18 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# additional build output
+build/
+
+# additional logs
+*.log
+
+# all env variants
+.env*
+
+# editor/system artifacts
+.vscode/
+Thumbs.db
+*.tmp
+*.swp

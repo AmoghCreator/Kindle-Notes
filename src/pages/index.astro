@@ -3,8 +3,13 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import BookCard from "../components/notes/BookCard.astro";
 import NoteCard from "../components/notes/NoteCard.astro";
+import RandomSuggestionCard from "../components/sharing/RandomSuggestionCard.astro";
 import EmptyState from "../components/common/EmptyState.astro";
 import { getAllBooks, getAllNotes } from "../lib/server/storage";
+import {
+  selectRandomSuggestion,
+  toSuggestionPool,
+} from "../lib/export/random-suggestion";
 
 // Load all data at build time
 const allBooks = await getAllBooks();
@@ -44,6 +49,8 @@ const stats = {
 };
 
 const hasContent = allBooks.length > 0;
+const suggestionPool = toSuggestionPool(allNotes, allBooks);
+const initialSuggestion = selectRandomSuggestion(suggestionPool);
 ---
 
 <BaseLayout
@@ -112,6 +119,8 @@ const hasContent = allBooks.length > 0;
           />
         ) : (
           <>
+            <RandomSuggestionCard suggestion={initialSuggestion} />
+
             {/* Books section */}
             <section class="books-section">
               <div class="section-header">
@@ -144,7 +153,13 @@ const hasContent = allBooks.length > 0;
                 <div class="notes-list">
                   {recentNotes.map((note) => {
                     const book = allBooks.find((b) => b.id === note.bookId);
-                    return <NoteCard note={note} bookTitle={book?.title} />;
+                    return (
+                      <NoteCard
+                        note={note}
+                        bookTitle={book?.title}
+                        bookAuthor={book?.author}
+                      />
+                    );
                   })}
                 </div>
               </section>
