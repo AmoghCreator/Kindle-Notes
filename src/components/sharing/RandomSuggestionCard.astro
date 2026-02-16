@@ -99,16 +99,31 @@ const { suggestion } = Astro.props;
       };
 
       if (navigator.share) {
+        console.debug(
+          "shareRandomSuggestion - invoking navigator.share",
+          shareData,
+        );
         await navigator.share(shareData);
+        console.debug("shareRandomSuggestion - navigator.share resolved");
         showSuggestionToast("Share opened successfully.", "success");
       } else {
         try {
+          console.debug(
+            "shareRandomSuggestion - copying to clipboard via navigator.clipboard.writeText",
+          );
           await navigator.clipboard.writeText(shareText);
+          console.debug(
+            "shareRandomSuggestion - clipboard.writeText succeeded",
+          );
           showSuggestionToast(
             "Formatted share text copied to clipboard!",
             "success",
           );
         } catch (clipboardError) {
+          console.debug(
+            "shareRandomSuggestion - clipboard.writeText failed, trying DOM fallback",
+            clipboardError,
+          );
           try {
             const ta = document.createElement("textarea");
             ta.value = shareText;
@@ -119,6 +134,10 @@ const { suggestion } = Astro.props;
             ta.select();
             const ok = document.execCommand("copy");
             ta.remove();
+            console.debug(
+              "shareRandomSuggestion - execCommand copy result:",
+              ok,
+            );
             if (ok) {
               showSuggestionToast(
                 "Formatted share text copied to clipboard!",
@@ -128,6 +147,10 @@ const { suggestion } = Astro.props;
               throw clipboardError || new Error("Clipboard copy failed");
             }
           } catch (fallbackError) {
+            console.debug(
+              "shareRandomSuggestion - DOM fallback failed",
+              fallbackError,
+            );
             throw fallbackError;
           }
         }
@@ -149,10 +172,18 @@ const { suggestion } = Astro.props;
           .map(encodeURIComponent)
           .join(",")}`
       : "";
+    console.debug(
+      "refreshRandomSuggestion - excludedSuggestionIds",
+      Array.from(excludedSuggestionIds),
+    );
+    console.debug("refreshRandomSuggestion - fetch query", query);
 
     try {
       const response = await fetch(`/api/suggestions${query}`);
       if (response.status === 204) {
+        console.debug(
+          "refreshRandomSuggestion - server returned 204 (no suggestions)",
+        );
         renderEmptySuggestion();
         return;
       }
@@ -162,6 +193,10 @@ const { suggestion } = Astro.props;
       }
 
       const suggestion = await response.json();
+      console.debug(
+        "refreshRandomSuggestion - fetched suggestion",
+        suggestion?.itemId,
+      );
       // Add the returned suggestion id to the excluded set so we don't show it again
       if (suggestion?.itemId)
         excludedSuggestionIds.add(String(suggestion.itemId));
