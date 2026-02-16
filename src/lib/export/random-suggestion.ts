@@ -61,7 +61,7 @@ export function selectRandomSuggestion(
         candidates = pool.filter((item) => !exclude.has(item.itemId));
     }
     if (!candidates.length) {
-        candidates = [...pool];
+        return null; // No available suggestions after exclusions
     }
 
     const index = Math.floor(rng() * candidates.length);
