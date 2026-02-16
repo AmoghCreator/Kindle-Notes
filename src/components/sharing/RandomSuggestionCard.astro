@@ -39,18 +39,10 @@ const { suggestion } = Astro.props;
           — {suggestion.bookTitle.split("(Z-Library")[0]}
         </p>
         <div class="suggestion-actions">
-          <button
-            type="button"
-            class="btn btn-primary"
-            onclick="shareRandomSuggestion()"
-          >
+          <button type="button" class="btn btn-primary" data-action="share">
             Share now
           </button>
-          <button
-            type="button"
-            class="btn btn-ghost"
-            onclick="refreshRandomSuggestion()"
-          >
+          <button type="button" class="btn btn-ghost" data-action="refresh">
             New suggestion
           </button>
         </div>
@@ -200,8 +192,8 @@ const { suggestion } = Astro.props;
         <p class="suggestion-text">${suggestion.itemType === "note" ? "Note: " : ""}“${escapedText}”</p>
         <p class="suggestion-attribution">— ${cleanBookTitle}${authorPart}</p>
         <div class="suggestion-actions">
-          <button type="button" class="btn btn-primary" onclick="shareRandomSuggestion()">Share now</button>
-          <button type="button" class="btn btn-ghost" onclick="refreshRandomSuggestion()">New suggestion</button>
+          <button type="button" class="btn btn-primary" data-action="share">Share now</button>
+          <button type="button" class="btn btn-ghost" data-action="refresh">New suggestion</button>
         </div>
       `;
       wrapper.setAttribute("data-suggestion-id", suggestion.itemId);
@@ -288,6 +280,21 @@ const { suggestion } = Astro.props;
 
   (window as any).shareRandomSuggestion = shareRandomSuggestion;
   (window as any).refreshRandomSuggestion = refreshRandomSuggestion;
+
+  // Event delegation: ensure buttons continue to work after DOM updates
+  const suggestionRoot = document.querySelector(".random-suggestion");
+  if (suggestionRoot) {
+    suggestionRoot.addEventListener("click", (ev) => {
+      const btn = (ev.target as HTMLElement).closest("button");
+      if (!btn) return;
+      const action = btn.getAttribute("data-action");
+      if (action === "share") {
+        shareRandomSuggestion();
+      } else if (action === "refresh") {
+        refreshRandomSuggestion();
+      }
+    });
+  }
 </script>
 
 <style>
