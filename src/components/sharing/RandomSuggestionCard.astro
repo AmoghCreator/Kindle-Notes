@@ -101,7 +101,10 @@ const { suggestion } = Astro.props;
       } else {
         try {
           await navigator.clipboard.writeText(shareText);
-          showSuggestionToast("Formatted share text copied to clipboard!", "success");
+          showSuggestionToast(
+            "Formatted share text copied to clipboard!",
+            "success",
+          );
         } catch (clipboardError) {
           try {
             const ta = document.createElement("textarea");
@@ -114,7 +117,10 @@ const { suggestion } = Astro.props;
             const ok = document.execCommand("copy");
             ta.remove();
             if (ok) {
-              showSuggestionToast("Formatted share text copied to clipboard!", "success");
+              showSuggestionToast(
+                "Formatted share text copied to clipboard!",
+                "success",
+              );
             } else {
               throw clipboardError || new Error("Clipboard copy failed");
             }
