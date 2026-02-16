@@ -39,10 +39,18 @@ const { suggestion } = Astro.props;
           — {suggestion.bookTitle.split("(Z-Library")[0]}
         </p>
         <div class="suggestion-actions">
-          <button type="button" class="btn btn-primary" data-action="share">
+          <button
+            type="button"
+            class="btn btn-primary"
+            onclick="shareRandomSuggestion()"
+          >
             Share now
           </button>
-          <button type="button" class="btn btn-ghost" data-action="refresh">
+          <button
+            type="button"
+            class="btn btn-ghost"
+            onclick="refreshRandomSuggestion()"
+          >
             New suggestion
           </button>
         </div>
@@ -56,6 +64,9 @@ const { suggestion } = Astro.props;
 </section>
 
 <script>
+  // Keep track of suggestion IDs we've shown so we can exclude them
+  const excludedSuggestionIds = new Set();
+
   function buildSuggestionShareText(card: HTMLElement): string {
     const primary =
       card.querySelector(".suggestion-highlight")?.textContent?.trim() || "";
@@ -132,8 +143,11 @@ const { suggestion } = Astro.props;
       "[data-suggestion-id]",
     ) as HTMLElement | null;
     const currentId = current?.dataset.suggestionId;
-    const query = currentId
-      ? `?excludeIds=${encodeURIComponent(currentId)}`
+    if (currentId) excludedSuggestionIds.add(currentId);
+    const query = excludedSuggestionIds.size
+      ? `?excludeIds=${Array.from(excludedSuggestionIds)
+          .map(encodeURIComponent)
+          .join(",")}`
       : "";
 
     try {
@@ -148,6 +162,9 @@ const { suggestion } = Astro.props;
       }
 
       const suggestion = await response.json();
+      // Add the returned suggestion id to the excluded set so we don't show it again
+      if (suggestion?.itemId)
+        excludedSuggestionIds.add(String(suggestion.itemId));
       renderSuggestion(suggestion);
       showSuggestionToast("New suggestion ready.", "success");
     } catch (error) {
@@ -192,8 +209,8 @@ const { suggestion } = Astro.props;
         <p class="suggestion-text">${suggestion.itemType === "note" ? "Note: " : ""}“${escapedText}”</p>
         <p class="suggestion-attribution">— ${cleanBookTitle}${authorPart}</p>
         <div class="suggestion-actions">
-          <button type="button" class="btn btn-primary" data-action="share">Share now</button>
-          <button type="button" class="btn btn-ghost" data-action="refresh">New suggestion</button>
+          <button type="button" class="btn btn-primary" onclick="shareRandomSuggestion()">Share now</button>
+          <button type="button" class="btn btn-ghost" onclick="refreshRandomSuggestion()">New suggestion</button>
         </div>
       `;
       wrapper.setAttribute("data-suggestion-id", suggestion.itemId);
@@ -280,21 +297,6 @@ const { suggestion } = Astro.props;
 
   (window as any).shareRandomSuggestion = shareRandomSuggestion;
   (window as any).refreshRandomSuggestion = refreshRandomSuggestion;
-
-  // Event delegation: ensure buttons continue to work after DOM updates
-  const suggestionRoot = document.querySelector(".random-suggestion");
-  if (suggestionRoot) {
-    suggestionRoot.addEventListener("click", (ev) => {
-      const btn = (ev.target as HTMLElement).closest("button");
-      if (!btn) return;
-      const action = btn.getAttribute("data-action");
-      if (action === "share") {
-        shareRandomSuggestion();
-      } else if (action === "refresh") {
-        refreshRandomSuggestion();
-      }
-    });
-  }
 </script>
 
 <style>
