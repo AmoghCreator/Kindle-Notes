@@ -90,50 +90,19 @@ const { suggestion } = Astro.props;
     }
 
     try {
-      console.debug("shareRandomSuggestion - card dataset:", {
-        ...card.dataset,
-      });
-      console.debug("shareRandomSuggestion - shareText:", shareText);
-
       const shareData = {
         title: `From ${card.dataset.suggestionTitle || "my reading"}`,
         text: shareText,
       };
 
-      console.info(
-        "shareRandomSuggestion - navigator.share available:",
-        !!navigator.share,
-      );
-      console.info(
-        "shareRandomSuggestion - navigator.clipboard.writeText available:",
-        !!(navigator.clipboard && navigator.clipboard.writeText),
-      );
-
       if (navigator.share) {
-        console.debug(
-          "shareRandomSuggestion - calling navigator.share",
-          shareData,
-        );
         await navigator.share(shareData);
-        console.info("shareRandomSuggestion - navigator.share resolved");
         showSuggestionToast("Share opened successfully.", "success");
       } else {
         try {
-          console.debug(
-            "shareRandomSuggestion - copying to clipboard via navigator.clipboard.writeText",
-          );
           await navigator.clipboard.writeText(shareText);
-          console.info("shareRandomSuggestion - clipboard.writeText succeeded");
-          showSuggestionToast(
-            "Formatted share text copied to clipboard!",
-            "success",
-          );
+          showSuggestionToast("Formatted share text copied to clipboard!", "success");
         } catch (clipboardError) {
-          console.warn(
-            "shareRandomSuggestion - clipboard.writeText failed",
-            clipboardError,
-          );
-          // Fallback: attempt a DOM-based copy for older browsers
           try {
             const ta = document.createElement("textarea");
             ta.value = shareText;
@@ -144,29 +113,18 @@ const { suggestion } = Astro.props;
             ta.select();
             const ok = document.execCommand("copy");
             ta.remove();
-            console.info(
-              "shareRandomSuggestion - execCommand copy result:",
-              ok,
-            );
             if (ok) {
-              showSuggestionToast(
-                "Formatted share text copied to clipboard!",
-                "success",
-              );
+              showSuggestionToast("Formatted share text copied to clipboard!", "success");
             } else {
               throw clipboardError || new Error("Clipboard copy failed");
             }
           } catch (fallbackError) {
-            console.error(
-              "shareRandomSuggestion - fallback copy failed",
-              fallbackError,
-            );
             throw fallbackError;
           }
         }
       }
     } catch (error) {
-      console.error("shareRandomSuggestion - failed", error);
+      console.error(error);
       showSuggestionToast("Failed to share suggestion text.", "error");
     }
   }
