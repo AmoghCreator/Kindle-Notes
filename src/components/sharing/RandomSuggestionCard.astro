@@ -90,6 +90,7 @@ const { suggestion } = Astro.props;
     }
 
     try {
+      console.log("Sharing suggestion with text:", shareText);
       const shareData = {
         title: `From ${card.dataset.suggestionTitle || "my reading"}`,
         text: shareText,
