@@ -146,15 +146,26 @@ const { suggestion } = Astro.props;
     // Add current id to excluded set only after we've determined it's valid
     if (currentId) excludedSuggestionIds.add(currentId);
 
-    const url = new URL('/api/suggestions', window.location.origin);
-    // Append each excluded id as its own query param for robustness
-    Array.from(excludedSuggestionIds).forEach((id) => url.searchParams.append('excludeIds', id));
+    const url = new URL("/api/suggestions", window.location.origin);
+    const excludedIds = Array.from(excludedSuggestionIds);
+    // Compatibility mode for old + new API parsing styles
+    if (excludedIds.length) {
+      // Old parser support: `searchParams.get('excludeIds')` + split(',')
+      url.searchParams.set("excludeIds", excludedIds.join(","));
+      // New parser support: `searchParams.getAll('excludeIds')`
+      excludedIds.forEach((id) => url.searchParams.append("excludeIds", id));
+    }
+    // Avoid stale cache responses in prod
+    url.searchParams.set("_ts", String(Date.now()));
 
-    console.debug('refreshRandomSuggestion - excludedIds:', Array.from(excludedSuggestionIds));
-    console.debug('refreshRandomSuggestion - request url:', url.toString());
+    console.debug(
+      "refreshRandomSuggestion - excludedIds:",
+      Array.from(excludedSuggestionIds),
+    );
+    console.debug("refreshRandomSuggestion - request url:", url.toString());
 
     try {
-      const response = await fetch(url.toString());
+      const response = await fetch(url.toString(), { cache: "no-store" });
       console.debug(
         "refreshRandomSuggestion - response status:",
         response.status,
@@ -171,9 +182,10 @@ const { suggestion } = Astro.props;
       }
 
       const suggestion = await response.json();
-      console.debug('refreshRandomSuggestion - new suggestion:', suggestion);
+      console.debug("refreshRandomSuggestion - new suggestion:", suggestion);
       // Add the returned suggestion id to the excluded set so we don't show it again
-      if (suggestion?.itemId) excludedSuggestionIds.add(String(suggestion.itemId));
+      if (suggestion?.itemId)
+        excludedSuggestionIds.add(String(suggestion.itemId));
       renderSuggestion(suggestion);
       showSuggestionToast("New suggestion ready.", "success");
     } catch (error) {
