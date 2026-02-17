@@ -65,7 +65,7 @@ const { suggestion } = Astro.props;
 
 <script>
   // Keep track of suggestion IDs we've shown so we can exclude them
-  const excludedSuggestionIds = new Set<string>();
+  const excludedSuggestionIds = new Set();
 
   function buildSuggestionShareText(card: HTMLElement): string {
     const primary =
@@ -144,19 +144,27 @@ const { suggestion } = Astro.props;
     ) as HTMLElement | null;
     const currentId = current?.dataset.suggestionId;
     if (currentId) excludedSuggestionIds.add(currentId);
+    const query = excludedSuggestionIds.size
+      ? `?excludeIds=${Array.from(excludedSuggestionIds)
+          .map(encodeURIComponent)
+          .join(",")}`
+      : "";
 
-    const params = new URLSearchParams();
-    for (const id of excludedSuggestionIds) {
-      params.append("excludeIds", id);
-    }
+    console.debug(
+      "refreshRandomSuggestion - excludedIds:",
+      Array.from(excludedSuggestionIds),
+    );
+    console.debug("refreshRandomSuggestion - query:", query);
 
     try {
-      const query = params.toString();
-      const response = await fetch(
-        query ? `/api/suggestions?${query}` : "/api/suggestions",
+      const response = await fetch(`/api/suggestions${query}`);
+      console.debug(
+        "refreshRandomSuggestion - response status:",
+        response.status,
       );
 
       if (response.status === 204) {
+        console.debug("refreshRandomSuggestion - no more suggestions");
         renderEmptySuggestion();
         return;
       }
@@ -166,19 +174,14 @@ const { suggestion } = Astro.props;
       }
 
       const suggestion = await response.json();
-      if (suggestion?.itemId) {
-        const suggestionId = String(suggestion.itemId);
-        if (excludedSuggestionIds.has(suggestionId)) {
-          renderEmptySuggestion();
-          showSuggestionToast("No new suggestions available.", "error");
-          return;
-        }
-        excludedSuggestionIds.add(suggestionId);
-      }
+      console.debug("refreshRandomSuggestion - new suggestion:", suggestion);
+      // Add the returned suggestion id to the excluded set so we don't show it again
+      if (suggestion?.itemId)
+        excludedSuggestionIds.add(String(suggestion.itemId));
       renderSuggestion(suggestion);
       showSuggestionToast("New suggestion ready.", "success");
     } catch (error) {
-      console.error(error);
+      console.error("refreshRandomSuggestion - error:", error);
       showSuggestionToast("Failed to load a new suggestion.", "error");
     }
   }
