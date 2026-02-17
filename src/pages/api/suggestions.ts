@@ -4,10 +4,11 @@ import { selectRandomSuggestion, toSuggestionPool } from '../../lib/export/rando
 
 export const GET: APIRoute = async ({ url }) => {
     try {
-        const excludeParam = url.searchParams.get('excludeIds') || '';
         const includeTypes = url.searchParams.get('includeTypes') || 'all';
-        const excludeIds = excludeParam
-            .split(',')
+        // Support either a single comma-separated `excludeIds` value or repeated params
+        const rawExcludeParams = url.searchParams.getAll('excludeIds');
+        const excludeIds: string[] = rawExcludeParams
+            .flatMap((val) => val.split(','))
             .map((entry) => entry.trim())
             .filter(Boolean);
 
