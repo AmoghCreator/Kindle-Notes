@@ -2,6 +2,8 @@ import type { APIRoute } from 'astro';
 import { getAllBooks, getAllNotes } from '../../lib/server/storage';
 import { selectRandomSuggestion, toSuggestionPool } from '../../lib/export/random-suggestion';
 
+export const prerender = false;
+
 export const GET: APIRoute = async ({ url }) => {
     try {
         const includeTypes = url.searchParams.get('includeTypes') || 'all';

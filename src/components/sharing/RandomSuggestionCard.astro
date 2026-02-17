@@ -65,7 +65,7 @@ const { suggestion } = Astro.props;
 
 <script>
   // Keep track of suggestion IDs we've shown so we can exclude them
-  const excludedSuggestionIds = new Set();
+  const excludedSuggestionIds = new Set<string>();
 
   function buildSuggestionShareText(card: HTMLElement): string {
     const primary =
@@ -143,36 +143,20 @@ const { suggestion } = Astro.props;
       "[data-suggestion-id]",
     ) as HTMLElement | null;
     const currentId = current?.dataset.suggestionId;
-    // Add current id to excluded set only after we've determined it's valid
     if (currentId) excludedSuggestionIds.add(currentId);
 
-    const url = new URL("/api/suggestions", window.location.origin);
-    const excludedIds = Array.from(excludedSuggestionIds);
-    // Compatibility mode for old + new API parsing styles
-    if (excludedIds.length) {
-      // Old parser support: `searchParams.get('excludeIds')` + split(',')
-      url.searchParams.set("excludeIds", excludedIds.join(","));
-      // New parser support: `searchParams.getAll('excludeIds')`
-      excludedIds.forEach((id) => url.searchParams.append("excludeIds", id));
+    const params = new URLSearchParams();
+    for (const id of excludedSuggestionIds) {
+      params.append("excludeIds", id);
     }
-    // Avoid stale cache responses in prod
-    url.searchParams.set("_ts", String(Date.now()));
-
-    console.debug(
-      "refreshRandomSuggestion - excludedIds:",
-      Array.from(excludedSuggestionIds),
-    );
-    console.debug("refreshRandomSuggestion - request url:", url.toString());
 
     try {
-      const response = await fetch(url.toString(), { cache: "no-store" });
-      console.debug(
-        "refreshRandomSuggestion - response status:",
-        response.status,
+      const query = params.toString();
+      const response = await fetch(
+        query ? `/api/suggestions?${query}` : "/api/suggestions",
       );
 
       if (response.status === 204) {
-        console.debug("refreshRandomSuggestion - no more suggestions");
         renderEmptySuggestion();
         return;
       }
@@ -182,14 +166,19 @@ const { suggestion } = Astro.props;
       }
 
       const suggestion = await response.json();
-      console.debug("refreshRandomSuggestion - new suggestion:", suggestion);
-      // Add the returned suggestion id to the excluded set so we don't show it again
-      if (suggestion?.itemId)
-        excludedSuggestionIds.add(String(suggestion.itemId));
+      if (suggestion?.itemId) {
+        const suggestionId = String(suggestion.itemId);
+        if (excludedSuggestionIds.has(suggestionId)) {
+          renderEmptySuggestion();
+          showSuggestionToast("No new suggestions available.", "error");
+          return;
+        }
+        excludedSuggestionIds.add(suggestionId);
+      }
       renderSuggestion(suggestion);
       showSuggestionToast("New suggestion ready.", "success");
     } catch (error) {
-      console.error("refreshRandomSuggestion - error:", error);
+      console.error(error);
       showSuggestionToast("Failed to load a new suggestion.", "error");
     }
   }
