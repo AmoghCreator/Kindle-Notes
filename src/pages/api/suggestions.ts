@@ -2,6 +2,8 @@ import type { APIRoute } from 'astro';
 import { getAllBooks, getAllNotes } from '../../lib/server/storage';
 import { selectRandomSuggestion, toSuggestionPool } from '../../lib/export/random-suggestion';
 
+export const prerender = false;
+
 export const GET: APIRoute = async ({ url }) => {
     try {
         const includeTypes = url.searchParams.get('includeTypes') || 'all';
@@ -21,12 +23,18 @@ export const GET: APIRoute = async ({ url }) => {
 
         const suggestion = selectRandomSuggestion(pool, { excludeIds });
         if (!suggestion) {
-            return new Response(null, { status: 204 });
+            return new Response(null, {
+                status: 204,
+                headers: { 'Cache-Control': 'no-store' },
+            });
         }
 
         return new Response(JSON.stringify(suggestion), {
             status: 200,
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-store',
+            },
         });
     } catch (error) {
         return new Response(

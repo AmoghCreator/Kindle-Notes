@@ -65,7 +65,7 @@ const { suggestion } = Astro.props;
 
 <script>
   // Keep track of suggestion IDs we've shown so we can exclude them
-  const excludedSuggestionIds = new Set();
+  const excludedSuggestionIds = new Set<string>();
 
   function buildSuggestionShareText(card: HTMLElement): string {
     const primary =
@@ -157,7 +157,9 @@ const { suggestion } = Astro.props;
     console.debug("refreshRandomSuggestion - query:", query);
 
     try {
-      const response = await fetch(`/api/suggestions${query}`);
+      const response = await fetch(`/api/suggestions${query}`, {
+        cache: "no-store",
+      });
       console.debug(
         "refreshRandomSuggestion - response status:",
         response.status,
