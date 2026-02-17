@@ -3,12 +3,17 @@ import type { RandomSuggestion } from "../../lib/types";
 
 export interface Props {
   suggestion: RandomSuggestion | null;
+  suggestionPool?: RandomSuggestion[];
 }
 
-const { suggestion } = Astro.props;
+const { suggestion, suggestionPool = [] } = Astro.props;
 ---
 
-<section class="random-suggestion" aria-labelledby="randomSuggestionTitle">
+<section
+  class="random-suggestion"
+  aria-labelledby="randomSuggestionTitle"
+  data-suggestion-pool={encodeURIComponent(JSON.stringify(suggestionPool))}
+>
   <div class="suggestion-header">
     <h2 id="randomSuggestionTitle">Random spark</h2>
     {suggestion && <span class="suggestion-type">{suggestion.itemType}</span>}
@@ -66,6 +71,18 @@ const { suggestion } = Astro.props;
 <script>
   // Keep track of suggestion IDs we've shown so we can exclude them
   const excludedSuggestionIds = new Set<string>();
+  const suggestionContainer = document.querySelector(
+    ".random-suggestion",
+  ) as HTMLElement | null;
+  const rawPool = suggestionContainer?.dataset.suggestionPool || "";
+  let allSuggestions: Array<{ itemId: string }> = [];
+  try {
+    allSuggestions = rawPool
+      ? (JSON.parse(decodeURIComponent(rawPool)) as Array<{ itemId: string }>)
+      : [];
+  } catch {
+    allSuggestions = [];
+  }
 
   function buildSuggestionShareText(card: HTMLElement): string {
     const primary =
@@ -144,38 +161,22 @@ const { suggestion } = Astro.props;
     ) as HTMLElement | null;
     const currentId = current?.dataset.suggestionId;
     if (currentId) excludedSuggestionIds.add(currentId);
-    const query = excludedSuggestionIds.size
-      ? `?excludeIds=${Array.from(excludedSuggestionIds)
-          .map(encodeURIComponent)
-          .join(",")}`
-      : "";
 
-    console.debug(
-      "refreshRandomSuggestion - excludedIds:",
-      Array.from(excludedSuggestionIds),
-    );
-    console.debug("refreshRandomSuggestion - query:", query);
+    console.debug("refreshRandomSuggestion - excludedIds:", Array.from(excludedSuggestionIds));
 
     try {
-      const response = await fetch(`/api/suggestions${query}`, {
-        cache: "no-store",
-      });
-      console.debug(
-        "refreshRandomSuggestion - response status:",
-        response.status,
+      const candidates = allSuggestions.filter(
+        (item) => !excludedSuggestionIds.has(String(item.itemId)),
       );
 
-      if (response.status === 204) {
-        console.debug("refreshRandomSuggestion - no more suggestions");
+      if (!candidates.length) {
+        console.debug("refreshRandomSuggestion - no more suggestions in local pool");
         renderEmptySuggestion();
         return;
       }
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch suggestion");
-      }
-
-      const suggestion = await response.json();
+      const index = Math.floor(Math.random() * candidates.length);
+      const suggestion = candidates[index];
       console.debug("refreshRandomSuggestion - new suggestion:", suggestion);
       // Add the returned suggestion id to the excluded set so we don't show it again
       if (suggestion?.itemId)

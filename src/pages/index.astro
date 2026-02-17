@@ -119,7 +119,10 @@ const initialSuggestion = selectRandomSuggestion(suggestionPool);
           />
         ) : (
           <>
-            <RandomSuggestionCard suggestion={initialSuggestion} />
+            <RandomSuggestionCard
+              suggestion={initialSuggestion}
+              suggestionPool={suggestionPool}
+            />
 
             {/* Books section */}
             <section class="books-section">
