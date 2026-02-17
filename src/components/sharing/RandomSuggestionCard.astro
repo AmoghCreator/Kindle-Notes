@@ -143,21 +143,18 @@ const { suggestion } = Astro.props;
       "[data-suggestion-id]",
     ) as HTMLElement | null;
     const currentId = current?.dataset.suggestionId;
+    // Add current id to excluded set only after we've determined it's valid
     if (currentId) excludedSuggestionIds.add(currentId);
-    const query = excludedSuggestionIds.size
-      ? `?excludeIds=${Array.from(excludedSuggestionIds)
-          .map(encodeURIComponent)
-          .join(",")}`
-      : "";
 
-    console.debug(
-      "refreshRandomSuggestion - excludedIds:",
-      Array.from(excludedSuggestionIds),
-    );
-    console.debug("refreshRandomSuggestion - query:", query);
+    const url = new URL('/api/suggestions', window.location.origin);
+    // Append each excluded id as its own query param for robustness
+    Array.from(excludedSuggestionIds).forEach((id) => url.searchParams.append('excludeIds', id));
+
+    console.debug('refreshRandomSuggestion - excludedIds:', Array.from(excludedSuggestionIds));
+    console.debug('refreshRandomSuggestion - request url:', url.toString());
 
     try {
-      const response = await fetch(`/api/suggestions${query}`);
+      const response = await fetch(url.toString());
       console.debug(
         "refreshRandomSuggestion - response status:",
         response.status,
@@ -174,10 +171,9 @@ const { suggestion } = Astro.props;
       }
 
       const suggestion = await response.json();
-      console.debug("refreshRandomSuggestion - new suggestion:", suggestion);
+      console.debug('refreshRandomSuggestion - new suggestion:', suggestion);
       // Add the returned suggestion id to the excluded set so we don't show it again
-      if (suggestion?.itemId)
-        excludedSuggestionIds.add(String(suggestion.itemId));
+      if (suggestion?.itemId) excludedSuggestionIds.add(String(suggestion.itemId));
       renderSuggestion(suggestion);
       showSuggestionToast("New suggestion ready.", "success");
     } catch (error) {
