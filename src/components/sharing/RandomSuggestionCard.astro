@@ -162,7 +162,10 @@ const { suggestion, suggestionPool = [] } = Astro.props;
     const currentId = current?.dataset.suggestionId;
     if (currentId) excludedSuggestionIds.add(currentId);
 
-    console.debug("refreshRandomSuggestion - excludedIds:", Array.from(excludedSuggestionIds));
+    console.debug(
+      "refreshRandomSuggestion - excludedIds:",
+      Array.from(excludedSuggestionIds),
+    );
 
     try {
       const candidates = allSuggestions.filter(
@@ -170,7 +173,9 @@ const { suggestion, suggestionPool = [] } = Astro.props;
       );
 
       if (!candidates.length) {
-        console.debug("refreshRandomSuggestion - no more suggestions in local pool");
+        console.debug(
+          "refreshRandomSuggestion - no more suggestions in local pool",
+        );
         renderEmptySuggestion();
         return;
       }
