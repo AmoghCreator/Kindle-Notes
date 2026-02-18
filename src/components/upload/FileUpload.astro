@@ -85,10 +85,7 @@ const {
       <div class="result-content">
         <h4>Upload Successful!</h4>
         <p id="successMessage"></p>
-        <button
-          class="btn btn-primary"
-          onclick="window.location.href='/'"
-        >
+        <button class="btn btn-primary" onclick="window.location.href='/'">
           View Library
         </button>
       </div>
@@ -114,8 +111,8 @@ const {
 </div>
 
 <script>
-  import { initDB, getDB } from '../../lib/db/index';
-  import { canonicalizeImportBooks } from '../../lib/parsers/kindle-canonical-import';
+  import { initDB, getDB } from "../../lib/db/index";
+  import { canonicalizeImportBooks } from "../../lib/parsers/kindle-canonical-import";
 
   const uploadArea = document.getElementById("uploadArea");
   const fileInput = document.getElementById("fileInput");
@@ -251,7 +248,12 @@ const {
       updateProgress(50, "Saving to local database...");
 
       // Hydrate books and notes into Dexie IndexedDB
-      let canonicalSummary = { autoLinked: 0, needsConfirmation: 0, provisional: 0, total: 0 };
+      let canonicalSummary = {
+        autoLinked: 0,
+        needsConfirmation: 0,
+        provisional: 0,
+        total: 0,
+      };
       try {
         await initDB();
         const db = getDB();
@@ -275,7 +277,10 @@ const {
         }
       } catch (dexieError) {
         // Dexie/canonical errors are non-fatal — server data is already saved
-        console.warn("Dexie hydration or canonical matching failed (non-fatal):", dexieError);
+        console.warn(
+          "Dexie hydration or canonical matching failed (non-fatal):",
+          dexieError,
+        );
       }
 
       updateProgress(100, "Complete!");

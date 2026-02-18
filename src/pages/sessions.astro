@@ -1,18 +1,18 @@
 ---
 /**
  * Reading Sessions Page
- * 
+ *
  * Main page for creating and browsing daily reading sessions.
  * Combines the session entry form and timeline list with
  * loading, empty, and error state handling.
  */
-import BaseLayout from '../layouts/BaseLayout.astro';
-import ReadingSessionForm from '../components/sessions/ReadingSessionForm.astro';
-import ReadingSessionList from '../components/sessions/ReadingSessionList.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ReadingSessionForm from "../components/sessions/ReadingSessionForm.astro";
+import ReadingSessionList from "../components/sessions/ReadingSessionList.astro";
 ---
 
-<BaseLayout 
-  title="Reading Sessions" 
+<BaseLayout
+  title="Reading Sessions"
   description="Log and browse your daily reading sessions"
 >
   <div class="sessions-page">
@@ -39,10 +39,10 @@ import ReadingSessionList from '../components/sessions/ReadingSessionList.astro'
 
 <script>
   // Initialize Dexie on page load
-  import { initDB } from '../lib/db/index';
-  
-  initDB().catch(err => {
-    console.error('Failed to initialize database:', err);
+  import { initDB } from "../lib/db/index";
+
+  initDB().catch((err) => {
+    console.error("Failed to initialize database:", err);
   });
 </script>
 

@@ -1,7 +1,7 @@
 ---
 /**
  * Reading Session Timeline List
- * 
+ *
  * Client-side rendered component that displays reading sessions
  * in reverse chronological order with date grouping.
  */
@@ -9,7 +9,7 @@ export interface Props {
   class?: string;
 }
 
-const { class: className = '' } = Astro.props;
+const { class: className = "" } = Astro.props;
 ---
 
 <div class={`session-list-wrapper ${className}`} id="sessionListWrapper">
@@ -22,16 +22,27 @@ const { class: className = '' } = Astro.props;
   </div>
 
   <!-- Error state -->
-  <div id="sessionListError" class="session-list-state error-state" style="display: none;" role="alert">
+  <div
+    id="sessionListError"
+    class="session-list-state error-state"
+    style="display: none;"
+    role="alert"
+  >
     <p class="state-message">⚠ Something went wrong loading your sessions.</p>
     <button class="btn btn-secondary" id="retryLoadBtn">Retry</button>
   </div>
 
   <!-- Empty state -->
-  <div id="sessionListEmpty" class="session-list-state empty-state" style="display: none;">
+  <div
+    id="sessionListEmpty"
+    class="session-list-state empty-state"
+    style="display: none;"
+  >
     <div class="empty-icon">📚</div>
     <h3 class="state-title">No sessions yet</h3>
-    <p class="state-message">Start logging your reading to see your timeline here.</p>
+    <p class="state-message">
+      Start logging your reading to see your timeline here.
+    </p>
   </div>
 
   <!-- Session timeline -->
@@ -70,7 +81,9 @@ const { class: className = '' } = Astro.props;
   }
 
   @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   .error-state {
@@ -184,26 +197,31 @@ const { class: className = '' } = Astro.props;
 </style>
 
 <script>
-  import { listReadingSessions } from '../../lib/db/repositories/reading-sessions';
-  import { getCanonicalBook } from '../../lib/db/repositories/canonical-books';
-  import { formatPageRange, getDateLabel, getTodayStr, getYesterdayStr } from '../../lib/utils/ui-state';
-  import type { ReadingSession, CanonicalBookIdentity } from '../../lib/types';
+  import { listReadingSessions } from "../../lib/db/repositories/reading-sessions";
+  import { getCanonicalBook } from "../../lib/db/repositories/canonical-books";
+  import {
+    formatPageRange,
+    getDateLabel,
+    getTodayStr,
+    getYesterdayStr,
+  } from "../../lib/utils/ui-state";
+  import type { ReadingSession, CanonicalBookIdentity } from "../../lib/types";
 
-  const loadingEl = document.getElementById('sessionListLoading')!;
-  const errorEl = document.getElementById('sessionListError')!;
-  const emptyEl = document.getElementById('sessionListEmpty')!;
-  const timelineEl = document.getElementById('sessionTimeline')!;
-  const timelineContent = document.getElementById('timelineContent')!;
-  const retryBtn = document.getElementById('retryLoadBtn')!;
+  const loadingEl = document.getElementById("sessionListLoading")!;
+  const errorEl = document.getElementById("sessionListError")!;
+  const emptyEl = document.getElementById("sessionListEmpty")!;
+  const timelineEl = document.getElementById("sessionTimeline")!;
+  const timelineContent = document.getElementById("timelineContent")!;
+  const retryBtn = document.getElementById("retryLoadBtn")!;
 
   async function loadSessions() {
-    showState('loading');
+    showState("loading");
 
     try {
       const sessions = await listReadingSessions();
 
       if (sessions.length === 0) {
-        showState('empty');
+        showState("empty");
         return;
       }
 
@@ -217,21 +235,24 @@ const { class: className = '' } = Astro.props;
       }
 
       renderTimeline(sessions, bookCache);
-      showState('ready');
+      showState("ready");
     } catch (err) {
-      console.error('Failed to load sessions:', err);
-      showState('error');
+      console.error("Failed to load sessions:", err);
+      showState("error");
     }
   }
 
-  function showState(state: 'loading' | 'error' | 'empty' | 'ready') {
-    loadingEl.style.display = state === 'loading' ? 'block' : 'none';
-    errorEl.style.display = state === 'error' ? 'block' : 'none';
-    emptyEl.style.display = state === 'empty' ? 'block' : 'none';
-    timelineEl.style.display = state === 'ready' ? 'block' : 'none';
+  function showState(state: "loading" | "error" | "empty" | "ready") {
+    loadingEl.style.display = state === "loading" ? "block" : "none";
+    errorEl.style.display = state === "error" ? "block" : "none";
+    emptyEl.style.display = state === "empty" ? "block" : "none";
+    timelineEl.style.display = state === "ready" ? "block" : "none";
   }
 
-  function renderTimeline(sessions: ReadingSession[], bookCache: Map<string, CanonicalBookIdentity>) {
+  function renderTimeline(
+    sessions: ReadingSession[],
+    bookCache: Map<string, CanonicalBookIdentity>,
+  ) {
     const today = getTodayStr();
     const yesterday = getYesterdayStr();
 
@@ -243,24 +264,24 @@ const { class: className = '' } = Astro.props;
       groups.get(date)!.push(session);
     }
 
-    timelineContent.innerHTML = '';
+    timelineContent.innerHTML = "";
 
     for (const [date, dateSessions] of groups) {
-      const group = document.createElement('div');
-      group.className = 'timeline-date-group';
+      const group = document.createElement("div");
+      group.className = "timeline-date-group";
 
-      const label = document.createElement('h3');
-      label.className = 'timeline-date-label';
+      const label = document.createElement("h3");
+      label.className = "timeline-date-label";
       label.textContent = getDateLabel(date, today, yesterday);
       group.appendChild(label);
 
       for (const session of dateSessions) {
         const book = bookCache.get(session.canonicalBookId);
-        const card = document.createElement('div');
-        card.className = 'session-card';
+        const card = document.createElement("div");
+        card.className = "session-card";
 
         const pageRange = formatPageRange(session.pageStart, session.pageEnd);
-        const bookTitle = book?.titleCanonical || 'Unknown Book';
+        const bookTitle = book?.titleCanonical || "Unknown Book";
 
         let html = `
           <div class="session-card-header">
@@ -283,16 +304,16 @@ const { class: className = '' } = Astro.props;
   }
 
   function escapeHtml(str: string): string {
-    const div = document.createElement('div');
+    const div = document.createElement("div");
     div.textContent = str;
     return div.innerHTML;
   }
 
   // Retry button
-  retryBtn.addEventListener('click', loadSessions);
+  retryBtn.addEventListener("click", loadSessions);
 
   // Listen for new sessions
-  window.addEventListener('session-created', loadSessions);
+  window.addEventListener("session-created", loadSessions);
 
   // Initial load
   loadSessions();

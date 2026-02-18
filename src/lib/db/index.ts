@@ -13,10 +13,10 @@ let dbInstance: KindleNotesDB | null = null;
  * Creates the instance on first call.
  */
 export function getDB(): KindleNotesDB {
-  if (!dbInstance) {
-    dbInstance = new KindleNotesDB();
-  }
-  return dbInstance;
+    if (!dbInstance) {
+        dbInstance = new KindleNotesDB();
+    }
+    return dbInstance;
 }
 
 /**
@@ -24,25 +24,25 @@ export function getDB(): KindleNotesDB {
  * Should be called once at app startup.
  */
 export async function initDB(): Promise<KindleNotesDB> {
-  const db = getDB();
-  await db.open();
-  return db;
+    const db = getDB();
+    await db.open();
+    return db;
 }
 
 /**
  * Close the database connection (useful for testing).
  */
 export async function closeDB(): Promise<void> {
-  if (dbInstance) {
-    dbInstance.close();
-    dbInstance = null;
-  }
+    if (dbInstance) {
+        dbInstance.close();
+        dbInstance = null;
+    }
 }
 
 /**
  * Delete the entire database (useful for testing/reset).
  */
 export async function deleteDB(): Promise<void> {
-  await closeDB();
-  await new KindleNotesDB().delete();
+    await closeDB();
+    await new KindleNotesDB().delete();
 }

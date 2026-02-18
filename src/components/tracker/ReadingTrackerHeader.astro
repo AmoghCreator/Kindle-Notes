@@ -1,7 +1,7 @@
 ---
 /**
  * Reading Tracker Header
- * 
+ *
  * Replaces the library hero header with a daily reading tracker.
  * Shows today/yesterday/latest session context with streak summary
  * and a CTA to log a new session.
@@ -10,7 +10,7 @@ export interface Props {
   class?: string;
 }
 
-const { class: className = '' } = Astro.props;
+const { class: className = "" } = Astro.props;
 ---
 
 <div class={`tracker-header ${className}`} id="trackerHeader">
@@ -23,17 +23,31 @@ const { class: className = '' } = Astro.props;
   </div>
 
   <!-- Error state -->
-  <div id="trackerError" class="tracker-state" style="display: none;" role="alert">
+  <div
+    id="trackerError"
+    class="tracker-state"
+    style="display: none;"
+    role="alert"
+  >
     <p class="tracker-error-message">⚠ Could not load your reading tracker.</p>
     <button class="btn btn-secondary btn-sm" id="trackerRetryBtn">Retry</button>
   </div>
 
   <!-- Empty state (no sessions) -->
-  <div id="trackerEmpty" class="tracker-state tracker-empty" style="display: none;">
+  <div
+    id="trackerEmpty"
+    class="tracker-state tracker-empty"
+    style="display: none;"
+  >
     <div class="tracker-icon">📖</div>
     <h2 class="tracker-title">Reading Tracker</h2>
-    <p class="tracker-empty-message">Start tracking your reading journey!<br/>Log your first session to see your progress here.</p>
-    <a href="/sessions" class="btn btn-primary">Log Your First Reading Session</a>
+    <p class="tracker-empty-message">
+      Start tracking your reading journey!<br />Log your first session to see
+      your progress here.
+    </p>
+    <a href="/sessions" class="btn btn-primary"
+      >Log Your First Reading Session</a
+    >
   </div>
 
   <!-- Session display state -->
@@ -47,7 +61,9 @@ const { class: className = '' } = Astro.props;
       <div class="tracker-cover" id="trackerCover">
         <div class="cover-placeholder">
           <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+            <path
+              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+            ></path>
           </svg>
         </div>
       </div>
@@ -55,7 +71,8 @@ const { class: className = '' } = Astro.props;
         <span class="tracker-date-label" id="trackerDateLabel"></span>
         <span class="tracker-book-title" id="trackerBookTitle"></span>
         <span class="tracker-page-range" id="trackerPageRange"></span>
-        <span class="tracker-insight" id="trackerInsight" style="display: none;"></span>
+        <span class="tracker-insight" id="trackerInsight" style="display: none;"
+        ></span>
       </div>
     </div>
 
@@ -104,7 +121,9 @@ const { class: className = '' } = Astro.props;
   }
 
   @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   .tracker-error-message {
@@ -289,46 +308,49 @@ const { class: className = '' } = Astro.props;
 </style>
 
 <script>
-  import { getTrackerSummary } from '../../lib/tracker/summary';
-  import { computeStreak } from '../../lib/tracker/streak';
-  import { formatPageRange } from '../../lib/utils/ui-state';
-  import { initDB } from '../../lib/db/index';
+  import { getTrackerSummary } from "../../lib/tracker/summary";
+  import { computeStreak } from "../../lib/tracker/streak";
+  import { formatPageRange } from "../../lib/utils/ui-state";
+  import { initDB } from "../../lib/db/index";
 
-  const loadingEl = document.getElementById('trackerLoading')!;
-  const errorEl = document.getElementById('trackerError')!;
-  const emptyEl = document.getElementById('trackerEmpty')!;
-  const contentEl = document.getElementById('trackerContent')!;
-  const retryBtn = document.getElementById('trackerRetryBtn')!;
+  const loadingEl = document.getElementById("trackerLoading")!;
+  const errorEl = document.getElementById("trackerError")!;
+  const emptyEl = document.getElementById("trackerEmpty")!;
+  const contentEl = document.getElementById("trackerContent")!;
+  const retryBtn = document.getElementById("trackerRetryBtn")!;
 
-  const dateLabelEl = document.getElementById('trackerDateLabel')!;
-  const bookTitleEl = document.getElementById('trackerBookTitle')!;
-  const pageRangeEl = document.getElementById('trackerPageRange')!;
-  const insightEl = document.getElementById('trackerInsight')!;
-  const coverEl = document.getElementById('trackerCover')!;
-  const streakEl = document.getElementById('trackerStreak')!;
+  const dateLabelEl = document.getElementById("trackerDateLabel")!;
+  const bookTitleEl = document.getElementById("trackerBookTitle")!;
+  const pageRangeEl = document.getElementById("trackerPageRange")!;
+  const insightEl = document.getElementById("trackerInsight")!;
+  const coverEl = document.getElementById("trackerCover")!;
+  const streakEl = document.getElementById("trackerStreak")!;
 
   async function loadTracker() {
-    showState('loading');
+    showState("loading");
 
     try {
       await initDB();
       const summary = await getTrackerSummary();
 
-      if (summary.state === 'empty') {
-        showState('empty');
+      if (summary.state === "empty") {
+        showState("empty");
         return;
       }
 
       // Populate session data
       dateLabelEl.textContent = summary.dateLabel;
-      bookTitleEl.textContent = summary.book?.titleCanonical || 'Unknown Book';
-      
+      bookTitleEl.textContent = summary.book?.titleCanonical || "Unknown Book";
+
       if (summary.session) {
-        pageRangeEl.textContent = formatPageRange(summary.session.pageStart, summary.session.pageEnd);
-        
+        pageRangeEl.textContent = formatPageRange(
+          summary.session.pageStart,
+          summary.session.pageEnd,
+        );
+
         if (summary.session.insight) {
           insightEl.textContent = `"${summary.session.insight}"`;
-          insightEl.style.display = 'block';
+          insightEl.style.display = "block";
         }
 
         // Cover image
@@ -340,32 +362,32 @@ const { class: className = '' } = Astro.props;
       // Load streak data
       try {
         const streak = await computeStreak();
-        if (streak.streakStatus === 'active') {
-          streakEl.textContent = `🔥 ${streak.currentStreakDays}-day streak · ${streak.daysReadThisWeek} day${streak.daysReadThisWeek !== 1 ? 's' : ''} this week`;
+        if (streak.streakStatus === "active") {
+          streakEl.textContent = `🔥 ${streak.currentStreakDays}-day streak · ${streak.daysReadThisWeek} day${streak.daysReadThisWeek !== 1 ? "s" : ""} this week`;
         } else if (streak.longestStreakDays > 0) {
           streakEl.textContent = `Your streak ended at ${streak.longestStreakDays} days. Start a new one!`;
         } else {
-          streakEl.textContent = 'Start your reading streak today!';
+          streakEl.textContent = "Start your reading streak today!";
         }
       } catch {
-        streakEl.textContent = '';
+        streakEl.textContent = "";
       }
 
-      showState('ready');
+      showState("ready");
     } catch (err) {
-      console.error('Failed to load tracker:', err);
-      showState('error');
+      console.error("Failed to load tracker:", err);
+      showState("error");
     }
   }
 
-  function showState(state: 'loading' | 'error' | 'empty' | 'ready') {
-    loadingEl.style.display = state === 'loading' ? 'flex' : 'none';
-    errorEl.style.display = state === 'error' ? 'flex' : 'none';
-    emptyEl.style.display = state === 'empty' ? 'flex' : 'none';
-    contentEl.style.display = state === 'ready' ? 'flex' : 'none';
+  function showState(state: "loading" | "error" | "empty" | "ready") {
+    loadingEl.style.display = state === "loading" ? "flex" : "none";
+    errorEl.style.display = state === "error" ? "flex" : "none";
+    emptyEl.style.display = state === "empty" ? "flex" : "none";
+    contentEl.style.display = state === "ready" ? "flex" : "none";
   }
 
-  retryBtn.addEventListener('click', loadTracker);
+  retryBtn.addEventListener("click", loadTracker);
 
   // Initial load
   loadTracker();

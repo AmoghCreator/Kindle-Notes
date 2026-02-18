@@ -118,17 +118,17 @@ export interface SyncMeta {
 
 export type UnifiedBookHistoryItem =
     | {
-          itemType: 'note';
-          itemId: string;
-          happenedAt: Date;
-          payload: Note;
-      }
+        itemType: 'note';
+        itemId: string;
+        happenedAt: Date;
+        payload: Note;
+    }
     | {
-          itemType: 'session';
-          itemId: string;
-          happenedAt: Date;
-          payload: ReadingSession;
-      };
+        itemType: 'session';
+        itemId: string;
+        happenedAt: Date;
+        payload: ReadingSession;
+    };
 
 export interface UnifiedBookHistory {
     canonicalBookId: string;
