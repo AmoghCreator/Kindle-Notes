@@ -119,7 +119,7 @@ const { suggestion, suggestionPool = [] } = Astro.props;
     const fullHighlight = card.dataset.fullAssociatedHighlightText || "";
     const title = card.dataset.suggestionTitle || "";
     const cleanTitle = title.split("(Z-Library")[0].trim();
-    
+
     const parts = [];
     if (fullHighlight) parts.push(`"${fullHighlight}"`);
     if (fullText) {
@@ -127,7 +127,7 @@ const { suggestion, suggestionPool = [] } = Astro.props;
       parts.push(`${prefix}"${fullText}"`);
     }
     if (cleanTitle) parts.push(`— ${cleanTitle}`);
-    
+
     const shareText = parts.join("\n");
     if (!shareText) {
       showSuggestionToast("No suggestion text available to share.", "error");
@@ -146,10 +146,7 @@ const { suggestion, suggestionPool = [] } = Astro.props;
       } else {
         try {
           await navigator.clipboard.writeText(shareText);
-          showSuggestionToast(
-            "Full text copied to clipboard!",
-            "success",
-          );
+          showSuggestionToast("Full text copied to clipboard!", "success");
         } catch (clipboardError) {
           try {
             const ta = document.createElement("textarea");
@@ -162,10 +159,7 @@ const { suggestion, suggestionPool = [] } = Astro.props;
             const ok = document.execCommand("copy");
             ta.remove();
             if (ok) {
-              showSuggestionToast(
-                "Full text copied to clipboard!",
-                "success",
-              );
+              showSuggestionToast("Full text copied to clipboard!", "success");
             } else {
               throw clipboardError || new Error("Clipboard copy failed");
             }
@@ -193,7 +187,7 @@ const { suggestion, suggestionPool = [] } = Astro.props;
     const previewHighlight = card.dataset.associatedHighlightText || "";
     const title = card.dataset.suggestionTitle || "";
     const cleanTitle = title.split("(Z-Library")[0].trim();
-    
+
     const parts = [];
     if (previewHighlight) parts.push(`"${previewHighlight}"`);
     if (previewText) {
@@ -201,7 +195,7 @@ const { suggestion, suggestionPool = [] } = Astro.props;
       parts.push(`${prefix}"${previewText}"`);
     }
     if (cleanTitle) parts.push(`— ${cleanTitle}`);
-    
+
     const shareText = parts.join("\n");
     if (!shareText) {
       showSuggestionToast("No suggestion text available to copy.", "error");
@@ -220,10 +214,7 @@ const { suggestion, suggestionPool = [] } = Astro.props;
       } else {
         try {
           await navigator.clipboard.writeText(shareText);
-          showSuggestionToast(
-            "Summary copied to clipboard!",
-            "success",
-          );
+          showSuggestionToast("Summary copied to clipboard!", "success");
         } catch (clipboardError) {
           try {
             const ta = document.createElement("textarea");
@@ -236,10 +227,7 @@ const { suggestion, suggestionPool = [] } = Astro.props;
             const ok = document.execCommand("copy");
             ta.remove();
             if (ok) {
-              showSuggestionToast(
-                "Summary copied to clipboard!",
-                "success",
-              );
+              showSuggestionToast("Summary copied to clipboard!", "success");
             } else {
               throw clipboardError || new Error("Clipboard copy failed");
             }
@@ -301,10 +289,9 @@ const { suggestion, suggestionPool = [] } = Astro.props;
       /"/g,
       "&quot;",
     );
-    const escapedFullHighlight = String(suggestion.fullAssociatedHighlightText || "").replace(
-      /"/g,
-      "&quot;",
-    );
+    const escapedFullHighlight = String(
+      suggestion.fullAssociatedHighlightText || "",
+    ).replace(/"/g, "&quot;");
     const authorPart = suggestion.bookAuthor
       ? `, ${suggestion.bookAuthor}`
       : "";
@@ -327,7 +314,8 @@ const { suggestion, suggestionPool = [] } = Astro.props;
       wrapper.className = "suggestion-body";
       wrapper.innerHTML = `
         ${
-          suggestion.itemType === "note" && suggestion.fullAssociatedHighlightText
+          suggestion.itemType === "note" &&
+          suggestion.fullAssociatedHighlightText
             ? `<p class="suggestion-highlight">"${escapedFullHighlight}"</p>`
             : ""
         }
