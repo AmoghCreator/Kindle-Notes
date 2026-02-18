@@ -7,7 +7,7 @@
 
 ## Summary
 
-Kindle Notes Website enables users to upload, organize, and share their Kindle highlights/notes through an attractive, Kindle-inspired static site. Core features include file import with automatic book/page organization, fast search/filtering, and one-click sharing to Twitter (text) and Instagram Stories (image export). Technical approach emphasizes frontend-heavy static site generation with minimal backend, prioritizing exceptional UX that feels simple yet eye-catching like a Kindle device.
+Kindle Notes Website enables users to upload, organize, and share their Kindle highlights/notes through an attractive, Kindle-inspired static site. Core features include file import with automatic book/page organization, fast search/filtering, and one-click sharing to Twitter (text) and Instagram Stories (image export). The implementation now also supports Random Spark full-text display with separate copy actions for full vs summary outputs. Technical approach emphasizes frontend-heavy static site generation with minimal backend, prioritizing exceptional UX that feels simple yet eye-catching like a Kindle device.
 
 ## Technical Context
 
@@ -130,6 +130,12 @@ public/               # Build output & static files
 ```
 
 **Structure Decision**: Static web application using frontend-heavy architecture. No backend directory needed—all processing client-side with optional minimal auth service integration. Build tools generate static assets to `public/` for deployment.
+
+## Implementation Alignment Addendum (2026-02-19)
+
+- Random Spark card rendering is aligned to show untrimmed note/highlight text in the visible UI.
+- Share interaction is split into two explicit actions: `Copy Full` (source text) and `Copy Summary` (preview text).
+- Data flow is aligned to carry both `fullText` and `previewText` so display and copy behaviors remain independently controllable.
 
 ## Complexity Tracking
 

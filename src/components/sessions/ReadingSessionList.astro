@@ -1,0 +1,299 @@
+---
+/**
+ * Reading Session Timeline List
+ * 
+ * Client-side rendered component that displays reading sessions
+ * in reverse chronological order with date grouping.
+ */
+export interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<div class={`session-list-wrapper ${className}`} id="sessionListWrapper">
+  <!-- Loading state -->
+  <div id="sessionListLoading" class="session-list-state" aria-live="polite">
+    <div class="loading-indicator">
+      <div class="spinner"></div>
+      <span>Loading your reading sessions...</span>
+    </div>
+  </div>
+
+  <!-- Error state -->
+  <div id="sessionListError" class="session-list-state error-state" style="display: none;" role="alert">
+    <p class="state-message">⚠ Something went wrong loading your sessions.</p>
+    <button class="btn btn-secondary" id="retryLoadBtn">Retry</button>
+  </div>
+
+  <!-- Empty state -->
+  <div id="sessionListEmpty" class="session-list-state empty-state" style="display: none;">
+    <div class="empty-icon">📚</div>
+    <h3 class="state-title">No sessions yet</h3>
+    <p class="state-message">Start logging your reading to see your timeline here.</p>
+  </div>
+
+  <!-- Session timeline -->
+  <div id="sessionTimeline" class="session-timeline" style="display: none;">
+    <h2 class="timeline-title">Session Timeline</h2>
+    <div id="timelineContent"></div>
+  </div>
+</div>
+
+<style>
+  .session-list-wrapper {
+    margin-top: var(--space-lg);
+  }
+
+  .session-list-state {
+    text-align: center;
+    padding: var(--space-2xl) var(--space-lg);
+  }
+
+  .loading-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    font-family: var(--font-family-secondary);
+    color: var(--color-text-secondary);
+  }
+
+  .spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--color-border);
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .error-state {
+    color: var(--color-error);
+  }
+
+  .empty-state .empty-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .state-title {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-xs);
+  }
+
+  .state-message {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  /* Timeline */
+  .timeline-title {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-lg);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .timeline-date-group {
+    margin-bottom: var(--space-lg);
+  }
+
+  .timeline-date-label {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .session-card {
+    padding: var(--space-md) var(--space-lg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    background: var(--color-surface);
+    margin-bottom: var(--space-sm);
+    transition: background var(--transition-fast);
+  }
+
+  .session-card:hover {
+    background: var(--color-surface-hover);
+  }
+
+  .session-card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xs);
+  }
+
+  .session-book-icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .session-book-title {
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .session-page-range {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .session-insight {
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-top: var(--space-xs);
+    font-style: italic;
+    line-height: var(--line-height-relaxed);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  @media (max-width: 768px) {
+    .session-card {
+      padding: var(--space-sm) var(--space-md);
+    }
+  }
+</style>
+
+<script>
+  import { listReadingSessions } from '../../lib/db/repositories/reading-sessions';
+  import { getCanonicalBook } from '../../lib/db/repositories/canonical-books';
+  import { formatPageRange, getDateLabel, getTodayStr, getYesterdayStr } from '../../lib/utils/ui-state';
+  import type { ReadingSession, CanonicalBookIdentity } from '../../lib/types';
+
+  const loadingEl = document.getElementById('sessionListLoading')!;
+  const errorEl = document.getElementById('sessionListError')!;
+  const emptyEl = document.getElementById('sessionListEmpty')!;
+  const timelineEl = document.getElementById('sessionTimeline')!;
+  const timelineContent = document.getElementById('timelineContent')!;
+  const retryBtn = document.getElementById('retryLoadBtn')!;
+
+  async function loadSessions() {
+    showState('loading');
+
+    try {
+      const sessions = await listReadingSessions();
+
+      if (sessions.length === 0) {
+        showState('empty');
+        return;
+      }
+
+      // Fetch canonical book info for each session
+      const bookCache = new Map<string, CanonicalBookIdentity>();
+      for (const session of sessions) {
+        if (!bookCache.has(session.canonicalBookId)) {
+          const book = await getCanonicalBook(session.canonicalBookId);
+          if (book) bookCache.set(session.canonicalBookId, book);
+        }
+      }
+
+      renderTimeline(sessions, bookCache);
+      showState('ready');
+    } catch (err) {
+      console.error('Failed to load sessions:', err);
+      showState('error');
+    }
+  }
+
+  function showState(state: 'loading' | 'error' | 'empty' | 'ready') {
+    loadingEl.style.display = state === 'loading' ? 'block' : 'none';
+    errorEl.style.display = state === 'error' ? 'block' : 'none';
+    emptyEl.style.display = state === 'empty' ? 'block' : 'none';
+    timelineEl.style.display = state === 'ready' ? 'block' : 'none';
+  }
+
+  function renderTimeline(sessions: ReadingSession[], bookCache: Map<string, CanonicalBookIdentity>) {
+    const today = getTodayStr();
+    const yesterday = getYesterdayStr();
+
+    // Group by date
+    const groups = new Map<string, ReadingSession[]>();
+    for (const session of sessions) {
+      const date = session.sessionDate;
+      if (!groups.has(date)) groups.set(date, []);
+      groups.get(date)!.push(session);
+    }
+
+    timelineContent.innerHTML = '';
+
+    for (const [date, dateSessions] of groups) {
+      const group = document.createElement('div');
+      group.className = 'timeline-date-group';
+
+      const label = document.createElement('h3');
+      label.className = 'timeline-date-label';
+      label.textContent = getDateLabel(date, today, yesterday);
+      group.appendChild(label);
+
+      for (const session of dateSessions) {
+        const book = bookCache.get(session.canonicalBookId);
+        const card = document.createElement('div');
+        card.className = 'session-card';
+
+        const pageRange = formatPageRange(session.pageStart, session.pageEnd);
+        const bookTitle = book?.titleCanonical || 'Unknown Book';
+
+        let html = `
+          <div class="session-card-header">
+            <span class="session-book-icon">📖</span>
+            <span class="session-book-title">${escapeHtml(bookTitle)}</span>
+          </div>
+          <div class="session-page-range">${pageRange}</div>
+        `;
+
+        if (session.insight) {
+          html += `<div class="session-insight">"${escapeHtml(session.insight)}"</div>`;
+        }
+
+        card.innerHTML = html;
+        group.appendChild(card);
+      }
+
+      timelineContent.appendChild(group);
+    }
+  }
+
+  function escapeHtml(str: string): string {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  // Retry button
+  retryBtn.addEventListener('click', loadSessions);
+
+  // Listen for new sessions
+  window.addEventListener('session-created', loadSessions);
+
+  // Initial load
+  loadSessions();
+</script>

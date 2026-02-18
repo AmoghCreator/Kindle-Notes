@@ -1,0 +1,494 @@
+openapi: 3.0.3
+info:
+  title: Reading Session Tracker API Contract
+  version: 1.0.0
+  description: |
+    Logical REST-style contract for reading-session tracking, streak summaries,
+    and canonical book matching via Google Books-backed metadata search.
+    This feature is static-first: operations are implemented client-side
+    (IndexedDB via Dexie + browser fetch), with no required project-owned backend service.
+servers:
+  - url: /
+x-static-client-only: true
+x-canonical-matching-thresholds:
+  autoLinkMin: 0.90
+  userConfirmMin: 0.70
+  provisionalMaxExclusive: 0.70
+paths:
+  /reading-sessions:
+    get:
+      summary: List reading sessions
+      operationId: listReadingSessions
+      parameters:
+        - in: query
+          name: canonicalBookId
+          schema:
+            type: string
+          required: false
+          description: Filter sessions by canonical book identity.
+        - in: query
+          name: fromDate
+          schema:
+            type: string
+            format: date
+          required: false
+        - in: query
+          name: toDate
+          schema:
+            type: string
+            format: date
+          required: false
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 500
+            default: 50
+          required: false
+      responses:
+        '200':
+          description: Session list returned
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items, total]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ReadingSession'
+                  total:
+                    type: integer
+        '400':
+          description: Invalid query parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Create reading session
+      operationId: createReadingSession
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReadingSessionRequest'
+      responses:
+        '201':
+          description: Session created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadingSession'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Canonical book not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /reading-sessions/streak:
+    get:
+      summary: Get reading streak summary
+      operationId: getReadingStreak
+      responses:
+        '200':
+          description: Streak summary returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadingStreakSummary'
+
+  /books/catalog/search:
+    get:
+      summary: Search canonical book candidates
+      operationId: searchCatalogCandidates
+      parameters:
+        - in: query
+          name: q
+          required: true
+          schema:
+            type: string
+            minLength: 2
+          description: Search text (title and optionally author keywords).
+        - in: query
+          name: author
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: limit
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 20
+            default: 5
+      responses:
+        '200':
+          description: Candidate list returned
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BookMatchCandidate'
+        '400':
+          description: Invalid query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Catalog provider unavailable (caller may proceed with provisional entry)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /books/catalog/resolve:
+    post:
+      summary: Resolve or create canonical book record
+      operationId: resolveCanonicalBook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResolveCanonicalBookRequest'
+      responses:
+        '200':
+          description: Existing canonical record resolved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CanonicalBookIdentity'
+        '201':
+          description: New canonical record created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CanonicalBookIdentity'
+        '400':
+          description: Invalid request payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /imports/kindle/canonicalize:
+    post:
+      summary: Canonicalize parsed books during Kindle import
+      description: |
+        Called by Kindle import workflow. For each parsed book candidate,
+        attempts canonical resolution and returns mapping used before persisting
+        imported books/notes and related reading entities.
+      operationId: canonicalizeKindleImportBooks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KindleImportCanonicalizeRequest'
+      responses:
+        '200':
+          description: Canonical mapping completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KindleImportCanonicalizeResponse'
+        '400':
+          description: Invalid import canonicalization payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    ReadingSession:
+      type: object
+      required:
+        - id
+        - sessionDate
+        - canonicalBookId
+        - pageStart
+        - pageEnd
+        - createdAt
+        - updatedAt
+      properties:
+        id:
+          type: string
+        sessionDate:
+          type: string
+          format: date
+        canonicalBookId:
+          type: string
+        bookId:
+          type: string
+          nullable: true
+        pageStart:
+          type: integer
+          minimum: 1
+        pageEnd:
+          type: integer
+          minimum: 1
+        insight:
+          type: string
+          maxLength: 2000
+          nullable: true
+        durationMinutes:
+          type: integer
+          minimum: 1
+          nullable: true
+        canonicalLinkAudit:
+          $ref: '#/components/schemas/CanonicalLinkAudit'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    CreateReadingSessionRequest:
+      type: object
+      required:
+        - sessionDate
+        - canonicalBookId
+        - pageStart
+        - pageEnd
+      properties:
+        sessionDate:
+          type: string
+          format: date
+        canonicalBookId:
+          type: string
+        pageStart:
+          type: integer
+          minimum: 1
+        pageEnd:
+          type: integer
+          minimum: 1
+        insight:
+          type: string
+          maxLength: 2000
+        durationMinutes:
+          type: integer
+          minimum: 1
+
+    ReadingStreakSummary:
+      type: object
+      required:
+        - currentStreakDays
+        - longestStreakDays
+        - streakStatus
+        - daysReadThisWeek
+      properties:
+        currentStreakDays:
+          type: integer
+          minimum: 0
+        longestStreakDays:
+          type: integer
+          minimum: 0
+        lastReadingDate:
+          type: string
+          format: date
+          nullable: true
+        streakStatus:
+          type: string
+          enum: [active, broken, none]
+        daysReadThisWeek:
+          type: integer
+          minimum: 0
+          maximum: 7
+
+    CanonicalBookIdentity:
+      type: object
+      required:
+        - canonicalBookId
+        - titleCanonical
+        - titleNormalized
+        - matchStatus
+        - matchSource
+        - createdAt
+        - updatedAt
+      properties:
+        canonicalBookId:
+          type: string
+        titleCanonical:
+          type: string
+        titleNormalized:
+          type: string
+        authorsCanonical:
+          type: array
+          items:
+            type: string
+        googleVolumeId:
+          type: string
+          nullable: true
+        isbn13:
+          type: string
+          nullable: true
+        coverUrl:
+          type: string
+          nullable: true
+        matchStatus:
+          type: string
+          enum: [verified, unverified, user-confirmed]
+        matchSource:
+          type: string
+          enum: [google-books, manual, import-fallback]
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    BookMatchCandidate:
+      type: object
+      required:
+        - candidateId
+        - title
+        - source
+        - confidence
+      properties:
+        candidateId:
+          type: string
+        title:
+          type: string
+        authors:
+          type: array
+          items:
+            type: string
+        coverUrl:
+          type: string
+          nullable: true
+        isbn13:
+          type: string
+          nullable: true
+        source:
+          type: string
+          enum: [google-books]
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+        selected:
+          type: boolean
+
+    ResolveCanonicalBookRequest:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+        author:
+          type: string
+        selectedCandidate:
+          $ref: '#/components/schemas/BookMatchCandidate'
+        allowProvisional:
+          type: boolean
+          default: true
+
+    KindleImportCanonicalizeRequest:
+      type: object
+      required: [books]
+      properties:
+        books:
+          type: array
+          items:
+            type: object
+            required: [importBookKey, title]
+            properties:
+              importBookKey:
+                type: string
+                description: Temporary import-side key used to map notes/book references.
+              title:
+                type: string
+              author:
+                type: string
+              source:
+                type: string
+                default: kindle-import
+
+    KindleImportCanonicalizeResponse:
+      type: object
+      required: [mappings]
+      properties:
+        mappings:
+          type: array
+          items:
+            type: object
+            required: [importBookKey, canonicalBookId, matchStatus]
+            properties:
+              importBookKey:
+                type: string
+              canonicalBookId:
+                type: string
+              matchStatus:
+                type: string
+                enum: [verified, unverified, user-confirmed]
+              matchSource:
+                type: string
+                enum: [google-books, manual, import-fallback]
+              confidenceScore:
+                type: number
+                minimum: 0
+                maximum: 1
+
+    CanonicalLinkAudit:
+      type: object
+      required:
+        - sourceFlow
+        - resolutionMode
+        - provider
+        - resolvedAt
+      properties:
+        sourceFlow:
+          type: string
+          enum: [kindle-import, manual-entry]
+        resolutionMode:
+          type: string
+          enum: [auto, user-confirmed, provisional]
+        confidenceScore:
+          type: number
+          minimum: 0
+          maximum: 1
+          nullable: true
+        provider:
+          type: string
+          enum: [google-books, none]
+        providerCandidateId:
+          type: string
+          nullable: true
+        resolvedAt:
+          type: string
+          format: date-time
+
+    ErrorResponse:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string

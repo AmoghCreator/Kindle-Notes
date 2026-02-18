@@ -91,11 +91,19 @@ export const POST: APIRoute = async ({ request }) => {
 
         await updateUploadSession(sessionId, 'completed', stats);
 
+        // Build the final saved books list with correct IDs for client-side Dexie hydration
+        const savedBooks = books.map(book => ({
+            ...book,
+            id: bookIdMap.get(book.id) || book.id,
+        }));
+
         return new Response(
             JSON.stringify({
                 success: true,
                 sessionId,
                 stats,
+                books: savedBooks,
+                notes: notesWithCorrectBookIds,
                 message: `Successfully imported ${books.length} books with ${deduplicationResult.added} new notes (${deduplicationResult.skipped} duplicates skipped)`
             }),
             {

@@ -1,0 +1,103 @@
+---
+/**
+ * Reading Sessions Page
+ * 
+ * Main page for creating and browsing daily reading sessions.
+ * Combines the session entry form and timeline list with
+ * loading, empty, and error state handling.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ReadingSessionForm from '../components/sessions/ReadingSessionForm.astro';
+import ReadingSessionList from '../components/sessions/ReadingSessionList.astro';
+---
+
+<BaseLayout 
+  title="Reading Sessions" 
+  description="Log and browse your daily reading sessions"
+>
+  <div class="sessions-page">
+    <header class="sessions-header">
+      <div class="header-content">
+        <nav class="breadcrumb">
+          <a href="/">Library</a>
+          <span class="breadcrumb-separator">›</span>
+          <span>Sessions</span>
+        </nav>
+        <h1 class="page-title">Reading Sessions</h1>
+      </div>
+    </header>
+
+    <div class="sessions-content">
+      <!-- Session entry form -->
+      <ReadingSessionForm />
+
+      <!-- Session timeline list -->
+      <ReadingSessionList />
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  // Initialize Dexie on page load
+  import { initDB } from '../lib/db/index';
+  
+  initDB().catch(err => {
+    console.error('Failed to initialize database:', err);
+  });
+</script>
+
+<style>
+  .sessions-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+  }
+
+  .sessions-header {
+    margin-bottom: var(--space-xl);
+    padding: var(--space-lg) 0;
+  }
+
+  .breadcrumb {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-sm);
+  }
+
+  .breadcrumb a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .breadcrumb-separator {
+    margin: 0 var(--space-xs);
+    color: var(--color-text-muted);
+  }
+
+  .page-title {
+    font-family: var(--font-family-primary);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  .sessions-content {
+    padding-bottom: var(--space-3xl);
+  }
+
+  @media (max-width: 768px) {
+    .sessions-page {
+      padding: 0;
+    }
+
+    .sessions-header {
+      padding: var(--space-md);
+    }
+  }
+</style>

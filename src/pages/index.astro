@@ -4,6 +4,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import BookCard from "../components/notes/BookCard.astro";
 import NoteCard from "../components/notes/NoteCard.astro";
 import RandomSuggestionCard from "../components/sharing/RandomSuggestionCard.astro";
+import ReadingTrackerHeader from "../components/tracker/ReadingTrackerHeader.astro";
 import EmptyState from "../components/common/EmptyState.astro";
 import { getAllBooks, getAllNotes } from "../lib/server/storage";
 import {
@@ -58,29 +59,8 @@ const initialSuggestion = selectRandomSuggestion(suggestionPool);
   description="Browse and organize your Kindle highlights, notes, and bookmarks"
 >
   <main class="library">
-    <header class="library-header">
-      <div class="header-content">
-        <h1 class="library-title">My Library</h1>
-        <p class="library-description">
-          Your collection of books, highlights, and insights
-        </p>
-      </div>
-
-      <div class="header-actions">
-        <a href="/search" class="btn btn-primary">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="M21 21l-4.35-4.35"></path>
-          </svg>
-          Search
-        </a>
-      </div>
-    </header>
+    <!-- Reading Tracker Header (replaces old library hero) -->
+    <ReadingTrackerHeader />
 
     {
       hasContent && (
@@ -181,49 +161,6 @@ const initialSuggestion = selectRandomSuggestion(suggestionPool);
     padding: 0 var(--space-md);
   }
 
-  .library-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--space-xl);
-    padding: var(--space-xl);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius-lg);
-    background: var(--color-surface);
-  }
-
-  .header-content {
-    flex: 1;
-  }
-
-  .library-title {
-    font-family: var(--font-family-primary);
-    font-size: clamp(1.8rem, 4vw, 2.6rem);
-    font-weight: var(--font-weight-bold);
-    color: var(--color-text-primary);
-    margin: 0 0 var(--space-sm);
-  }
-
-  .library-description {
-    font-family: var(--font-family-secondary);
-    font-size: var(--font-size-lg);
-    color: var(--color-text-secondary);
-    margin: 0;
-    max-width: 38rem;
-  }
-
-  .header-actions {
-    display: flex;
-    gap: var(--space-sm);
-    align-items: center;
-  }
-
-  .header-actions .btn svg {
-    width: 20px;
-    height: 20px;
-    margin-right: var(--space-xs);
-  }
-
   .library-stats {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -321,17 +258,6 @@ const initialSuggestion = selectRandomSuggestion(suggestionPool);
   @media (max-width: 768px) {
     .library {
       padding: 0;
-    }
-
-    .library-header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--space-lg);
-      padding: var(--space-lg);
-    }
-
-    .header-actions {
-      width: 100%;
     }
 
     .library-stats {

@@ -1,0 +1,664 @@
+---
+/**
+ * Reading Session Entry Form
+ * 
+ * Client-side rendered form for creating daily reading sessions.
+ * Includes book search/selection, page range input, and optional insight.
+ */
+export interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<div class={`session-form-wrapper ${className}`} id="sessionFormWrapper">
+  <form id="sessionForm" class="session-form" novalidate>
+    <h2 class="form-title">New Session</h2>
+
+    <!-- Date field -->
+    <div class="form-group">
+      <label for="sessionDate" class="form-label">Date</label>
+      <input 
+        type="date" 
+        id="sessionDate" 
+        name="sessionDate"
+        class="form-input"
+        required
+        aria-describedby="sessionDateError"
+      />
+      <span id="sessionDateError" class="form-error" role="alert"></span>
+    </div>
+
+    <!-- Book search field -->
+    <div class="form-group">
+      <label for="bookSearch" class="form-label">Book</label>
+      <div class="book-search-wrapper">
+        <input 
+          type="text" 
+          id="bookSearch" 
+          name="bookSearch"
+          class="form-input"
+          placeholder="Search or enter book title..."
+          autocomplete="off"
+          required
+          aria-describedby="bookSearchError bookMatchInfo"
+        />
+        <div id="bookSearchResults" class="search-results" role="listbox" style="display: none;"></div>
+      </div>
+      <span id="bookSearchError" class="form-error" role="alert"></span>
+
+      <!-- Match info / confirmation band -->
+      <div id="bookMatchInfo" class="match-info" style="display: none;" aria-live="polite"></div>
+
+      <!-- Hidden canonical fields -->
+      <input type="hidden" id="canonicalBookId" name="canonicalBookId" />
+      <input type="hidden" id="matchConfidence" name="matchConfidence" />
+      <input type="hidden" id="matchResolution" name="matchResolution" />
+      <input type="hidden" id="providerCandidateId" name="providerCandidateId" />
+    </div>
+
+    <!-- Page range -->
+    <div class="form-row">
+      <div class="form-group form-group-half">
+        <label for="pageStart" class="form-label">Page Start</label>
+        <input 
+          type="number" 
+          id="pageStart" 
+          name="pageStart"
+          class="form-input"
+          min="1"
+          required
+          aria-describedby="pageError"
+        />
+      </div>
+      <div class="form-group form-group-half">
+        <label for="pageEnd" class="form-label">Page End</label>
+        <input 
+          type="number" 
+          id="pageEnd" 
+          name="pageEnd"
+          class="form-input"
+          min="1"
+          required
+          aria-describedby="pageError"
+        />
+      </div>
+    </div>
+    <span id="pageError" class="form-error" role="alert"></span>
+
+    <!-- Insight -->
+    <div class="form-group">
+      <label for="insight" class="form-label">
+        Insight <span class="form-label-optional">(optional)</span>
+      </label>
+      <textarea 
+        id="insight" 
+        name="insight"
+        class="form-input form-textarea"
+        rows="3"
+        maxlength="2000"
+        placeholder="Key takeaway from today's reading..."
+        aria-describedby="insightCount"
+      ></textarea>
+      <span id="insightCount" class="form-hint">0 / 2000</span>
+    </div>
+
+    <!-- Submit -->
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary" id="submitBtn">
+        Save Session
+      </button>
+    </div>
+
+    <!-- Form-level error -->
+    <div id="formError" class="form-error form-level-error" role="alert" style="display: none;"></div>
+    <!-- Success toast -->
+    <div id="formSuccess" class="form-success" role="status" style="display: none;"></div>
+  </form>
+</div>
+
+<style>
+  .session-form-wrapper {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    background: var(--color-surface);
+    padding: var(--space-xl);
+    margin-bottom: var(--space-xl);
+  }
+
+  .form-title {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-lg);
+  }
+
+  .form-group {
+    margin-bottom: var(--space-md);
+  }
+
+  .form-row {
+    display: flex;
+    gap: var(--space-md);
+  }
+
+  .form-group-half {
+    flex: 1;
+  }
+
+  .form-label {
+    display: block;
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-xs);
+  }
+
+  .form-label-optional {
+    color: var(--color-text-muted);
+    font-weight: var(--font-weight-normal);
+  }
+
+  .form-input {
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-background);
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+    transition: border-color var(--transition-fast);
+    box-sizing: border-box;
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.15);
+  }
+
+  .form-input.invalid {
+    border-color: var(--color-error);
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .form-error {
+    display: block;
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-error);
+    margin-top: var(--space-xs);
+    min-height: 1.2em;
+  }
+
+  .form-hint {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    margin-top: var(--space-xs);
+    display: block;
+    text-align: right;
+  }
+
+  .form-level-error {
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(var(--color-error-rgb), 0.08);
+    border-radius: var(--border-radius);
+    margin-top: var(--space-md);
+  }
+
+  .form-success {
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(var(--color-success-rgb), 0.08);
+    color: var(--color-success);
+    border-radius: var(--border-radius);
+    margin-top: var(--space-md);
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+  }
+
+  .form-actions {
+    margin-top: var(--space-lg);
+  }
+
+  .form-actions .btn {
+    width: 100%;
+  }
+
+  /* Book search results dropdown */
+  .book-search-wrapper {
+    position: relative;
+  }
+
+  .search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-top: none;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    max-height: 240px;
+    overflow-y: auto;
+    z-index: 50;
+  }
+
+  .search-result-item {
+    padding: var(--space-sm) var(--space-md);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    transition: background var(--transition-fast);
+  }
+
+  .search-result-item:hover,
+  .search-result-item[aria-selected="true"] {
+    background: var(--color-surface-hover);
+  }
+
+  .search-result-cover {
+    width: 32px;
+    height: 44px;
+    border-radius: 2px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: var(--color-border);
+  }
+
+  .search-result-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .search-result-title {
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .search-result-author {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-xs);
+  }
+
+  .search-result-confidence {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+  }
+
+  /* Match info / confirmation states */
+  .match-info {
+    margin-top: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--border-radius);
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+  }
+
+  .match-info.match-verified {
+    background: rgba(var(--color-success-rgb), 0.08);
+    color: var(--color-success);
+  }
+
+  .match-info.match-confirm {
+    background: rgba(180, 150, 50, 0.08);
+    color: var(--color-warning);
+  }
+
+  .match-info.match-provisional {
+    background: rgba(var(--color-primary-rgb), 0.06);
+    color: var(--color-text-secondary);
+  }
+
+  @media (max-width: 768px) {
+    .form-row {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .session-form-wrapper {
+      padding: var(--space-lg);
+    }
+  }
+</style>
+
+<script>
+  import { searchGoogleBooks } from '../../lib/matching/google-books-client';
+  import { rankCandidates, getThresholdBand } from '../../lib/matching/canonicalize';
+  import { createAuditFromBand } from '../../lib/matching/audit';
+  import { resolveOrCreateCanonical } from '../../lib/db/repositories/canonical-books';
+  import { createAlias } from '../../lib/db/repositories/aliases';
+  import { createReadingSession } from '../../lib/db/repositories/reading-sessions';
+  import { validateReadingSessionForm } from '../../lib/utils/validation';
+  import type { BookMatchCandidate, CanonicalLinkAudit } from '../../lib/types';
+
+  // DOM refs
+  const form = document.getElementById('sessionForm') as HTMLFormElement;
+  const dateInput = document.getElementById('sessionDate') as HTMLInputElement;
+  const bookSearch = document.getElementById('bookSearch') as HTMLInputElement;
+  const searchResults = document.getElementById('bookSearchResults') as HTMLDivElement;
+  const matchInfo = document.getElementById('bookMatchInfo') as HTMLDivElement;
+  const pageStartInput = document.getElementById('pageStart') as HTMLInputElement;
+  const pageEndInput = document.getElementById('pageEnd') as HTMLInputElement;
+  const insightInput = document.getElementById('insight') as HTMLTextAreaElement;
+  const insightCount = document.getElementById('insightCount') as HTMLSpanElement;
+  const submitBtn = document.getElementById('submitBtn') as HTMLButtonElement;
+  const formError = document.getElementById('formError') as HTMLDivElement;
+  const formSuccess = document.getElementById('formSuccess') as HTMLDivElement;
+
+  // Hidden fields
+  const canonicalBookIdInput = document.getElementById('canonicalBookId') as HTMLInputElement;
+  const matchConfidenceInput = document.getElementById('matchConfidence') as HTMLInputElement;
+  const matchResolutionInput = document.getElementById('matchResolution') as HTMLInputElement;
+  const providerCandidateIdInput = document.getElementById('providerCandidateId') as HTMLInputElement;
+
+  // State
+  let searchTimeout: ReturnType<typeof setTimeout> | null = null;
+  let currentCandidates: BookMatchCandidate[] = [];
+  let selectedCandidate: BookMatchCandidate | null = null;
+  let auditData: CanonicalLinkAudit | null = null;
+
+  // Default date to today
+  const today = new Date().toISOString().slice(0, 10);
+  dateInput.value = today;
+  dateInput.max = today;
+
+  // --- Book search with debounce ---
+  bookSearch.addEventListener('input', () => {
+    if (searchTimeout) clearTimeout(searchTimeout);
+    
+    const query = bookSearch.value.trim();
+    if (query.length < 2) {
+      hideSearchResults();
+      return;
+    }
+
+    searchTimeout = setTimeout(async () => {
+      await performBookSearch(query);
+    }, 400);
+  });
+
+  async function performBookSearch(query: string) {
+    const result = await searchGoogleBooks(query);
+    
+    if (!result.providerAvailable || result.candidates.length === 0) {
+      // Provider unavailable or no results — allow provisional
+      showProvisionalMatch(query, result.providerAvailable);
+      return;
+    }
+
+    // Score and rank candidates against the search query
+    currentCandidates = rankCandidates(result.candidates, query);
+    
+    const best = currentCandidates[0];
+    const band = getThresholdBand(best.confidence);
+
+    if (band === 'auto') {
+      // Very high confidence (≥0.90) — auto-link without prompt
+      selectCandidate(best, 'auto');
+      hideSearchResults();
+    } else {
+      // Show the dropdown so the user can pick the right book.
+      // Partial queries (e.g. "steve" for "Steve Jobs") score low on
+      // Levenshtein similarity but the API results are usually correct —
+      // let the user confirm by clicking.
+      showSearchResults(currentCandidates);
+    }
+  }
+
+  function showSearchResults(candidates: BookMatchCandidate[]) {
+    searchResults.innerHTML = '';
+    
+    candidates.forEach((c) => {
+      const item = document.createElement('div');
+      item.className = 'search-result-item';
+      item.setAttribute('role', 'option');
+      item.setAttribute('aria-selected', 'false');
+      item.tabIndex = 0;
+
+      const coverHtml = c.coverUrl 
+        ? `<img class="search-result-cover" src="${c.coverUrl}" alt="" />`
+        : `<div class="search-result-cover"></div>`;
+      
+      const pct = Math.round(c.confidence * 100);
+      item.innerHTML = `
+        ${coverHtml}
+        <div class="search-result-info">
+          <div class="search-result-title">${escapeHtml(c.title)}</div>
+          <div class="search-result-author">${c.authors?.join(', ') || 'Unknown author'}</div>
+        </div>
+        <span class="search-result-confidence">${pct}%</span>
+      `;
+
+      item.addEventListener('click', () => selectCandidate(c, 'user-confirmed'));
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          selectCandidate(c, 'user-confirmed');
+        }
+      });
+
+      searchResults.appendChild(item);
+    });
+
+    // Add "None of these" option
+    const noneItem = document.createElement('div');
+    noneItem.className = 'search-result-item';
+    noneItem.setAttribute('role', 'option');
+    noneItem.tabIndex = 0;
+    noneItem.innerHTML = `
+      <div class="search-result-info">
+        <div class="search-result-title" style="color: var(--color-text-secondary);">
+          None of these — create new entry
+        </div>
+      </div>
+    `;
+    noneItem.addEventListener('click', () => {
+      showProvisionalMatch(bookSearch.value.trim(), true);
+      hideSearchResults();
+    });
+    searchResults.appendChild(noneItem);
+
+    searchResults.style.display = 'block';
+  }
+
+  function hideSearchResults() {
+    searchResults.style.display = 'none';
+    searchResults.innerHTML = '';
+  }
+
+  function selectCandidate(candidate: BookMatchCandidate, resolution: 'auto' | 'user-confirmed') {
+    selectedCandidate = candidate;
+    
+    bookSearch.value = candidate.title;
+    canonicalBookIdInput.value = candidate.candidateId;
+    matchConfidenceInput.value = String(candidate.confidence);
+    matchResolutionInput.value = resolution;
+    providerCandidateIdInput.value = candidate.candidateId;
+
+    const band = resolution === 'auto' ? 'auto' : 'confirm';
+    auditData = createAuditFromBand('manual-entry', band, candidate.confidence, candidate.candidateId);
+
+    // Show match confirmation
+    const pct = Math.round(candidate.confidence * 100);
+    const statusLabel = resolution === 'auto' ? 'Auto-linked ✓' : 'Confirmed ✓';
+    matchInfo.className = `match-info ${resolution === 'auto' ? 'match-verified' : 'match-confirm'}`;
+    matchInfo.innerHTML = `📚 <strong>${escapeHtml(candidate.title)}</strong>${candidate.authors?.length ? ` by ${escapeHtml(candidate.authors.join(', '))}` : ''}<br/>Confidence: ${pct}% · ${statusLabel}`;
+    matchInfo.style.display = 'block';
+
+    hideSearchResults();
+  }
+
+  function showProvisionalMatch(title: string, providerAvailable: boolean) {
+    selectedCandidate = null;
+    canonicalBookIdInput.value = 'provisional';
+    matchConfidenceInput.value = '0';
+    matchResolutionInput.value = 'provisional';
+    providerCandidateIdInput.value = '';
+
+    auditData = createAuditFromBand('manual-entry', 'provisional', 0, undefined);
+
+    matchInfo.className = 'match-info match-provisional';
+    matchInfo.innerHTML = providerAvailable
+      ? `ℹ️ No confident match found. "${escapeHtml(title)}" will be saved as provisional.`
+      : `ℹ️ Book search unavailable. "${escapeHtml(title)}" will be saved as provisional.`;
+    matchInfo.style.display = 'block';
+
+    hideSearchResults();
+  }
+
+  // --- Insight character counter ---
+  insightInput.addEventListener('input', () => {
+    insightCount.textContent = `${insightInput.value.length} / 2000`;
+  });
+
+  // --- Close search results on click outside ---
+  document.addEventListener('click', (e) => {
+    if (!bookSearch.contains(e.target as Node) && !searchResults.contains(e.target as Node)) {
+      hideSearchResults();
+    }
+  });
+
+  // --- Form submission ---
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    formError.style.display = 'none';
+    formSuccess.style.display = 'none';
+
+    const bookTitle = bookSearch.value.trim();
+    const sessionDate = dateInput.value;
+    const pageStart = parseInt(pageStartInput.value, 10);
+    const pageEnd = parseInt(pageEndInput.value, 10);
+    const insight = insightInput.value.trim() || undefined;
+    const canonicalId = canonicalBookIdInput.value;
+
+    // Validate
+    const validation = validateReadingSessionForm({
+      sessionDate,
+      canonicalBookId: canonicalId,
+      bookTitle,
+      pageStart,
+      pageEnd,
+      insight,
+    });
+
+    if (!validation.isValid) {
+      showFormError(validation.errors.join('. '));
+      return;
+    }
+
+    if (!auditData) {
+      showFormError('Please search and select a book first.');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Saving...';
+
+    try {
+      // Resolve canonical book identity
+      let resolvedCanonicalId = canonicalId;
+      
+      if (canonicalId === 'provisional' || !selectedCandidate) {
+        // Create provisional canonical record
+        const canonical = await resolveOrCreateCanonical({
+          titleCanonical: bookTitle,
+          matchStatus: 'unverified',
+          matchSource: 'manual',
+        });
+        resolvedCanonicalId = canonical.canonicalBookId;
+      } else if (selectedCandidate) {
+        // Create/resolve verified/user-confirmed canonical record
+        const matchStatus = matchResolutionInput.value === 'auto' ? 'verified' : 'user-confirmed';
+        const canonical = await resolveOrCreateCanonical({
+          titleCanonical: selectedCandidate.title,
+          authorsCanonical: selectedCandidate.authors,
+          googleVolumeId: selectedCandidate.candidateId,
+          isbn13: selectedCandidate.isbn13,
+          coverUrl: selectedCandidate.coverUrl,
+          matchStatus,
+          matchSource: 'google-books',
+        });
+        resolvedCanonicalId = canonical.canonicalBookId;
+
+        // Create alias mapping
+        await createAlias({
+          rawTitle: bookTitle,
+          canonicalBookId: resolvedCanonicalId,
+          confidence: selectedCandidate.confidence,
+          resolution: matchResolutionInput.value as 'auto' | 'user-confirmed',
+        });
+      }
+
+      // Create the reading session
+      await createReadingSession({
+        canonicalBookId: resolvedCanonicalId,
+        sessionDate,
+        pageStart,
+        pageEnd,
+        insight,
+        canonicalLinkAudit: auditData,
+      });
+
+      // Show success and reset
+      formSuccess.textContent = '✓ Session saved!';
+      formSuccess.style.display = 'block';
+      resetForm();
+
+      // Dispatch custom event for session list to refresh
+      window.dispatchEvent(new CustomEvent('session-created'));
+
+      // Hide success after 3s
+      setTimeout(() => { formSuccess.style.display = 'none'; }, 3000);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Failed to save session';
+      showFormError(msg);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Save Session';
+    }
+  });
+
+  function showFormError(message: string) {
+    formError.textContent = message;
+    formError.style.display = 'block';
+  }
+
+  function resetForm() {
+    dateInput.value = today;
+    bookSearch.value = '';
+    pageStartInput.value = '';
+    pageEndInput.value = '';
+    insightInput.value = '';
+    insightCount.textContent = '0 / 2000';
+    canonicalBookIdInput.value = '';
+    matchConfidenceInput.value = '';
+    matchResolutionInput.value = '';
+    providerCandidateIdInput.value = '';
+    matchInfo.style.display = 'none';
+    selectedCandidate = null;
+    auditData = null;
+    currentCandidates = [];
+  }
+
+  function escapeHtml(str: string): string {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+</script>

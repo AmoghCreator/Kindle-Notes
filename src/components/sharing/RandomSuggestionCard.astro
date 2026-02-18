@@ -26,19 +26,24 @@ const { suggestion, suggestionPool = [] } = Astro.props;
         data-suggestion-id={suggestion.itemId}
         data-suggestion-type={suggestion.itemType}
         data-suggestion-title={suggestion.bookTitle}
+        data-full-text={suggestion.fullText}
+        data-preview-text={suggestion.previewText}
         data-associated-highlight-text={
           suggestion.associatedHighlightText || ""
         }
+        data-full-associated-highlight-text={
+          suggestion.fullAssociatedHighlightText || ""
+        }
       >
         {suggestion.itemType === "note" &&
-          suggestion.associatedHighlightText && (
+          suggestion.fullAssociatedHighlightText && (
             <p class="suggestion-highlight">
-              “{suggestion.associatedHighlightText}”
+              "{suggestion.fullAssociatedHighlightText}"
             </p>
           )}
         <p class="suggestion-text">
           {suggestion.itemType === "note" ? "Note: " : ""}
-          {`“${suggestion.previewText}”`}
+          {`"${suggestion.fullText}"`}
         </p>
         <p class="suggestion-attribution">
           — {suggestion.bookTitle.split("(Z-Library")[0]}
@@ -47,9 +52,16 @@ const { suggestion, suggestionPool = [] } = Astro.props;
           <button
             type="button"
             class="btn btn-primary"
-            onclick="shareRandomSuggestion()"
+            onclick="copyFullText()"
           >
-            Share now
+            Copy Full
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            onclick="copySummary()"
+          >
+            Copy Summary
           </button>
           <button
             type="button"
@@ -94,16 +106,29 @@ const { suggestion, suggestionPool = [] } = Astro.props;
     return [primary, secondary, attribution].filter(Boolean).join("\n");
   }
 
-  async function shareRandomSuggestion() {
+  async function copyFullText() {
     const card = document.querySelector(
       "[data-suggestion-id]",
     ) as HTMLElement | null;
     if (!card) {
-      showSuggestionToast("No suggestion available to share.", "error");
+      showSuggestionToast("No suggestion available to copy.", "error");
       return;
     }
 
-    const shareText = buildSuggestionShareText(card);
+    const fullText = card.dataset.fullText || "";
+    const fullHighlight = card.dataset.fullAssociatedHighlightText || "";
+    const title = card.dataset.suggestionTitle || "";
+    const cleanTitle = title.split("(Z-Library")[0].trim();
+    
+    const parts = [];
+    if (fullHighlight) parts.push(`"${fullHighlight}"`);
+    if (fullText) {
+      const prefix = card.dataset.suggestionType === "note" ? "Note: " : "";
+      parts.push(`${prefix}"${fullText}"`);
+    }
+    if (cleanTitle) parts.push(`— ${cleanTitle}`);
+    
+    const shareText = parts.join("\n");
     if (!shareText) {
       showSuggestionToast("No suggestion text available to share.", "error");
       return;
@@ -122,7 +147,7 @@ const { suggestion, suggestionPool = [] } = Astro.props;
         try {
           await navigator.clipboard.writeText(shareText);
           showSuggestionToast(
-            "Formatted share text copied to clipboard!",
+            "Full text copied to clipboard!",
             "success",
           );
         } catch (clipboardError) {
@@ -138,7 +163,7 @@ const { suggestion, suggestionPool = [] } = Astro.props;
             ta.remove();
             if (ok) {
               showSuggestionToast(
-                "Formatted share text copied to clipboard!",
+                "Full text copied to clipboard!",
                 "success",
               );
             } else {
@@ -151,7 +176,81 @@ const { suggestion, suggestionPool = [] } = Astro.props;
       }
     } catch (error) {
       console.error(error);
-      showSuggestionToast("Failed to share suggestion text.", "error");
+      showSuggestionToast("Failed to copy full text.", "error");
+    }
+  }
+
+  async function copySummary() {
+    const card = document.querySelector(
+      "[data-suggestion-id]",
+    ) as HTMLElement | null;
+    if (!card) {
+      showSuggestionToast("No suggestion available to copy.", "error");
+      return;
+    }
+
+    const previewText = card.dataset.previewText || "";
+    const previewHighlight = card.dataset.associatedHighlightText || "";
+    const title = card.dataset.suggestionTitle || "";
+    const cleanTitle = title.split("(Z-Library")[0].trim();
+    
+    const parts = [];
+    if (previewHighlight) parts.push(`"${previewHighlight}"`);
+    if (previewText) {
+      const prefix = card.dataset.suggestionType === "note" ? "Note: " : "";
+      parts.push(`${prefix}"${previewText}"`);
+    }
+    if (cleanTitle) parts.push(`— ${cleanTitle}`);
+    
+    const shareText = parts.join("\n");
+    if (!shareText) {
+      showSuggestionToast("No suggestion text available to copy.", "error");
+      return;
+    }
+
+    try {
+      const shareData = {
+        title: `From ${card.dataset.suggestionTitle || "my reading"}`,
+        text: shareText,
+      };
+
+      if (navigator.share) {
+        await navigator.share(shareData);
+        showSuggestionToast("Share opened successfully.", "success");
+      } else {
+        try {
+          await navigator.clipboard.writeText(shareText);
+          showSuggestionToast(
+            "Summary copied to clipboard!",
+            "success",
+          );
+        } catch (clipboardError) {
+          try {
+            const ta = document.createElement("textarea");
+            ta.value = shareText;
+            ta.setAttribute("readonly", "");
+            ta.style.position = "fixed";
+            ta.style.opacity = "0";
+            document.body.appendChild(ta);
+            ta.select();
+            const ok = document.execCommand("copy");
+            ta.remove();
+            if (ok) {
+              showSuggestionToast(
+                "Summary copied to clipboard!",
+                "success",
+              );
+            } else {
+              throw clipboardError || new Error("Clipboard copy failed");
+            }
+          } catch (fallbackError) {
+            throw fallbackError;
+          }
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      showSuggestionToast("Failed to copy summary.", "error");
     }
   }
 
@@ -198,7 +297,11 @@ const { suggestion, suggestionPool = [] } = Astro.props;
     const container = document.querySelector(".random-suggestion");
     if (!container) return;
 
-    const escapedText = String(suggestion.previewText || "").replace(
+    const escapedText = String(suggestion.fullText || "").replace(
+      /"/g,
+      "&quot;",
+    );
+    const escapedFullHighlight = String(suggestion.fullAssociatedHighlightText || "").replace(
       /"/g,
       "&quot;",
     );
@@ -224,40 +327,53 @@ const { suggestion, suggestionPool = [] } = Astro.props;
       wrapper.className = "suggestion-body";
       wrapper.innerHTML = `
         ${
-          suggestion.itemType === "note" && suggestion.associatedHighlightText
-            ? `<p class="suggestion-highlight">“${String(suggestion.associatedHighlightText).replace(/"/g, "&quot;")}”</p>`
+          suggestion.itemType === "note" && suggestion.fullAssociatedHighlightText
+            ? `<p class="suggestion-highlight">"${escapedFullHighlight}"</p>`
             : ""
         }
-        <p class="suggestion-text">${suggestion.itemType === "note" ? "Note: " : ""}“${escapedText}”</p>
+        <p class="suggestion-text">${suggestion.itemType === "note" ? "Note: " : ""}"${escapedText}"</p>
         <p class="suggestion-attribution">— ${cleanBookTitle}${authorPart}</p>
         <div class="suggestion-actions">
-          <button type="button" class="btn btn-primary" onclick="shareRandomSuggestion()">Share now</button>
+          <button type="button" class="btn btn-primary" onclick="copyFullText()">Copy Full</button>
+          <button type="button" class="btn btn-secondary" onclick="copySummary()">Copy Summary</button>
           <button type="button" class="btn btn-ghost" onclick="refreshRandomSuggestion()">New suggestion</button>
         </div>
       `;
       wrapper.setAttribute("data-suggestion-id", suggestion.itemId);
       wrapper.setAttribute("data-suggestion-type", suggestion.itemType);
       wrapper.setAttribute("data-suggestion-title", suggestion.bookTitle);
+      wrapper.setAttribute("data-full-text", suggestion.fullText || "");
+      wrapper.setAttribute("data-preview-text", suggestion.previewText || "");
       wrapper.setAttribute(
         "data-associated-highlight-text",
         suggestion.associatedHighlightText || "",
+      );
+      wrapper.setAttribute(
+        "data-full-associated-highlight-text",
+        suggestion.fullAssociatedHighlightText || "",
       );
       container.appendChild(wrapper);
     } else {
       body.setAttribute("data-suggestion-id", suggestion.itemId);
       body.setAttribute("data-suggestion-type", suggestion.itemType);
       body.setAttribute("data-suggestion-title", suggestion.bookTitle);
+      body.setAttribute("data-full-text", suggestion.fullText || "");
+      body.setAttribute("data-preview-text", suggestion.previewText || "");
       body.setAttribute(
         "data-associated-highlight-text",
         suggestion.associatedHighlightText || "",
       );
+      body.setAttribute(
+        "data-full-associated-highlight-text",
+        suggestion.fullAssociatedHighlightText || "",
+      );
       const textNode = body.querySelector(".suggestion-text");
       if (textNode)
-        textNode.textContent = `${suggestion.itemType === "note" ? "Note: " : ""}“${suggestion.previewText}”`;
+        textNode.textContent = `${suggestion.itemType === "note" ? "Note: " : ""}"${suggestion.fullText}"`;
       let highlightNode = body.querySelector(".suggestion-highlight");
       if (
         suggestion.itemType === "note" &&
-        suggestion.associatedHighlightText
+        suggestion.fullAssociatedHighlightText
       ) {
         if (!highlightNode) {
           highlightNode = document.createElement("p");
@@ -265,7 +381,7 @@ const { suggestion, suggestionPool = [] } = Astro.props;
           // Insert highlight before note text
           textNode?.parentNode?.insertBefore(highlightNode, textNode);
         }
-        highlightNode.textContent = `“${suggestion.associatedHighlightText}”`;
+        highlightNode.textContent = `"${suggestion.fullAssociatedHighlightText}"`;
       } else if (highlightNode) {
         highlightNode.remove();
       }
@@ -317,7 +433,8 @@ const { suggestion, suggestionPool = [] } = Astro.props;
     setTimeout(() => toast.remove(), 3000);
   }
 
-  (window as any).shareRandomSuggestion = shareRandomSuggestion;
+  (window as any).copyFullText = copyFullText;
+  (window as any).copySummary = copySummary;
   (window as any).refreshRandomSuggestion = refreshRandomSuggestion;
 </script>
 

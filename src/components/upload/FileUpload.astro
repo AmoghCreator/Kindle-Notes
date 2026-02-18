@@ -87,7 +87,7 @@ const {
         <p id="successMessage"></p>
         <button
           class="btn btn-primary"
-          onclick="window.location.href='/library'"
+          onclick="window.location.href='/'"
         >
           View Library
         </button>
@@ -114,6 +114,9 @@ const {
 </div>
 
 <script>
+  import { initDB, getDB } from '../../lib/db/index';
+  import { canonicalizeImportBooks } from '../../lib/parsers/kindle-canonical-import';
+
   const uploadArea = document.getElementById("uploadArea");
   const fileInput = document.getElementById("fileInput");
   const progressSection = document.getElementById("uploadProgress");
@@ -224,21 +227,19 @@ const {
   async function processFile(file: File) {
     // Show progress
     showProgress(file.name, file.size);
-    updateProgress(20, "Uploading file...");
+    updateProgress(15, "Uploading file...");
 
     try {
       // Create form data and upload to server
       const formData = new FormData();
       formData.append("file", file);
 
-      updateProgress(40, "Processing clippings...");
+      updateProgress(30, "Processing clippings...");
 
       const response = await fetch("/api/upload", {
         method: "POST",
         body: formData,
       });
-
-      updateProgress(80, "Saving notes...");
 
       if (!response.ok) {
         const error = await response.json();
@@ -247,9 +248,39 @@ const {
 
       const result = await response.json();
 
+      updateProgress(50, "Saving to local database...");
+
+      // Hydrate books and notes into Dexie IndexedDB
+      let canonicalSummary = { autoLinked: 0, needsConfirmation: 0, provisional: 0, total: 0 };
+      try {
+        await initDB();
+        const db = getDB();
+
+        // Upsert books into Dexie (same data that was saved server-side)
+        if (result.books && result.books.length > 0) {
+          await db.books.bulkPut(result.books);
+        }
+
+        // Upsert notes into Dexie
+        if (result.notes && result.notes.length > 0) {
+          await db.notes.bulkPut(result.notes);
+        }
+
+        updateProgress(70, "Matching books to catalog...");
+
+        // Run canonical matching against Google Books
+        if (result.books && result.books.length > 0) {
+          const canonicalResult = await canonicalizeImportBooks(result.books);
+          canonicalSummary = canonicalResult.summary;
+        }
+      } catch (dexieError) {
+        // Dexie/canonical errors are non-fatal — server data is already saved
+        console.warn("Dexie hydration or canonical matching failed (non-fatal):", dexieError);
+      }
+
       updateProgress(100, "Complete!");
 
-      // Show success with upload statistics
+      // Show success with upload + canonical statistics
       setTimeout(() => {
         showSuccess({
           sessionId: result.sessionId,
@@ -257,6 +288,7 @@ const {
           notesAdded: result.stats.notesAdded,
           notesSkipped: result.stats.notesSkipped,
           message: result.message,
+          canonical: canonicalSummary,
         });
       }, 500);
     } catch (error) {
@@ -297,12 +329,30 @@ const {
 
     const messageEl = document.getElementById("successMessage");
     if (messageEl) {
-      messageEl.innerHTML = `
+      const canon = result.canonical;
+      const hasCanonical = canon && canon.total > 0;
+
+      let html = `
         <strong>${result.message || "Upload successful!"}</strong>
         <br>📚 <strong>${result.booksAdded || 0} books</strong> added
         <br>📝 <strong>${result.notesAdded || 0} new notes</strong> imported
         ${result.notesSkipped ? `<br>⚠️ <small>${result.notesSkipped} duplicate notes skipped</small>` : ""}
       `;
+
+      if (hasCanonical) {
+        html += `<br><br><strong>Book catalog matching:</strong>`;
+        if (canon.autoLinked > 0) {
+          html += `<br>✅ ${canon.autoLinked} auto-matched`;
+        }
+        if (canon.needsConfirmation > 0) {
+          html += `<br>🔍 ${canon.needsConfirmation} matched (pending review)`;
+        }
+        if (canon.provisional > 0) {
+          html += `<br>📋 ${canon.provisional} saved as provisional`;
+        }
+      }
+
+      messageEl.innerHTML = html;
     }
   }
 
@@ -325,7 +375,7 @@ const {
     if (resultsSection) resultsSection.style.display = "none";
 
     // Reset file input
-    if (fileInput) fileInput.value = "";
+    if (fileInput) (fileInput as HTMLInputElement).value = "";
   }
 
   function formatFileSize(bytes: number): string {
@@ -339,7 +389,7 @@ const {
   }
 
   // Global function for retry button
-  window.resetUpload = resetUpload;
+  (window as any).resetUpload = resetUpload;
 </script>
 
 <style>

@@ -31,6 +31,114 @@ export interface Book {
     lastModifiedAt: Date;
 }
 
+export type CanonicalThresholdBand = 'auto' | 'confirm' | 'provisional';
+
+export interface CanonicalBookIdentity {
+    canonicalBookId: string;
+    titleCanonical: string;
+    titleNormalized: string;
+    authorsCanonical?: string[];
+    googleVolumeId?: string;
+    isbn13?: string;
+    coverUrl?: string;
+    matchStatus: 'verified' | 'unverified' | 'user-confirmed';
+    matchSource: 'google-books' | 'manual' | 'import-fallback';
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface BookAlias {
+    id: string;
+    normalizedKey: string;
+    rawTitle: string;
+    rawAuthor?: string;
+    canonicalBookId: string;
+    confidence: number;
+    resolution: 'auto' | 'user-confirmed' | 'provisional';
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface CanonicalLinkAudit {
+    sourceFlow: 'kindle-import' | 'manual-entry';
+    resolutionMode: 'auto' | 'user-confirmed' | 'provisional';
+    confidenceScore?: number; // 0..1
+    provider: 'google-books' | 'none';
+    providerCandidateId?: string;
+    resolvedAt: Date;
+}
+
+export interface ReadingSession {
+    id: string;
+    canonicalBookId: string;
+    bookId?: string;
+    sessionDate: string; // YYYY-MM-DD
+    pageStart: number;
+    pageEnd: number;
+    insight?: string;
+    durationMinutes?: number;
+    canonicalLinkAudit: CanonicalLinkAudit;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+/**
+ * Computed streak summary (not persisted — derived from reading sessions).
+ */
+export interface ReadingStreakSummary {
+    currentStreakDays: number;
+    longestStreakDays: number;
+    lastReadingDate?: string; // YYYY-MM-DD
+    streakStatus: 'active' | 'broken' | 'none';
+    daysReadThisWeek: number;
+}
+
+/**
+ * Transient metadata candidate returned from book search/match.
+ */
+export interface BookMatchCandidate {
+    candidateId: string;
+    title: string;
+    authors?: string[];
+    coverUrl?: string;
+    isbn13?: string;
+    source: 'google-books';
+    confidence: number;
+    selected?: boolean;
+}
+
+/**
+ * Migration / version metadata stored in syncMeta table.
+ */
+export interface SyncMeta {
+    key: string;
+    value: string | number | boolean;
+    updatedAt: Date;
+}
+
+export type UnifiedBookHistoryItem =
+    | {
+          itemType: 'note';
+          itemId: string;
+          happenedAt: Date;
+          payload: Note;
+      }
+    | {
+          itemType: 'session';
+          itemId: string;
+          happenedAt: Date;
+          payload: ReadingSession;
+      };
+
+export interface UnifiedBookHistory {
+    canonicalBookId: string;
+    canonicalTitle: string;
+    noteCount: number;
+    sessionCount: number;
+    lastActivityAt?: Date;
+    items: UnifiedBookHistoryItem[];
+}
+
 export interface Note {
     id: string;
     bookId: string;
@@ -262,8 +370,10 @@ export interface RandomSuggestion {
     itemId: string;
     itemType: ShareableItemType;
     previewText: string;
+    fullText: string;
     associatedHighlightId?: string;
     associatedHighlightText?: string;
+    fullAssociatedHighlightText?: string;
     bookId: string;
     bookTitle: string;
     bookAuthor?: string;

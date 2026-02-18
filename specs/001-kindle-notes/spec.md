@@ -2,7 +2,7 @@
 
 **Feature Branch**: `001-kindle-notes`  
 **Created**: 2026-02-04  
-**Status**: Draft  
+**Status**: Updated (Implementation-aligned)  
 **Input**: User description: "The website stores users' Kindle notes/highlights; users upload their Kindle notes; the site organizes them by book and page; core feature is easy note finding; one-click sharing: Twitter (message format) and Instagram Story (exported image); users can browse, edit, and add to their notes."
 
 ## User Scenarios & Testing *(mandatory)*
@@ -65,6 +65,9 @@ Users share a note instantly: as a preformatted Twitter message or as an exporte
 1. **Given** a selected note, **When** the user chooses "Share → Twitter", **Then** a prefilled message is generated including note text, book title, and optional source attribution.
 2. **Given** a selected note, **When** the user chooses "Share → Instagram Story", **Then** an image is generated with legible typography, book/title attribution, and safe margins.
 3. **Given** a long note, **When** the user selects Twitter share, **Then** the system provides intelligent truncation with an indicator and preserves attribution.
+4. **Given** a Random Spark suggestion contains a long note, **When** the card is displayed, **Then** the full note text is shown by default in the UI.
+5. **Given** a Random Spark suggestion is visible, **When** the user clicks "Copy Full", **Then** the copied output contains untrimmed note/highlight text plus attribution.
+6. **Given** a Random Spark suggestion is visible, **When** the user clicks "Copy Summary", **Then** the copied output uses truncated preview text and retains attribution.
 
 ---
 
@@ -120,6 +123,9 @@ Users browse their notes, make edits, add tags/annotations, and save changes for
 - **FR-013**: System MUST provide accessible UI controls and semantic structure meeting WCAG 2.1 AA.
 - **FR-014**: System MUST process large imports (e.g., 10k notes) within a reasonable time and show progress.
 - **FR-015**: System MUST accept at least one standard Kindle export format for notes. [NEEDS CLARIFICATION: accepted import file formats]
+- **FR-016**: Random Spark suggestion cards MUST render full note/highlight text in the visible card content by default.
+- **FR-017**: Random Spark suggestion cards MUST provide separate actions for copying full text and copying summary text.
+- **FR-018**: Summary-copy behavior MUST use preview-length text while full-copy behavior MUST use untrimmed source text.
 
 ### Key Entities *(include if feature involves data)*
 
@@ -143,6 +149,7 @@ Users browse their notes, make edits, add tags/annotations, and save changes for
 - **SC-003**: 90% of users successfully generate a Twitter message or Instagram image on first attempt without guidance.
 - **SC-004**: 95% of UI actions meet accessibility checks (automated) and core pages achieve a high usability score in user tests.
 - **SC-005**: Duplicate notes across imports reduced to ≤2% via deduplication.
+- **SC-006**: For long Random Spark suggestions (>140 characters), 100% of rendered cards show full note text while Summary copy output remains preview-length.
 
 ## Assumptions
 

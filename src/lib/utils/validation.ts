@@ -268,3 +268,136 @@ export function validateParsedEntry(entry: any): ValidationResult {
         warnings
     };
 }
+
+export interface ReadingSessionFormInput {
+    sessionDate: string;
+    canonicalBookId: string;
+    bookTitle: string;
+    pageStart: number;
+    pageEnd: number;
+    insight?: string;
+}
+
+export function validateReadingSessionForm(input: ReadingSessionFormInput): ValidationResult {
+    const errors: string[] = [];
+    const warnings: string[] = [];
+
+    // Date validation
+    if (!input.sessionDate || !/^\d{4}-\d{2}-\d{2}$/.test(input.sessionDate)) {
+        errors.push('Session date is required (YYYY-MM-DD)');
+    } else {
+        const sessionDate = new Date(input.sessionDate + 'T00:00:00');
+        const today = new Date();
+        today.setHours(23, 59, 59, 999);
+        if (sessionDate > today) {
+            errors.push('Session date cannot be in the future');
+        }
+    }
+
+    // Book validation
+    if (!input.canonicalBookId || input.canonicalBookId.trim().length === 0) {
+        errors.push('A book must be selected');
+    }
+
+    if (!input.bookTitle || input.bookTitle.trim().length === 0) {
+        errors.push('Book title is required');
+    }
+
+    // Page validation
+    if (typeof input.pageStart !== 'number' || input.pageStart < 1) {
+        errors.push('Starting page must be at least 1');
+    }
+
+    if (typeof input.pageEnd !== 'number' || input.pageEnd < 1) {
+        errors.push('Ending page must be at least 1');
+    }
+
+    if (input.pageStart && input.pageEnd && input.pageEnd < input.pageStart) {
+        errors.push('Ending page must be greater than or equal to starting page');
+    }
+
+    // Insight validation
+    if (input.insight && input.insight.length > 2000) {
+        errors.push('Insight must be 2000 characters or fewer');
+    }
+
+    return {
+        isValid: errors.length === 0,
+        errors,
+        warnings,
+    };
+}
+
+export interface ReadingSessionInput {
+    title?: string;
+    author?: string;
+    durationMinutes?: number;
+    sessionDate?: string;
+    startedAt?: Date;
+    endedAt?: Date;
+    pagesRead?: number;
+}
+
+export function validateReadingSessionInput(input: ReadingSessionInput): ValidationResult {
+    const errors: string[] = [];
+    const warnings: string[] = [];
+
+    if (!input.title || input.title.trim().length === 0) {
+        errors.push('Book title is required');
+    }
+
+    if (typeof input.durationMinutes !== 'number' || input.durationMinutes <= 0) {
+        errors.push('Duration must be a positive number of minutes');
+    } else if (input.durationMinutes > 24 * 60) {
+        warnings.push('Duration is unusually long; please confirm this value');
+    }
+
+    if (!input.sessionDate || !/^\d{4}-\d{2}-\d{2}$/.test(input.sessionDate)) {
+        errors.push('Session date must use YYYY-MM-DD format');
+    }
+
+    if (input.startedAt && Number.isNaN(input.startedAt.getTime())) {
+        errors.push('Start time is invalid');
+    }
+
+    if (input.endedAt && Number.isNaN(input.endedAt.getTime())) {
+        errors.push('End time is invalid');
+    }
+
+    if (input.startedAt && input.endedAt && input.endedAt < input.startedAt) {
+        errors.push('End time cannot be earlier than start time');
+    }
+
+    if (typeof input.pagesRead === 'number' && input.pagesRead < 0) {
+        errors.push('Pages read cannot be negative');
+    }
+
+    return {
+        isValid: errors.length === 0,
+        errors,
+        warnings
+    };
+}
+
+export function validateCanonicalInput(title?: string, author?: string): ValidationResult {
+    const errors: string[] = [];
+    const warnings: string[] = [];
+
+    if (!title || title.trim().length < 2) {
+        errors.push('A valid book title is required for canonical matching');
+    }
+
+    if (!author || author.trim().length === 0) {
+        warnings.push('Author is missing; match confidence may be reduced');
+    }
+
+    if (title && title.length > 300) {
+        warnings.push('Title is unusually long and may reduce match quality');
+    }
+
+    return {
+        isValid: errors.length === 0,
+        errors,
+        warnings
+    };
+}

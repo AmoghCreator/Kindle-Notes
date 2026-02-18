@@ -1,0 +1,372 @@
+---
+/**
+ * Reading Tracker Header
+ * 
+ * Replaces the library hero header with a daily reading tracker.
+ * Shows today/yesterday/latest session context with streak summary
+ * and a CTA to log a new session.
+ */
+export interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<div class={`tracker-header ${className}`} id="trackerHeader">
+  <!-- Loading state -->
+  <div id="trackerLoading" class="tracker-state" aria-live="polite">
+    <div class="tracker-loading-content">
+      <div class="spinner"></div>
+      <span>Loading reading tracker...</span>
+    </div>
+  </div>
+
+  <!-- Error state -->
+  <div id="trackerError" class="tracker-state" style="display: none;" role="alert">
+    <p class="tracker-error-message">⚠ Could not load your reading tracker.</p>
+    <button class="btn btn-secondary btn-sm" id="trackerRetryBtn">Retry</button>
+  </div>
+
+  <!-- Empty state (no sessions) -->
+  <div id="trackerEmpty" class="tracker-state tracker-empty" style="display: none;">
+    <div class="tracker-icon">📖</div>
+    <h2 class="tracker-title">Reading Tracker</h2>
+    <p class="tracker-empty-message">Start tracking your reading journey!<br/>Log your first session to see your progress here.</p>
+    <a href="/sessions" class="btn btn-primary">Log Your First Reading Session</a>
+  </div>
+
+  <!-- Session display state -->
+  <div id="trackerContent" class="tracker-content" style="display: none;">
+    <div class="tracker-top">
+      <div class="tracker-icon">📖</div>
+      <h2 class="tracker-title">Reading Tracker</h2>
+    </div>
+
+    <div class="tracker-session">
+      <div class="tracker-cover" id="trackerCover">
+        <div class="cover-placeholder">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+          </svg>
+        </div>
+      </div>
+      <div class="tracker-details">
+        <span class="tracker-date-label" id="trackerDateLabel"></span>
+        <span class="tracker-book-title" id="trackerBookTitle"></span>
+        <span class="tracker-page-range" id="trackerPageRange"></span>
+        <span class="tracker-insight" id="trackerInsight" style="display: none;"></span>
+      </div>
+    </div>
+
+    <div class="tracker-footer">
+      <div class="tracker-streak" id="trackerStreak"></div>
+      <a href="/sessions" class="btn btn-primary btn-sm">Log Today's Reading</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .tracker-header {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    background: var(--color-surface);
+    padding: var(--space-xl);
+    margin-bottom: var(--space-xl);
+    min-height: 120px;
+  }
+
+  .tracker-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-lg) 0;
+  }
+
+  .tracker-loading-content {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-family: var(--font-family-secondary);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+  }
+
+  .spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--color-border);
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .tracker-error-message {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-error);
+    margin: 0 0 var(--space-sm);
+  }
+
+  .tracker-empty {
+    padding: var(--space-xl) 0;
+  }
+
+  .tracker-icon {
+    font-size: 1.8rem;
+    margin-bottom: var(--space-xs);
+  }
+
+  .tracker-title {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-xs);
+  }
+
+  .tracker-empty-message {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-lg);
+    line-height: var(--line-height-relaxed);
+  }
+
+  /* Session display */
+  .tracker-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .tracker-top {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .tracker-top .tracker-icon {
+    font-size: 1.4rem;
+    margin-bottom: 0;
+  }
+
+  .tracker-top .tracker-title {
+    margin: 0;
+    font-size: var(--font-size-lg);
+  }
+
+  .tracker-session {
+    display: flex;
+    gap: var(--space-lg);
+    align-items: flex-start;
+  }
+
+  .tracker-cover {
+    flex-shrink: 0;
+    width: 64px;
+    height: 88px;
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--color-border);
+  }
+
+  .tracker-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .cover-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+  }
+
+  .cover-placeholder svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .tracker-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .tracker-date-label {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .tracker-book-title {
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tracker-page-range {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .tracker-insight {
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    font-style: italic;
+    margin-top: 2px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .tracker-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .tracker-streak {
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .btn-sm {
+    font-size: var(--font-size-sm);
+    padding: var(--space-xs) var(--space-md);
+  }
+
+  @media (max-width: 768px) {
+    .tracker-header {
+      padding: var(--space-lg);
+    }
+
+    .tracker-session {
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .tracker-cover {
+      width: 48px;
+      height: 66px;
+    }
+
+    .tracker-footer {
+      flex-direction: column;
+      gap: var(--space-sm);
+      align-items: flex-start;
+    }
+
+    .tracker-footer .btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
+
+<script>
+  import { getTrackerSummary } from '../../lib/tracker/summary';
+  import { computeStreak } from '../../lib/tracker/streak';
+  import { formatPageRange } from '../../lib/utils/ui-state';
+  import { initDB } from '../../lib/db/index';
+
+  const loadingEl = document.getElementById('trackerLoading')!;
+  const errorEl = document.getElementById('trackerError')!;
+  const emptyEl = document.getElementById('trackerEmpty')!;
+  const contentEl = document.getElementById('trackerContent')!;
+  const retryBtn = document.getElementById('trackerRetryBtn')!;
+
+  const dateLabelEl = document.getElementById('trackerDateLabel')!;
+  const bookTitleEl = document.getElementById('trackerBookTitle')!;
+  const pageRangeEl = document.getElementById('trackerPageRange')!;
+  const insightEl = document.getElementById('trackerInsight')!;
+  const coverEl = document.getElementById('trackerCover')!;
+  const streakEl = document.getElementById('trackerStreak')!;
+
+  async function loadTracker() {
+    showState('loading');
+
+    try {
+      await initDB();
+      const summary = await getTrackerSummary();
+
+      if (summary.state === 'empty') {
+        showState('empty');
+        return;
+      }
+
+      // Populate session data
+      dateLabelEl.textContent = summary.dateLabel;
+      bookTitleEl.textContent = summary.book?.titleCanonical || 'Unknown Book';
+      
+      if (summary.session) {
+        pageRangeEl.textContent = formatPageRange(summary.session.pageStart, summary.session.pageEnd);
+        
+        if (summary.session.insight) {
+          insightEl.textContent = `"${summary.session.insight}"`;
+          insightEl.style.display = 'block';
+        }
+
+        // Cover image
+        if (summary.book?.coverUrl) {
+          coverEl.innerHTML = `<img src="${summary.book.coverUrl}" alt="${summary.book.titleCanonical} cover" />`;
+        }
+      }
+
+      // Load streak data
+      try {
+        const streak = await computeStreak();
+        if (streak.streakStatus === 'active') {
+          streakEl.textContent = `🔥 ${streak.currentStreakDays}-day streak · ${streak.daysReadThisWeek} day${streak.daysReadThisWeek !== 1 ? 's' : ''} this week`;
+        } else if (streak.longestStreakDays > 0) {
+          streakEl.textContent = `Your streak ended at ${streak.longestStreakDays} days. Start a new one!`;
+        } else {
+          streakEl.textContent = 'Start your reading streak today!';
+        }
+      } catch {
+        streakEl.textContent = '';
+      }
+
+      showState('ready');
+    } catch (err) {
+      console.error('Failed to load tracker:', err);
+      showState('error');
+    }
+  }
+
+  function showState(state: 'loading' | 'error' | 'empty' | 'ready') {
+    loadingEl.style.display = state === 'loading' ? 'flex' : 'none';
+    errorEl.style.display = state === 'error' ? 'flex' : 'none';
+    emptyEl.style.display = state === 'empty' ? 'flex' : 'none';
+    contentEl.style.display = state === 'ready' ? 'flex' : 'none';
+  }
+
+  retryBtn.addEventListener('click', loadTracker);
+
+  // Initial load
+  loadTracker();
+</script>

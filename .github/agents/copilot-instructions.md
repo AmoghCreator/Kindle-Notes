@@ -12,6 +12,10 @@ Auto-generated from all feature plans. Last updated: 2026-02-04
 - TypeScript (Astro 5.17.1, Node.js 18+) + Astro, @astrojs/node, MiniSearch (existing) (001-twitter-note-sharing)
 - Local JSON files (`data/books.json`, `data/notes.json`, `data/uploads.json`) (001-twitter-note-sharing)
 - TypeScript (Astro 5.17.1), Node.js 18+ + Astro, @astrojs/node, MiniSearch (existing only) (001-twitter-note-sharing)
+- TypeScript (Astro 5.17.1), Node.js 18+ + Astro, @astrojs/node, MiniSearch, existing Google Books utility integration (001-reading-session-tracker)
+- Local JSON files in `data/` (`books.json`, `notes.json`, `uploads.json`) plus new `reading-sessions.json` and optional catalog metadata fields in `books.json` (001-reading-session-tracker)
+- TypeScript (Astro 5.17.1), Node.js 18+ + Astro, @astrojs/node, MiniSearch, Dexie, Google Books HTTP API (browser fetch) (001-reading-session-tracker)
+- Browser IndexedDB via Dexie (`books`, `notes`, `readingSessions`, `canonicalBooks`, `bookAliases`, `syncMeta`) (001-reading-session-tracker)
 
 - TypeScript/JavaScript ES2022, HTML5, CSS3 (001-kindle-notes)
 
@@ -32,9 +36,9 @@ npm test && npm run lint
 TypeScript/JavaScript ES2022, HTML5, CSS3: Follow standard conventions
 
 ## Recent Changes
-- 001-twitter-note-sharing: Added TypeScript (Astro 5.17.1), Node.js 18+ + Astro, @astrojs/node, MiniSearch (existing only)
-- 001-twitter-note-sharing: Added TypeScript (Astro 5.17.1, Node.js 18+) + Astro, @astrojs/node, MiniSearch (existing)
-- 004-highlight-note-link: Added TypeScript (ES2022+) via Astro 5.17.1 + Astro (SSG framework), MiniSearch (client-side search)
+- 001-reading-session-tracker: Added TypeScript (Astro 5.17.1), Node.js 18+ + Astro, @astrojs/node, MiniSearch, Dexie, Google Books HTTP API (browser fetch)
+- 001-reading-session-tracker: Added TypeScript (Astro 5.17.1), Node.js 18+ + Astro, @astrojs/node, MiniSearch, Dexie, Google Books HTTP API (browser fetch)
+- 001-reading-session-tracker: Added TypeScript (Astro 5.17.1), Node.js 18+ + Astro, @astrojs/node, MiniSearch, existing Google Books utility integration
 
 
 <!-- MANUAL ADDITIONS START -->
